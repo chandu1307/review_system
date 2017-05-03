@@ -1,0 +1,26 @@
+<% provide(:title, "Add") %>
+<h1>Add Review</h1>
+
+<form class="form-horizontal">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-highlight">
+      <thead>
+      <th>S.No</th>
+      <th>Goal</th>
+      <th>Weightage(%)</th>
+
+      </thead>
+      <tbody>
+
+      <% (1..4).each do |i| %>
+          <tr class="centered">
+            <td class="col-md-2"><label for="sel1"><%= i %></label></td>
+            <td  class="col-md-6"> <textarea  rows="3" type="text" class="form-control" placeholder="Enter Goal?" required></textarea></td>
+            <td  class="col-md-3"><input type="number" class="form-control" value="" /></td>
+          </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+  </div>
+</form>
