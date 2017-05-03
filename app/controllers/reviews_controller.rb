@@ -10,7 +10,7 @@ class ReviewsController < ApplicationController
 
     @review = current_user.reviews.build(name: get_review_name, submitted: false, approved: false)
     if @review.save
-      debugger
+      
       flash[:success] = "Review created!"
       redirect_to reviews_path
     else
