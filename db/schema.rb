@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170501112710) do
+ActiveRecord::Schema.define(version: 20170503064534) do
+
+  create_table "goals", force: :cascade do |t|
+    t.text     "description"
+    t.integer  "weightage"
+    t.integer  "review_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["review_id"], name: "index_goals_on_review_id"
+  end
 
   create_table "reviews", force: :cascade do |t|
     t.text     "name"

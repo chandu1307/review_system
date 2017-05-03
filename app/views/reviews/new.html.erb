@@ -1,7 +1,10 @@
 <% provide(:title, "Add") %>
 <h1>Add Review</h1>
 
-<form class="form-horizontal">
+<% @review = Review.new %>
+<% (1..4).each { @review.goals.build } %>
+<%= form_for @review do |f| %>
+
   <div class="table-responsive">
     <table class="table table-bordered table-striped table-highlight">
       <thead>
@@ -12,15 +15,26 @@
       </thead>
       <tbody>
 
-      <% (1..4).each do |i| %>
-          <tr class="centered">
-            <td class="col-md-2"><label for="sel1"><%= i %></label></td>
-            <td  class="col-md-6"> <textarea  rows="3" type="text" class="form-control" placeholder="Enter Goal?" required></textarea></td>
-            <td  class="col-md-3"><input type="number" class="form-control" value="" /></td>
-          </tr>
-      <% end %>
+      <% i=1 %>
+
+          <%= f.fields_for :goals do |ff| %>
+
+                 <tr class="centered">
+                     <td class="col-md-2"><label for="sel1"><%= i %></label></td>
+                     <td  class="col-md-6">  <%= ff.text_area :description, placeholder: "Enter Goal?",:rows => 3,cols: 70, :required => true %></td>
+                     <td  class="col-md-3"><%= ff.number_field :weightage, max: 40, min: 10  %></td>
+                   <% i = i+1 %>
+                 </tr>
+              <% end %>
+
 
       </tbody>
     </table>
   </div>
-</form>
+
+
+<div class="centered">
+  <%= f.submit "Post", class: "btn btn-primary" %>
+</div>
+
+<% end %>

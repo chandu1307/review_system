@@ -9,18 +9,23 @@
   <div class="col-md-8">
     <h3>Reviews</h3>
     <% if @review_items.any? %>
-        <ol class="microposts">
-          <%= render @review_items %>
-        </ol>
-        <%= will_paginate @review_items %>
+        <% @review_items.each do |review| %>
+            <div>
+           <%= link_to review.name , review %>
+            </div>
+
+        <% end %>
     <% else %>
         <div class="center jumbotron">
           <h1>No reviews yet!</h1>
         </div>
-        <a href="reviews/new" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Review</a>
-    <% end %>
 
+    <% end %>
+    <div >
+    <a href="reviews/new" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Review</a>
+    </div>
   </div>
+
 </div>
 
 

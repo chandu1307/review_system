@@ -92,6 +92,10 @@ h1 {
 }
 
 
+.centered_row {
+  text-align:center;
+  @include center-block();
+}
 
 
 

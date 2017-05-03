@@ -4,24 +4,7 @@
 
 <body>
 
-<div class="row">
 
-  <div class="col-md-8">
-    <h3>Reviews</h3>
-    <% if @review_items.any? %>
-        <ol class="microposts">
-          <%= render @review_items %>
-        </ol>
-        <%= will_paginate @review_items %>
-    <% else %>
-        <div class="center jumbotron">
-          <h1>No reviews yet!</h1>
-        </div>
-        <a href="/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Review</a>
-    <% end %>
-
-  </div>
-</div>
 
 
 </body>
