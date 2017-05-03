@@ -24,7 +24,7 @@ build:
       name: set rails environment
       code: export RAILS_ENV=test
 
-    #- bundle-install
+    - rails-database-yml
 
     - script:
       name: install gems
@@ -32,56 +32,60 @@ build:
         echo "gem: --no-rdoc --no-ri" > ~/.gemrc
         rm .ruby-version
         gem install bundler
-        bundle install --without deployment test --retry=3 --no-cache
-
-    - rails-database-yml
+        gem install tzinfo-data
+        bundle install --without deployment test --retry=3 --no-cache --quiet
 
     - script:
       name: setup database
-      code: bundle exec rake db:create db:migrate
+      code: bundle exec rake db:drop db:create db:migrate
 
-    - script:
-      name: rubocop
-      code: bundle exec rubocop
+    #- script:
+      #name: rubocop
+      #code: bundle exec rubocop
 
     - script:
       name: run unit tests and code coverage
       code: |
         bundle exec rspec > rspec_output.log
         cat rspec_output.log
-        COVERAGE=$(cat rspec_output.log| grep 'Coverage report' | awk '{ print $12 }')
 
-        if [ $COVERAGE == "(100.0%)"]; then
-          echo "Good job with the unit tests!"
-        else
-          echo "Not enough unit tests to let you get away with it. ($COVERAGE)"
-          exit 1
-        fi
+        # COVERAGE=$(cat rspec_output.log| grep 'Coverage report' | awk '{ print $12 }')
+        #
+        # if [ $COVERAGE == "(100.0%)"]; then
+        #   echo "Good job with the unit tests!"
+        # else
+        #   echo "Not enough unit tests to let you get away with it. ($COVERAGE)"
+        #   exit 1
+        # fi
+deploy_staging:
+  steps:
+    - script:
+      name: set rails environment
+      code: export RAILS_ENV=test
+
+    - rails-database-yml
+
+    - script:
+      name: install gems
+      code: |
+        echo "gem: --no-rdoc --no-ri" > ~/.gemrc
+        rm -f .ruby-version
+        gem install bundler
+        bundle install --without deployment test --retry=3 --no-cache --quiet
 
     - script:
       name: precompile assets
       code: bundle exec rake assets:precompile
 
-    # Create review-system-deployment.json for initialization
-    - script:
-      name: create review-system-deployment.json
-      code: bash ./scripts/create_review-system-deployment.yaml.sh
+    ## Create review-system-deployment.json for initialization
+    #- script:
+      #name: create review-system-deployment.json
+      #code: bash ./scripts/create_review-system-deployment.yaml.sh
 
-    # Create review-system-service.json for initialization
-    - script:
-      name: create review-system-service.json
-      code: bash ./scripts/create_review-system-service.json.sh
-
-    - script:
-      name: prepare nginx conf
-      code: |
-        cd /pipeline/source
-        export RAILS_ENV=staging
-        bash ./scripts/app_env_vars.sh
-        sed -i 's/test/staging/g' config/database.yml
-        SECRET=$(ruby -e "require 'securerandom'; puts SecureRandom.hex(64)")
-        sed -i -e "s@STAGING_SECRET@$SECRET@" config/secrets.yml
-        bash ./scripts/nginx_conf.sh
+    ## Create review-system-service.json for initialization
+    #- script:
+      #name: create review-system-service.json
+      #code: bash ./scripts/create_review-system-service.json.sh
 
     - internal/docker-push:
         username: $DOCKER_HUB_USERNAME
@@ -90,9 +94,8 @@ build:
         ports: "8080"
         repository: itsprdp/review-system
         registry: https://registry.hub.docker.com
+        working-dir: /pipeline/source
 
-deploy_staging:
-  steps:
     # # create secrets
     #- kubectl:
     #server: $KUBERNETES_MASTER_IP
@@ -104,26 +107,26 @@ deploy_staging:
               #--docker-password=$DOCKER_PASSWORD \
               #--docker-email=$DOCKER_EMAIL
 
-    ## create deployment
-    #- kubectl:
-        #server: $KUBERNETES_MASTER_IP
-        #username: $KUBERNETES_USERNAME
-        #password: $KUBERNETES_PASSWORD
-        #insecure-skip-tls-verify: true
-        #command: create -f $MS_NAME-deployment.yaml --record
-
-    ## create service
-    #- kubectl:
-        #server: $KUBERNETES_MASTER_IP
-        #username: $KUBERNETES_USERNAME
-        #password: $KUBERNETES_PASSWORD
-        #insecure-skip-tls-verify: true
-        #command: create -f $MS_NAME-service.json --record
-
-    ## rolling update
+    # create deployment
     - kubectl:
         server: $KUBERNETES_MASTER_IP
         username: $KUBERNETES_USERNAME
         password: $KUBERNETES_PASSWORD
         insecure-skip-tls-verify: true
-        command: set image deployment $MS_NAME $MS_NAME-webapp=itsprdp/$MS_NAME:${WERCKER_GIT_COMMIT} --record
+        command: create -f $MS_NAME-deployment.yaml --record
+
+    # create service
+    - kubectl:
+        server: $KUBERNETES_MASTER_IP
+        username: $KUBERNETES_USERNAME
+        password: $KUBERNETES_PASSWORD
+        insecure-skip-tls-verify: true
+        command: create -f $MS_NAME-service.json --record
+
+    ## rolling update
+    #- kubectl:
+        #server: $KUBERNETES_MASTER_IP
+        #username: $KUBERNETES_USERNAME
+        #password: $KUBERNETES_PASSWORD
+        #insecure-skip-tls-verify: true
+        #command: set image deployment $MS_NAME $MS_NAME-webapp=itsprdp/$MS_NAME:${WERCKER_GIT_COMMIT} --record

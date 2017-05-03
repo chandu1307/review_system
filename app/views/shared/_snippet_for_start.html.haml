@@ -1,0 +1,26 @@
+.container
+  .row.bs-wizard{:style => "border-bottom:0;"}
+    .col-xs-3.bs-wizard-step.disabled
+      .text-center.bs-wizard-stepnum Submited
+      .progress
+        .progress-bar
+      %a.bs-wizard-dot{:href => "#"}
+    .col-xs-3.bs-wizard-step.disabled
+      / complete
+      .text-center.bs-wizard-stepnum Accepted
+      .progress
+        .progress-bar
+      %a.bs-wizard-dot{:href => "#"}
+        %a.bs-wizard-dot{:href => "#"}
+    .col-xs-3.bs-wizard-step.disabled
+      / complete
+      .text-center.bs-wizard-stepnum Feedback submitted
+      .progress
+        .progress-bar
+      %a.bs-wizard-dot{:href => "#"}
+    .col-xs-3.bs-wizard-step.disabled
+      / complete
+      .text-center.bs-wizard-stepnum Completed
+      .progress
+        .progress-bar
+      %a.bs-wizard-dot{:href => "#"}

@@ -1,0 +1,20 @@
+- provide(:title, "Feedback")
+%h1 Submit Feedback
+= render 'shared/goal_name'
+- if @review.feedback_submitted?
+  = render 'shared/snippet_for_submit_feedback'
+- else
+  = render 'shared/snippet_for_approve'
+= form_tag(submit_feedback_review_goals_url([@review]),  method: :post) do |f|
+  %div.lable_heading
+    %label{:for => "sel1"}= 'Goals'
+  %div.rounded
+    %text_field{:for => "sel1"}= @goal.description.gsub(/\n/, '<br/>').html_safe
+  %div.lable_heading
+    %label{:for => "sel1"}= 'Your feedback'
+  %div.margin_top
+    = text_area_tag :manager_feedback, @goal.manager_feedback, autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 8
+  %div.margin_top_bottom
+    .centered
+      = submit_tag "Submit feedback", class: "btn btn-primary", name: "commit"
+      = submit_tag "Submit final feedback", class: "btn btn-primary", name: "commit"

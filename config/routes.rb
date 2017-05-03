@@ -1,18 +1,25 @@
 Rails.application.routes.draw do
-
+  root 'users#new'
 
   get 'auth/:provider/callback', to: 'users#create'
   get 'auth/failure', to: redirect('/')
-  delete '/logout',  to: 'users#destroy'
-  put 'select_team_leads', to: 'users#team_leads', as: :select_team_leads
-  put 'approve_goals_by_team_lead', to: 'reviews#approve_goals', as: :approve_goals_by_team_lead
-  resources :reviews
-  resources :users do
-    member do
-      get 'reviews'
+
+  resources :reviews, only: [:index] do
+    resource :goals, only: [:new, :edit, :show, :create, :update] do
+      member do
+        get 'feedback'
+        post 'submit_feedback'
+        put 'approve'
+      end
     end
   end
-  root 'users#new'
 
-
+  resources :users, only: [:index, :new, :create] do
+    delete 'logout'
+    collection do
+      get 'team_members'
+      get 'all_reviews'
+      put 'team_leads'
+    end
+  end
 end
