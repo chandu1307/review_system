@@ -11,7 +11,11 @@
     <% if @review_items.any? %>
         <% @review_items.each do |review| %>
             <div>
-           <%= link_to review.name , review %>
+              <% if review.submitted %>
+                  <%= link_to review.name , review %>
+              <% else %>
+                  <%= link_to review.name , edit_review_path(review)  %>
+              <% end %>
             </div>
 
         <% end %>

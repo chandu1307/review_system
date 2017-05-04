@@ -1,10 +1,37 @@
-<% provide(:title, "Home") %>
-<h1>Welcome <%= current_user.name %></h1>
-
-
-<body>
 
 
 
+<% provide(:title, "Add") %>
+<h1><%= @review.name%></h1>
 
-</body>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-highlight">
+        <thead>
+        <th>S.No</th>
+        <th>Goal</th>
+        <th>Weightage(%)</th>
+
+        </thead>
+        <tbody>
+
+        <% i=1 %>
+
+        <% @goal_iteams.each do |goal| %>
+
+            <tr class="centered">
+              <td class="col-md-2"><label for="sel1"><%= i %></label></td>
+              <td  class="col-md-6"> <label for="sel1"><%= goal.description %></label></td>
+              <td  class="col-md-3"><label for="sel1"><%= goal.weightage %></label></td>
+              <% i = i+1 %>
+            </tr>
+        <% end %>
+
+
+        </tbody>
+      </table>
+    </div>
+
+
+
+

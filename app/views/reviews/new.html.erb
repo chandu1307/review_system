@@ -1,8 +1,5 @@
 <% provide(:title, "Add") %>
 <h1>Add Review</h1>
-
-<% @review = Review.new %>
-<% (1..4).each { @review.goals.build } %>
 <%= form_for @review do |f| %>
 
   <div class="table-responsive">
@@ -34,7 +31,8 @@
 
 
 <div class="centered">
-  <%= f.submit "Post", class: "btn btn-primary" %>
+  <%= f.submit "Save", class: "btn btn-primary", name: "commit" %>
+  <%= f.submit "Submit", class: "btn btn-primary", name: "commit"%>
 </div>
 
 <% end %>

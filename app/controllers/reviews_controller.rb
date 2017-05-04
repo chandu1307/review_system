@@ -3,20 +3,64 @@ class ReviewsController < ApplicationController
   before_action :logged_in_user, only: [:index,:new ,:show]
 
   def show
-
-
+    @review = Review.find(params[:id])
+    @goal_iteams = @review.goals.paginate(page: params[:page])
   end
-  def create
 
-    @review = current_user.reviews.build(name: get_review_name, submitted: false, approved: false)
-    if @review.save
-      
+
+  def edit
+    @review = Review.find(params[:id])
+  end
+
+  def new
+    @review = Review.new
+    (1..4).each { @review.goals.build }
+  end
+
+
+  def create
+    submitted_value = false
+    if params[:commit] == 'Submit'
+      submitted_value = true
+    end
+    review = current_user.reviews.build(name: get_review_name, submitted: submitted_value, approved: false)
+    if review.save
+      goals = review.goals.build(params[:review][:goals_attributes].values);
+      goals.each do|goal|
+        goal.save
+      end
       flash[:success] = "Review created!"
       redirect_to reviews_path
+
     else
       render reviews_path
     end
+
   end
+
+  def update
+    @review = Review.find(params[:id])
+    submitted_value = false
+    if params[:commit] == 'Submit'
+      submitted_value = true
+    end
+    if @review.update(submitted: submitted_value)
+        goals = params[:review][:goals_attributes].values
+
+        goals.each do|goal|
+
+          goal.update(goal)
+        end
+
+        redirect_to reviews_path
+
+
+
+    end
+
+  end
+
+
 
   def index
     @review_items = current_user.reviews.paginate(page: params[:page])
@@ -38,19 +82,13 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(:name, :submitted, :approved)
   end
 
-  def get_review_name
-    date = Time.now.strftime("%Y%m")
-    if  Time.now.month < 3
-      return "Quarter 1 - "+date.year
-    elsif  Time.now.month < 6
-      return "Quarter 2 - "+date.year
-    elsif  Time.now.month < 8
-      return "Quarter 3 - "+date.year
-    else
-       return "Quarter 4 - "+date.year
-    end
+  def goals_params_require(params)
+
+    params.require(:goal).permit(:description, :weightage)
   end
 
+
+  private
 
   def get_review_name
 
@@ -62,9 +100,12 @@ class ReviewsController < ApplicationController
     elsif  Time.now.month < 8
       name =  name +"Quarter 3 - "+ Time.now.strftime("%Y")
     else
-      name =  name +"Quarter 4 - "+Time.now.strftime("%Y")
+      name =  name +"Quarter 4 - "+Time.now.year
     end
     return name
   end
+
+
+
 end
 
