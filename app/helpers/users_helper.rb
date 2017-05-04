@@ -63,4 +63,16 @@ module UsersHelper
     session[:forwarding_url] = request.original_url if request.get?
   end
 
+
+  # Returns true if the user is logged in, false otherwise.
+  def is_access?
+    @review = Review.find(params[:id])
+    if( !current_user.nil? && @review.user_id ==current_user.id)
+      return true
+    end
+    return false
+
+  end
+
+
 end

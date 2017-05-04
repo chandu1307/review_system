@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
 
-  before_action :logged_in_user, only: [:index,:new ,:show]
+  before_action :logged_in_user, only: [:index,:new ,:show,:edit]
+  before_action :belongs_to_this_user,only: [:show,:edit]
 
   def show
     @review = Review.find(params[:id])
@@ -46,9 +47,7 @@ class ReviewsController < ApplicationController
     end
     if @review.update(submitted: submitted_value)
         goals = params[:review][:goals_attributes].values
-
         goals.each do|goal|
-
           goal.update(goal)
         end
 
@@ -74,6 +73,13 @@ class ReviewsController < ApplicationController
   def logged_in_user
     unless logged_in?
       flash[:danger] = "Please log in."
+      redirect_to root_path
+    end
+  end
+
+  def belongs_to_this_user
+    unless is_access?
+      flash[:danger] = "You are not acess that"
       redirect_to root_path
     end
   end
