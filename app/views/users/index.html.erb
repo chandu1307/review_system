@@ -1,36 +1,35 @@
-<% provide(:title, "Home") %>
-<h1>Welcome <%= current_user.name %></h1>
+<% provide(:title, "Team Members") %>
+<h1>Team Hierarchy</h1>
 
 
-<body>
+<div class="table-responsive">
 
-<div class="row">
+  <%= form_tag(select_team_leads_path, method: :put)  do %>
+      <table class="table table-bordered table-striped table-highlight">
+        <thead>
+        <th>S.No</th>
+        <th>Employe name</th>
+        <th>Select Manager</th>
+        </thead>
 
-  <div class="col-md-8">
-    <h3>Reviews</h3>
-    <% if @review_items.any? %>
-        <% @review_items.each do |review| %>
-            <div>
-              <% if review.submitted %>
-                  <%= link_to review.name , review %>
-              <% else %>
-                  <%= link_to review.name , edit_review_path(review)  %>
-              <% end %>
-            </div>
+        <tbody>
+        <% i=1 %>
+        <% for user in @users %>
+            <tr class="centered">
+              <td class="col-md-2"><label for="sel1"><%= i %></label></td>
+              <td class="col-md-4"><label for="sel1"><%= user.name %></label></td>
+              <td class="col-md-4">
+                <%= select_tag "managers[user_id :  #{user.id}]", options_from_collection_for_select(@users, 'id', 'name', user.id) %>
 
+              </td>
+            </tr>
+            <% i = i+1 %>
         <% end %>
-    <% else %>
-        <div class="center jumbotron">
-          <h1>No reviews yet!</h1>
-        </div>
-
-    <% end %>
-    <div >
-    <a href="reviews/new" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Review</a>
-    </div>
-  </div>
+        </tbody>
+      </table>
+      <div class="centered">
+         <%= submit_tag 'Submit' %>
+      </div>
+  <% end %>
 
 </div>
-
-
-</body>
