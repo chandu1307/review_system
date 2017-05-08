@@ -5,8 +5,7 @@
 <body>
 
 <div class="row">
-
-  <div class="col-md-8">
+    <aside class="col-md-6">
     <h3>Reviews</h3>
     <% if @review_items.any? %>
         <% @review_items.each do |review| %>
@@ -28,9 +27,28 @@
     <div >
     <a href="reviews/new" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Review</a>
     </div>
-  </div>
+
+
+    </aside>
+
+  <% if @current_user.manager &&  @users.any?%>
+
+      <div class="col-md-4">
+        <h3>Team Members</h3>
+
+        <% @users.each do |user| %>
+            <div>
+              <%= link_to user.name , "" %>
+            </div>
+
+        <% end %>
+      </div>
+
+
+  <% end %>
 
 </div>
+
 
 
 </body>

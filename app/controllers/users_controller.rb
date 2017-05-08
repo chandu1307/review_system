@@ -23,11 +23,18 @@ class UsersController < ApplicationController
   end
 
   def team_leads
-
-    debugger
+    users = params[:managers].keys
+    managers = params[:managers].values;
     User.update_all(manager: false)
-    User.where(id: params[:user_id]).update_all(manager: true)
-    redirect_to team_hierarchy_path
+
+    i = 0
+
+    users.each do|user_id|
+      User.where(id: managers[i]).update_all(manager: true)
+      User.where(id: user_id).update(manager_id: managers[i])
+      i= i+1;
+    end
+    redirect_to reviews_path
   end
 
   def team_hierarchy

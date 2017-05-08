@@ -19,7 +19,7 @@
               <td class="col-md-2"><label for="sel1"><%= i %></label></td>
               <td class="col-md-4"><label for="sel1"><%= user.name %></label></td>
               <td class="col-md-4">
-                <%= select_tag "managers[user_id :  #{user.id}]", options_from_collection_for_select(@users, 'id', 'name', user.id) %>
+                <%= select_tag "managers[#{user.id}]", options_from_collection_for_select(@users, 'id', 'name', user.id) %>
 
               </td>
             </tr>

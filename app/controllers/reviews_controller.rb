@@ -63,6 +63,7 @@ class ReviewsController < ApplicationController
 
   def index
     @review_items = current_user.reviews.paginate(page: params[:page])
+    @users = User.where(:manager_id => current_user.id)
 
   end
 
