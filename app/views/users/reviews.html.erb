@@ -1,0 +1,34 @@
+<% provide(:title, "Reviews") %>
+<h1><%= @user.name %> Reviews</h1>
+
+
+<body>
+<div class="row">
+    <aside class="col-md-6">
+    <h3>Reviews</h3>
+    <% if @review_items.any? %>
+        <% @review_items.each do |review| %>
+            <div>
+              <%= link_to review.name , review %>
+
+            </div>
+
+        <% end %>
+    <% else %>
+        <div class="center jumbotron">
+          <h1>No reviews yet!</h1>
+        </div>
+
+    <% end %>
+
+
+
+    </aside>
+
+
+
+</div>
+
+
+
+</body>

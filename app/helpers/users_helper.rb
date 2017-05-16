@@ -67,7 +67,10 @@ module UsersHelper
   # Returns true if the user is logged in, false otherwise.
   def is_access?
     @review = Review.find(params[:id])
-    if( !current_user.nil? && @review.user_id ==current_user.id)
+    if(!@review.nil?)
+       @review_user =  User.find_by(id: @review.user_id)
+     end
+    if((!current_user.nil? && (@review.user_id ==current_user.id)||(!@review_user.nil? && @review_user.manager_id==current_user.id)))
       return true
     end
     return false

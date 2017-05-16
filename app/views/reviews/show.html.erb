@@ -30,8 +30,15 @@
 
         </tbody>
       </table>
+
+          <% if !@review.approved && current_user.id != @review.user_id%>
+              <%= form_tag(approve_goals_by_team_lead_path, method: :put)  do %>
+                <div class="centered">
+                    <%= submit_tag 'Approve', class: "btn btn-primary", name: "edit[#{@review.id}]" %>
+                    <%= submit_tag 'Reject', class: "btn btn-primary", name: "edit[#{@review.id}]" %>
+                </div>
+              <% end %>
+
+
+        <% end %>
     </div>
-
-
-
-

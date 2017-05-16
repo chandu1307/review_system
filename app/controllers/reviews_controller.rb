@@ -67,6 +67,21 @@ class ReviewsController < ApplicationController
 
   end
 
+  def approve_goals
+    review_id = params[:edit].keys
+    value = params[:edit].values;
+    approved = false
+    if value[0] == 'Approve'
+      approved = true
+    end
+    if(approved)
+       Review.where(id: review_id[0]).update(approved: true)
+     else
+       Review.where(id: review_id[0]).update(submitted: false)
+     end
+   redirect_to reviews_path
+  end
+
 
 
 
@@ -115,4 +130,3 @@ class ReviewsController < ApplicationController
 
 
 end
-

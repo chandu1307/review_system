@@ -22,6 +22,8 @@ class UsersController < ApplicationController
 
   end
 
+
+
   def team_leads
     users = params[:managers].keys
     managers = params[:managers].values;
@@ -37,24 +39,19 @@ class UsersController < ApplicationController
     redirect_to reviews_path
   end
 
-  def team_hierarchy
-
-
-
-  end
 
 
 
   def if_user_is_logged_in
-
     redirect_to reviews_path if logged_in?
-
-
   end
 
   def reviews
-    Review.where(user_id: id)
+      @review_items = Review.where(["user_id = ? and submitted = ?", params[:id], true])
+      @user = User.where(id: params[:id])
   end
+
+
 
 
 

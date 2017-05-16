@@ -38,7 +38,7 @@
 
         <% @users.each do |user| %>
             <div>
-              <%= link_to user.name , "" %>
+              <%= link_to user.name , reviews_user_path(user) %>
             </div>
 
         <% end %>
