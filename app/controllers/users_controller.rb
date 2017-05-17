@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   end
 
   def reviews
-      @review_items = Review.where(["user_id = ? and submitted = ?", params[:id], true])
+      @review_items = Review.where(["user_id = ? and mode != ?", params[:id], 0])
       @user = User.where(id: params[:id])
   end
 

@@ -5,6 +5,7 @@ class ReviewsController < ApplicationController
 
   def show
     @review = Review.find(params[:id])
+
     @goal_iteams = @review.goals.paginate(page: params[:page])
   end
 
@@ -20,11 +21,13 @@ class ReviewsController < ApplicationController
 
 
   def create
-    submitted_value = false
+    mode = Review.modes["saved"]
     if params[:commit] == 'Submit'
-      submitted_value = true
+      mode = Review.modes["submitted"]
     end
-    review = current_user.reviews.build(name: get_review_name, submitted: submitted_value, approved: false)
+
+
+    review = current_user.reviews.build(name: get_review_name, mode: mode)
     if review.save
       goals = review.goals.build(params[:review][:goals_attributes].values);
       goals.each do|goal|
@@ -41,11 +44,11 @@ class ReviewsController < ApplicationController
 
   def update
     @review = Review.find(params[:id])
-    submitted_value = false
+    current_mode = Review.modes["saved"]
     if params[:commit] == 'Submit'
-      submitted_value = true
+      current_mode = Review.modes["submitted"]
     end
-    if @review.update(submitted: submitted_value)
+    if @review.update(mode: current_mode)
         goals = params[:review][:goals_attributes].values
         goals.each do|goal|
           goal.update(goal)
@@ -63,6 +66,7 @@ class ReviewsController < ApplicationController
 
   def index
     @review_items = current_user.reviews.paginate(page: params[:page])
+
     @users = User.where(:manager_id => current_user.id)
 
   end
@@ -70,15 +74,12 @@ class ReviewsController < ApplicationController
   def approve_goals
     review_id = params[:edit].keys
     value = params[:edit].values;
-    approved = false
+    mode = Review.modes["saved"]
     if value[0] == 'Approve'
-      approved = true
+      mode = Review.modes["accepted"]
     end
-    if(approved)
-       Review.where(id: review_id[0]).update(approved: true)
-     else
-       Review.where(id: review_id[0]).update(submitted: false)
-     end
+
+  Review.where(id: review_id[0]).update(mode: mode)
    redirect_to reviews_path
   end
 
