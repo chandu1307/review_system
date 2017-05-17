@@ -24,9 +24,11 @@
         </div>
 
     <% end %>
+    <% if !@review_items.any? || @review_items[@review_items.size-1].approved %>
     <div >
     <a href="reviews/new" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add Review</a>
     </div>
+    <% end %>
 
 
     </aside>
