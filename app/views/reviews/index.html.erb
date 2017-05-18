@@ -10,10 +10,12 @@
     <% if @review_items.any? %>
         <% @review_items.each do |review| %>
             <div>
-                <% if review.saved? %>
-                    <%= link_to review.name , edit_review_path(review)  %>
-              <% else %>
+              <% if review.saved? %>
+                    <%= link_to review.name , edit_review_path(review),class: "link_custom"  %>
+                <% elsif review.accepted? %>
                     <%= link_to review.name , review %>
+                <% else %>
+                    <%= link_to review.name , review,class: "link_custom"  %>
               <% end %>
             </div>
 
@@ -44,6 +46,12 @@
             </div>
 
         <% end %>
+
+         <% if current_user.admin? %>
+           <div class="btn-space">
+              <a href="users" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Team Hierarchy</a>
+            </div>
+          <% end %>
       </div>
 
 
