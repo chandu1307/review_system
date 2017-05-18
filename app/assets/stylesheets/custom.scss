@@ -7,6 +7,18 @@ body {
   padding-top: 60px;
 }
 
+.btn-space {
+      margin-top: 16px;
+      margin-bottom: 16px;
+
+}
+
+.number_field_cstom {
+
+  width: 60%;
+
+
+}
 
 
 
@@ -96,10 +108,3 @@ h1 {
   text-align:center;
   @include center-block();
 }
-
-
-
-
-
-
-

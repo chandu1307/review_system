@@ -1,38 +1,3 @@
 <% provide(:title, "Add") %>
 <h1>Add Review</h1>
-<%= form_for @review do |f| %>
-
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped table-highlight">
-      <thead>
-      <th>S.No</th>
-      <th>Goal</th>
-      <th>Weightage(%)</th>
-
-      </thead>
-      <tbody>
-
-      <% i=1 %>
-
-          <%= f.fields_for :goals do |ff| %>
-
-                 <tr class="centered">
-                     <td class="col-md-2"><label for="sel1"><%= i %></label></td>
-                     <td  class="col-md-6">  <%= ff.text_area :description, placeholder: "Enter Goal?",:rows => 3,cols: 70, :required => true %></td>
-                     <td  class="col-md-3"><%= ff.number_field :weightage, max: 40, min: 10  %></td>
-                   <% i = i+1 %>
-                 </tr>
-              <% end %>
-
-
-      </tbody>
-    </table>
-  </div>
-
-
-<div class="centered">
-  <%= f.submit "Save", class: "btn btn-primary", name: "commit" %>
-  <%= f.submit "Submit", class: "btn btn-primary", name: "commit"%>
-</div>
-
-<% end %>
+<%= render 'layouts/goals_form' %>
