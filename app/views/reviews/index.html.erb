@@ -34,10 +34,10 @@
 
 
     </aside>
+  <div class="col-md-4">
+     <% if @current_user.manager &&  @users.any?%>
 
-  <% if @current_user.manager &&  @users.any?%>
 
-      <div class="col-md-4">
         <h3>Team Members</h3>
 
         <% @users.each do |user| %>
@@ -47,15 +47,13 @@
 
         <% end %>
 
-         <% if current_user.admin? %>
-           <div class="btn-space">
-              <a href="users " class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Team Hierarchy</a>
-            </div>
-          <% end %>
-      </div>
-
-
-  <% end %>
+    <% end %>
+    <% if current_user.admin? %>
+      <div class="btn-space">
+         <a href="users " class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Team Hierarchy</a>
+       </div>
+     <% end %>
+  </div>
 
 </div>
 

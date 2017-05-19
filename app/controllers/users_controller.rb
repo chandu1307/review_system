@@ -47,8 +47,9 @@ class UsersController < ApplicationController
   end
 
   def reviews
+      @tema_member = User.where(id: params[:id])
       @review_items = Review.where(["user_id = ? and mode != ?", params[:id], 0])
-      @user = User.where(id: params[:id])
+
   end
 
 
