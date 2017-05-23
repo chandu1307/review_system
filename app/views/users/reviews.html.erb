@@ -9,7 +9,11 @@
     <% if @review_items.any? %>
         <% @review_items.each do |review| %>
             <div>
-              <%= link_to review.name , review %>
+              <% if review.accepted? %>
+                  <%= link_to review.name , review %>
+              <% else %>
+                  <%= link_to review.name , review,class: "link_custom"  %>
+              <% end %>
 
             </div>
 
