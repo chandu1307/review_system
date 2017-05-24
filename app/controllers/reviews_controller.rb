@@ -26,8 +26,9 @@ class ReviewsController < ApplicationController
       mode = Review.modes["submitted"]
     end
 
-
     review = current_user.reviews.build(name: get_review_name, mode: mode)
+    goals = params[:review][:goals_attributes].values;
+
     if review.save
       goals = review.goals.build(params[:review][:goals_attributes].values);
       goals.each do|goal|
@@ -37,7 +38,8 @@ class ReviewsController < ApplicationController
       redirect_to reviews_path
 
     else
-      render reviews_path
+      flash[:success] = "Total weightage must be 100"
+      redirect_to reviews_path
     end
 
   end

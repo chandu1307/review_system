@@ -1,8 +1,7 @@
 class User < ApplicationRecord
-
+  validates :name,  presence: true
+  validates :email, presence: true
   has_many :reviews, dependent: :destroy
-
-
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.find_by(email: data['email'])
