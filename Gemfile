@@ -18,16 +18,18 @@ gem 'will_paginate',           '3.1.0'
 gem 'bootstrap-will_paginate', '0.0.10'
 gem "omniauth-google-oauth2", "~> 0.2.1"
 
-
-
 group :development, :test do
-  gem 'sqlite3'
   gem 'byebug',  '9.0.0', platform: :mri
+  gem 'rspec-rails'
+  gem 'sqlite3'
+  gem 'rspec-rails'
+  gem 'simplecov', require: false
 end
 
 group :development do
   gem 'web-console'
   gem 'listen'
+  gem 'rubocop'
   gem 'spring'
   gem 'spring-watcher-listen'
 end
@@ -42,10 +44,3 @@ end
 group :production do
   gem 'pg', '0.18.4'
 end
-
-group :development, :test do
-  gem 'rspec-rails'
-end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
