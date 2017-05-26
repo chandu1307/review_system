@@ -2,13 +2,20 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
 
-  describe "Render Template new" do
-     it "renders the new template" do
-        expect(response).to render_template("new")
-     end
 
+describe '#destroy' do
 
+  context 'when resource is found' do
+    it 'responds with 200'
+    it 'shows the resource'
   end
+
+  context 'when resource is not found' do
+    it 'responds with 404'
+  end
+
+
+ end
 
   describe "GET #index" do
       it "responds successfully with an HTTP 200 status code" do

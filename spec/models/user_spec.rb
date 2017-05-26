@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  
+
   it "is valid with valid attributes" do
     expect(User.new(name: 'Anything', email: "anyemail@gmail.com")).to be_valid
    end
@@ -13,4 +13,5 @@ RSpec.describe User, type: :model do
     it "is not valid without a email" do
       expect(User.new(name: 'Anything', email: "")).to be_valid
      end
+
 end
