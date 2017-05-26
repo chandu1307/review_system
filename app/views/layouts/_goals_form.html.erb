@@ -17,7 +17,7 @@
             <tr class="centered">
               <td class="col-md-2"><label for="sel1"><%= i %></label></td>
               <td  class="col-md-6">  <%= ff.text_area :description, placeholder: "Enter Goal?",:rows => 6,cols: 70, :required => true %></td>
-              <td  class="col-md-3"><%= ff.number_field :weightage, max: 40, min: 10  , class: "number_field_cstom centered"%></td>
+              <td  class="col-md-3"><%= ff.number_field :weightage, max: 40, min: 10  , placeholder: "Weightage", :required => 'required', class: "number_field_cstom centered"%></td>
               <% i = i+1 %>
             </tr>
         <% end %>

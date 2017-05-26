@@ -27,7 +27,7 @@ class ReviewsController < ApplicationController
     end
 
     review = current_user.reviews.build(name: get_review_name, mode: mode)
-    goals = params[:review][:goals_attributes].values;
+    
 
     if review.save
       goals = review.goals.build(params[:review][:goals_attributes].values);
