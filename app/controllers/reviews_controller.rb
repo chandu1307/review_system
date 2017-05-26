@@ -27,7 +27,7 @@ class ReviewsController < ApplicationController
     end
 
     review = current_user.reviews.build(name: get_review_name, mode: mode)
-    
+
 
     if review.save
       goals = review.goals.build(params[:review][:goals_attributes].values);
@@ -52,8 +52,10 @@ class ReviewsController < ApplicationController
     end
     if @review.update(mode: current_mode)
         goals = params[:review][:goals_attributes].values
+
+
         goals.each do|goal|
-          goal.update(goal)
+            Goal.where(id: goal["id"]).update(description: goal["description"], weightage: goal["weightage"])
         end
 
         redirect_to reviews_path
