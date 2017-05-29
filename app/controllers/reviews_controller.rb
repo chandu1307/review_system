@@ -2,14 +2,13 @@ class ReviewsController < ApplicationController
 
   before_action :logged_in_user, only: [:index,:new ,:show,:edit]
   before_action :belongs_to_this_user,only: [:show,:edit]
+  before_action :set_review, only: [:show, :edit, :update]
 
   def show
-    @review = Review.find(params[:id])
-    @goal_iteams = @review.goals.paginate(page: params[:page])
+    @goal_items = @review.goals.paginate(page: params[:page])
   end
 
   def edit
-    @review = Review.find(params[:id])
   end
 
   def new
@@ -43,7 +42,6 @@ class ReviewsController < ApplicationController
   end
 
   def update
-    @review = Review.find(params[:id])
     current_mode = Review.modes["saved"]
     if params[:commit] == 'Submit'
       current_mode = Review.modes["submitted"]
@@ -99,6 +97,10 @@ class ReviewsController < ApplicationController
 
 
   private
+
+  def set_review
+    @review = Review.find(params[:id])
+  end
 
   def get_review_name
 
