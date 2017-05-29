@@ -28,9 +28,7 @@ class UsersController < ApplicationController
     users = params[:managers].keys
     managers = params[:managers].values;
     User.update_all(manager: false)
-
     i = 0
-
     users.each do|user_id|
       User.where(id: managers[i]).update_all(manager: true)
       User.where(id: user_id).update(manager_id: managers[i])

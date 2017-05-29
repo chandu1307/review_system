@@ -5,10 +5,8 @@ class ReviewsController < ApplicationController
 
   def show
     @review = Review.find(params[:id])
-
     @goal_iteams = @review.goals.paginate(page: params[:page])
   end
-
 
   def edit
     @review = Review.find(params[:id])
@@ -52,27 +50,18 @@ class ReviewsController < ApplicationController
     end
     if @review.update(mode: current_mode)
         goals = params[:review][:goals_attributes].values
-
-
         goals.each do|goal|
             Goal.where(id: goal["id"]).update(description: goal["description"], weightage: goal["weightage"])
         end
-
         redirect_to reviews_path
-
-
-
     end
-
   end
 
 
 
   def index
     @review_items = current_user.reviews.paginate(page: params[:page])
-
     @users = User.where(:manager_id => current_user.id)
-
   end
 
   def approve_goals
@@ -82,14 +71,9 @@ class ReviewsController < ApplicationController
     if value[0] == 'Approve'
       mode = Review.modes["accepted"]
     end
-
-  Review.where(id: review_id[0]).update(mode: mode)
-   redirect_to reviews_path
+    Review.where(id: review_id[0]).update(mode: mode)
+    redirect_to reviews_path
   end
-
-
-
-
 
   def logged_in_user
     unless logged_in?
@@ -110,7 +94,6 @@ class ReviewsController < ApplicationController
   end
 
   def goals_params_require(params)
-
     params.require(:goal).permit(:description, :weightage)
   end
 

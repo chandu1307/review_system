@@ -64,7 +64,6 @@ module UsersHelper
   end
 
 
-  # Returns true if the user is logged in, false otherwise.
   def is_access?
     @review = Review.find(params[:id])
     if(!@review.nil?)
