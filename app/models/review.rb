@@ -6,9 +6,7 @@ class Review < ApplicationRecord
   enum mode: [:saved, :submitted, :accepted]
 
 
-  def goals_create
-    Goal.where(review_id: id)
-  end
+
 
 
   private
