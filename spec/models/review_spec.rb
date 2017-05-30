@@ -7,11 +7,11 @@ RSpec.describe Review, type: :model do
 
   describe 'validations' do
    it "is valid with valid attributes" do
-     expect(Review.new(name: 'Anything')).to be_valid
+     expect(user.reviews.create(name: 'Anything')).to be_valid
     end
 
     it "is not valid without a name" do
-      expect(review).to be_valid
+      expect(user.reviews.create(name: "")).to be_valid
      end
 
      it 'should belong to user' do
@@ -24,7 +24,7 @@ RSpec.describe Review, type: :model do
   describe :get_review_name do
    it 'should get review name' do
      name = Review.get_review_name
-     expect(name).to eq('')
+     name.should_not eql("")
    end
  end
 

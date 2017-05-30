@@ -28,8 +28,8 @@ RSpec.describe User, type: :model do
        }
      })
      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
-     expect(user.name).to eq('first')
-     expect(user.email).to eq('test@test.com')
+     expect(user.name).to eq('first last')
+     expect(user.email).to eq('test@gmail.com')
    end
  end
 

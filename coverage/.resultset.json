@@ -277,6 +277,14 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         0
       ],
       "/Users/chandramoulilatchireddy/ruby_projects/review_systeam/app/helpers/application_helper.rb": [
@@ -372,6 +380,15 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         0
       ],
       "/Users/chandramoulilatchireddy/ruby_projects/review_systeam/app/jobs/application_job.rb": [
@@ -385,6 +402,6 @@
         0
       ]
     },
-    "timestamp": 1496128892
+    "timestamp": 1496140577
   }
 }
