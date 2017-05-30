@@ -66,6 +66,18 @@
         1,
         null
       ],
+      "/Users/chandramoulilatchireddy/ruby_projects/review_systeam/app/models/goal.rb": [
+        1,
+        1,
+        1,
+        1,
+        null
+      ],
+      "/Users/chandramoulilatchireddy/ruby_projects/review_systeam/app/models/application_record.rb": [
+        1,
+        1,
+        null
+      ],
       "/Users/chandramoulilatchireddy/ruby_projects/review_systeam/app/models/review.rb": [
         1,
         1,
@@ -97,11 +109,6 @@
         null,
         null,
         null,
-        null
-      ],
-      "/Users/chandramoulilatchireddy/ruby_projects/review_systeam/app/models/application_record.rb": [
-        1,
-        1,
         null
       ],
       "/Users/chandramoulilatchireddy/ruby_projects/review_systeam/app/models/user.rb": [
@@ -376,15 +383,8 @@
         0,
         0,
         0
-      ],
-      "/Users/chandramoulilatchireddy/ruby_projects/review_systeam/app/models/goal.rb": [
-        0,
-        0,
-        0,
-        0,
-        0
       ]
     },
-    "timestamp": 1496127090
+    "timestamp": 1496128389
   }
 }
