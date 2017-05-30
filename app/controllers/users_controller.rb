@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :if_user_is_logged_in, only: [:new ,:create, :reviews]
+  before_action :if_user_is_logged_in, only: [:new ,:create]
 
 
 
