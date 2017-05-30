@@ -6,7 +6,7 @@ class ReviewsController < ApplicationController
   before_action :allow_to_add_review, only: [:new , :create]
 
   def show
-    @goal_items = @review.goals.paginate(page: params[:page])
+    @goal_items = @review.goals
   end
 
   def edit
@@ -59,7 +59,7 @@ class ReviewsController < ApplicationController
 
 
   def index
-    @review_items = current_user.reviews.paginate(page: params[:page])
+    @review_items = current_user.reviews
     @users = User.where(:manager_id => current_user.id)
   end
 
