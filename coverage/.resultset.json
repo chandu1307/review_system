@@ -77,8 +77,6 @@
         1,
         null,
         null,
-        1,
-        0,
         null,
         null,
         null,
@@ -153,6 +151,8 @@
         0
       ],
       "/Users/chandramoulilatchireddy/ruby_projects/review_systeam/app/controllers/reviews_controller.rb": [
+        0,
+        0,
         0,
         0,
         0,
@@ -387,6 +387,6 @@
         0
       ]
     },
-    "timestamp": 1496048084
+    "timestamp": 1496062150
   }
 }

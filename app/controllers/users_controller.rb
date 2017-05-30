@@ -22,8 +22,6 @@ class UsersController < ApplicationController
 
   end
 
-
-
   def team_leads
     users = params[:managers].keys
     managers = params[:managers].values;
