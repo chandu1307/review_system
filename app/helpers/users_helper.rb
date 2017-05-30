@@ -76,5 +76,14 @@ module UsersHelper
 
   end
 
+  def is_allow?
+    review = current_user.reviews.last
+    if(review.nil? || review.accepted?)
+      return true
+    end
+    return false
+
+  end
+
 
 end

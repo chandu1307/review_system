@@ -3,6 +3,7 @@ class ReviewsController < ApplicationController
   before_action :logged_in_user, only: [:index,:new ,:show,:edit]
   before_action :belongs_to_this_user,only: [:show,:edit]
   before_action :set_review, only: [:show, :edit, :update]
+  before_action :allow_to_add_review, only: [:new , :create]
 
   def show
     @goal_items = @review.goals.paginate(page: params[:page])
@@ -83,6 +84,13 @@ class ReviewsController < ApplicationController
   def belongs_to_this_user
     unless is_access?
       flash[:danger] = "You are not acess that"
+      redirect_to root_path
+    end
+  end
+
+  def allow_to_add_review
+    unless is_allow?
+      flash[:danger] = "You can't create new review"
       redirect_to root_path
     end
   end
