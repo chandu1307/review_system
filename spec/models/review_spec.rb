@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Review, type: :model do
   let(:user) { User.create(name: 'test', email: 'test@gmail.com') }
   let(:review) { user.reviews.create(name: 'test review') }
+
+
   describe 'validations' do
    it "is valid with valid attributes" do
      expect(Review.new(name: 'Anything')).to be_valid
@@ -17,5 +19,13 @@ RSpec.describe Review, type: :model do
     end
 
   end
+
+
+  describe :get_review_name do
+   it 'should get review name' do
+     name = Review.get_review_name
+     expect(name).to eq('')
+   end
+ end
 
 end
