@@ -11,7 +11,9 @@ RSpec.describe Review, type: :model do
     end
 
     it "is not valid without a name" do
-      expect(user.reviews.create(name: "")).to be_valid
+      review = user.reviews.create(name: "")
+      expect(review).not_to be_valid
+      expect(review.errors.messages.keys).to include("name")
      end
 
      it 'should belong to user' do
@@ -23,16 +25,14 @@ RSpec.describe Review, type: :model do
 
 describe :get_review_name do
    it 'should get review name' do
-     name = Review.get_review_name
-     name.should_not eql("")
+     expect(Review.get_review_name).not_to eq("")
    end
  end
 
 describe :save_review_and_goals do
   it 'should save the review ' do
-    goals_attributes = [{"description"=>"Goal1", "weightage"=>"25"}, {"description"=>"Gola2", "weightage"=>"25"}, {"description"=>"Goal3", "weightage"=>"25"}, {"description"=>"Gol4", "weightage"=>"25"}]
-    isSaved = review.save_review_and_goals(goals_attributes: goals_attributes)
-    expect(isSaved).to eq(true)
+    goals_attributes = [{"description"=>"Goal1", "weightage"=>"50"}, {"description"=>"Gola2", "weightage"=>"50"}, ]
+    expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_truthy
   end
  end
 

@@ -12,11 +12,16 @@ RSpec.describe Goal, type: :model do
     end
 
     it "is not valid without a description" do
-      expect(review.goals.create(description: '', weightage: 33)).to be_valid
+      goal = review.goals.create(description: '', weightage: 33)
+      expect(goal).not_to be_valid
+      expect(goal.errors.messages.keys).to include("description")
     end
 
     it "is not valid without a weightage" do
-      expect(review.goals.create(description: 'test description')).to be_valid
+      goal = review.goals.create(description: 'test description')
+      expect(goal).not_to be_valid
+      expect(goal.errors.messages.keys).to include("weightage")
+
     end
 
   end

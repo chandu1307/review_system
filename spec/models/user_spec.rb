@@ -9,11 +9,15 @@ RSpec.describe User, type: :model do
    end
 
    it "is not valid without a name" do
-     expect(User.new(name: '', email: "anyemail@gmail.com")).to be_valid
+     user = User.new(name: '', email: "test@gmail.com")
+     expect(user).not_to be_valid
+     expect(user.errors.messages.keys).to include("name")
     end
 
     it "is not valid without a email" do
-      expect(User.new(name: 'Anything', email: "")).to be_valid
+      user = User.new(name: 'Anything', email: "")
+      expect(user).not_to be_valid
+      expect(user.errors.messages.keys).to include("email")
      end
    end
 
