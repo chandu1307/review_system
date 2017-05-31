@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
   before_action :logged_in_user, only: [:index,:new ,:show,:edit]
   before_action :belongs_to_this_user,only: [:show,:edit]
   before_action :set_review, only: [:show, :edit, :update]
-  before_action :allow_to_add_review, only: [ ]
+  before_action :allow_to_add_review, only: [:new, :create ]
 
   def show
     @goal_items = @review.goals
@@ -19,33 +19,28 @@ class ReviewsController < ApplicationController
 
 
   def create
-    mode = Review.modes["saved"]
-    if params[:commit] == 'Submit'
-      mode = Review.modes["submitted"]
-    end
-    review = current_user.reviews.build(name: Review.get_review_name, mode: mode)
+
+    review = current_user.reviews.build(name: Review.get_review_name, mode: get_review_mode)
     isSaved = review.save_review_and_goals(goals_attributes: params[:review][:goals_attributes].values)
      if(isSaved)
        flash[:success] = "Review created!"
        redirect_to reviews_path
      else
        flash[:success] = "Total weightage must be 100"
-       review.errors.add(:weightage, "Total weightage must be 100")
        redirect_to reviews_path
+
      end
   end
 
   def update
-    current_mode = Review.modes["saved"]
-    if params[:commit] == 'Submit'
-      current_mode = Review.modes["submitted"]
-    end
-    if @review.update(mode: current_mode)
-        goals = params[:review][:goals_attributes].values
-        goals.each do|goal|
-            Goal.where(id: goal["id"]).update(description: goal["description"], weightage: goal["weightage"])
-        end
+    @review.mode = get_review_mode
+    isSaved = @review.save_review_and_goals(goals_attributes: params[:review][:goals_attributes].values)
+    if isSaved
         redirect_to reviews_path
+      else
+        flash[:success] = "Total weightage must be 100"
+        redirect_to reviews_path
+
     end
   end
 
@@ -101,6 +96,15 @@ class ReviewsController < ApplicationController
 
   def set_review
     @review = Review.find(params[:id])
+  end
+
+
+  def get_review_mode
+    mode = Review.modes["saved"]
+    if params[:commit] == 'Submit'
+      mode = Review.modes["submitted"]
+    end
+    return mode
   end
 
 

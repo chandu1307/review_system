@@ -28,36 +28,22 @@ class Review < ApplicationRecord
       goals = self.goals.build(goals_attributes)
       if self.goals.map(&:weightage).sum == 100
         goals.each do|goal|
-          goal.save!
+         if goal["id"].nil?
+            goal.save!
+          else
+            Goal.where(id: goal["id"]).update(description: goal["description"], weightage: goal["weightage"])
+          end
         end
           isSaved = true
        else
-         isSaved = false;
+         errors.add(:base, :blank, message: "Total weightage must be 100")
          raise ActiveRecord::Rollback, "Total weightage must be 100"
       end
     end
   end
 
-  def update_review_and_goals(goals_attributes:)
-    isSaved = false
-    self.transaction do
-      self.update!
-      goals = self.goals.build(goals_attributes)
-      if self.goals.map(&:weightage).sum == 100
-        goals.each do|goal|
-          goal.save!
-        end
-          isSaved = true
-       else
-         isSaved = false;
-         raise ActiveRecord::Rollback, "Total weightage must be 100"
-      end
-    end
-  end
 
-  def update_review_status(mode:)
-    self.update(mode: mode)
-  end
+
 
 
 
