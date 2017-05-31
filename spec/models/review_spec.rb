@@ -21,11 +21,18 @@ RSpec.describe Review, type: :model do
   end
 
 
-  describe :get_review_name do
+describe :get_review_name do
    it 'should get review name' do
      name = Review.get_review_name
      name.should_not eql("")
    end
+ end
+
+describe :save_review_and_goals do
+  it 'should save the review ' do
+    isSaved = review.save_review_and_goals(null)
+    expect(isSaved).to eq(true)
+  end
  end
 
 end

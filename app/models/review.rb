@@ -21,11 +21,45 @@ class Review < ApplicationRecord
     return name
   end
 
-  private
-    def check_total_weightage
-      unless self.goals.map(&:weightage).sum == 100
-         errors.add(:weightage, "Total weightage must be 100")
-       end
-     end
+  def save_review_and_goals(goals_attributes:)
+    isSaved = false
+    self.transaction do
+      self.save!
+      goals = self.goals.build(goals_attributes)
+      if self.goals.map(&:weightage).sum == 100
+        goals.each do|goal|
+          goal.save!
+        end
+          isSaved = true
+       else
+         isSaved = false;
+         raise ActiveRecord::Rollback, "Total weightage must be 100"
+      end
+    end
+  end
+
+  def update_review_and_goals(goals_attributes:)
+    isSaved = false
+    self.transaction do
+      self.update!
+      goals = self.goals.build(goals_attributes)
+      if self.goals.map(&:weightage).sum == 100
+        goals.each do|goal|
+          goal.save!
+        end
+          isSaved = true
+       else
+         isSaved = false;
+         raise ActiveRecord::Rollback, "Total weightage must be 100"
+      end
+    end
+  end
+
+  def update_review_status(mode:)
+    self.update(mode: mode)
+  end
+
+
+
 
 end

@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
   before_action :logged_in_user, only: [:index,:new ,:show,:edit]
   before_action :belongs_to_this_user,only: [:show,:edit]
   before_action :set_review, only: [:show, :edit, :update]
-  before_action :allow_to_add_review, only: [:new , :create]
+  before_action :allow_to_add_review, only: [ ]
 
   def show
     @goal_items = @review.goals
@@ -23,23 +23,16 @@ class ReviewsController < ApplicationController
     if params[:commit] == 'Submit'
       mode = Review.modes["submitted"]
     end
-
     review = current_user.reviews.build(name: Review.get_review_name, mode: mode)
-
-
-    if review.save
-      goals = review.goals.build(params[:review][:goals_attributes].values);
-      goals.each do|goal|
-        goal.save
-      end
-      flash[:success] = "Review created!"
-      redirect_to reviews_path
-
-    else
-      flash[:success] = "Total weightage must be 100"
-      redirect_to reviews_path
-    end
-
+    isSaved = review.save_review_and_goals(goals_attributes: params[:review][:goals_attributes].values)
+     if(isSaved)
+       flash[:success] = "Review created!"
+       redirect_to reviews_path
+     else
+       flash[:success] = "Total weightage must be 100"
+       review.errors.add(:weightage, "Total weightage must be 100")
+       redirect_to reviews_path
+     end
   end
 
   def update
