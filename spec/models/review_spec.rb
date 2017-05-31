@@ -30,7 +30,8 @@ describe :get_review_name do
 
 describe :save_review_and_goals do
   it 'should save the review ' do
-    isSaved = review.save_review_and_goals(null)
+    goals_attributes = [{"description"=>"Goal1", "weightage"=>"25"}, {"description"=>"Gola2", "weightage"=>"25"}, {"description"=>"Goal3", "weightage"=>"25"}, {"description"=>"Gol4", "weightage"=>"25"}]
+    isSaved = review.save_review_and_goals(goals_attributes: goals_attributes)
     expect(isSaved).to eq(true)
   end
  end
