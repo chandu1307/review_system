@@ -17,34 +17,29 @@ class ReviewsController < ApplicationController
     (1..4).each { @review.goals.build }
   end
 
-
   def create
-
     review = current_user.reviews.build(name: Review.get_review_name, mode: get_review_mode)
+    #TODO use is_saved instead of isSaved
     isSaved = review.save_review_and_goals(goals_attributes: params[:review][:goals_attributes].values)
-     if(isSaved)
-       flash[:success] = "Review created!"
-       redirect_to reviews_path
-     else
-       flash[:success] = "Total weightage must be 100"
-       redirect_to reviews_path
-
-     end
+    if(isSaved)
+      flash[:success] = "Review created!"
+      redirect_to reviews_path
+    else
+      flash[:success] = "Total weightage must be 100"
+      redirect_to reviews_path
+    end
   end
 
   def update
     @review.mode = get_review_mode
     isSaved = @review.save_review_and_goals(goals_attributes: params[:review][:goals_attributes].values)
     if isSaved
-        redirect_to reviews_path
-      else
-        flash[:success] = "Total weightage must be 100"
-        redirect_to reviews_path
-
+      redirect_to reviews_path
+    else
+      flash[:success] = "Total weightage must be 100"
+      redirect_to reviews_path
     end
   end
-
-
 
   def index
     @review_items = current_user.reviews
@@ -91,13 +86,11 @@ class ReviewsController < ApplicationController
     params.require(:goal).permit(:description, :weightage)
   end
 
-
   private
 
   def set_review
     @review = Review.find(params[:id])
   end
-
 
   def get_review_mode
     mode = Review.modes["saved"]
@@ -106,9 +99,4 @@ class ReviewsController < ApplicationController
     end
     return mode
   end
-
-
-
-
-
 end
