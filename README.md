@@ -1,24 +1,19 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## About
 
-Things you may want to cover:
+Review employees performance
 
-* Ruby version
+## How to run the app locally?
+Install the right ruby version - 2.2.3 (ruby) with rvm
 
-* System dependencies
+* `rvm install 2.2.3`
+* `gem install bundler` to install the bundler gem.
+* `bundle install` to install the gems for the project.
+* `bundle exec rake db:create` to create the local database
+* `bundle exec rake db:migrate` to migrate
+* `bundle exec rails s` to start the server on port 3000
 
-* Configuration
 
-* Database creation
+## Test Steps
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* TODO

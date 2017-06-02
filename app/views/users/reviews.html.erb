@@ -1,36 +1,32 @@
 <% provide(:title, "Reviews") %>
-<h1> <%= @team_member.name %> Reviews</h1>
+<h1>
+  <%= @team_member.name %>
+  Reviews</h1>
 <body>
-<div class="row">
+  <div class="row">
     <aside class="col-md-6">
-    <h3>Reviews</h3>
-    <% if @review_items.any? %>
-        <% @review_items.each do |review| %>
-            <div>
-              <% if review.accepted? %>
-                  <%= link_to review.name , review %>
-              <% else %>
-                  <%= link_to review.name , review,class: "link_custom"  %>
-              <% end %>
-
-            </div>
-
+      <h3>Reviews</h3>
+      <% if @review_items.any? %>
+      <% @review_items.each do |review| %>
+      <div>
+        <% if review.accepted? %>
+        <%= link_to review.name , review %>
+      <% else %>
+        <%= link_to review.name , review,class: "link_custom"  %>
         <% end %>
+
+      </div>
+
+      <% end %>
     <% else %>
-        <div class="center jumbotron">
-          <h1>No reviews yet!</h1>
-        </div>
+      <div class="center jumbotron">
+        <h1>No reviews yet!</h1>
+      </div>
 
-    <% end %>
-
-
+      <% end %>
 
     </aside>
 
-
-
-</div>
-
-
+  </div>
 
 </body>

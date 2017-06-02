@@ -1,35 +1,38 @@
 <% provide(:title, "Team Members") %>
 <h1>Team Hierarchy</h1>
 
-
 <div class="table-responsive">
 
   <%= form_tag(select_team_leads_path, method: :put)  do %>
-      <table class="table table-bordered table-striped table-highlight">
-        <thead>
-        <th class="centered">S.No</th>
-        <th class="centered">Employe name</th>
-        <th class="centered">Select Manager</th>
-        </thead>
+  <table class="table table-bordered table-striped table-highlight">
+    <thead>
+      <th class="centered">S.No</th>
+      <th class="centered">Employe name</th>
+      <th class="centered">Select Manager</th>
+    </thead>
 
-        <tbody>
-        <% i=1 %>
-        <% for user in @users %>
-            <tr class="centered">
-              <td class="col-md-2"><label for="sel1"><%= i %></label></td>
-              <td class="col-md-4"><label for="sel1"><%= user.name %></label></td>
-              <td class="col-md-4">
-                <%= select_tag "managers[#{user.id}]", options_from_collection_for_select(@users, 'id', 'name', user.id) %>
+    <tbody>
+      <% i=1 %>
+      <% for user in @users %>
+      <tr class="centered">
+        <td class="col-md-2">
+          <label for="sel1"><%= i %></label>
+        </td>
+        <td class="col-md-4">
+          <label for="sel1"><%= user.name %></label>
+        </td>
+        <td class="col-md-4">
+          <%= select_tag "managers[#{user.id}]", options_from_collection_for_select(@users, 'id', 'name', user.id) %>
 
-              </td>
-            </tr>
-            <% i = i+1 %>
-        <% end %>
-        </tbody>
-      </table>
-      <div class="centered">
-         <%= submit_tag 'Submit' %>
-      </div>
+        </td>
+      </tr>
+      <% i = i+1 %>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="centered">
+    <%= submit_tag 'Submit' %>
+  </div>
   <% end %>
 
 </div>
