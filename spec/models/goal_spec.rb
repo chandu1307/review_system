@@ -19,7 +19,7 @@ RSpec.describe Goal, type: :model do
       end
     end
 
-    it "is valid with valid attributes" do
+    it "is valid with provided with the following attributes - description, weightage" do
 
       expect( review.goals.create(description: 'test description',weightage: 33) ).to be_valid
     end

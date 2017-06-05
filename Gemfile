@@ -42,5 +42,6 @@ group :test do
 end
 
 group :production do
+  #TODO: Move to MySQL for production.
   gem 'pg', '0.18.4'
 end

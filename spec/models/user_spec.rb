@@ -31,5 +31,9 @@ describe 'User' do
       expect(user.name).to eq('mouli l')
       expect(user.email).to eq('mouli@gmail.com')
     end
+
+    it 'creates a new User record if the user authenicated for the very first time'
+
+    it 'does not create a new User record if the authenticated user already exists in the DB'
   end
 end

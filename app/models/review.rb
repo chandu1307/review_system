@@ -6,6 +6,7 @@ class Review < ApplicationRecord
   enum mode: [:saved, :submitted, :accepted]
 
 
+  # TODO: Get rid of get_review_name once you capture the quarter value in the form.
 
   def self.get_review_name
     name  = ""
