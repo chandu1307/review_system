@@ -21,15 +21,15 @@ describe 'User' do
       OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
         provider: 'google_oauth2',
         info: {
-          first_name: 'first',
-          last_name: 'last',
-          email: 'test@gmail.com'
+          first_name: 'mouli',
+          last_name: 'l',
+          email: 'mouli@gmail.com'
         }
       })
       user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
 
-      expect(user.name).to eq('first last')
-      expect(user.email).to eq('test@gmail.com')
+      expect(user.name).to eq('mouli l')
+      expect(user.email).to eq('mouli@gmail.com')
     end
   end
 end

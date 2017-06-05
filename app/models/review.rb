@@ -26,23 +26,33 @@ class Review < ApplicationRecord
   def save_review_and_goals(goals_attributes:)
     is_saved = false
 
-    #TODO Use Begin Rescue for transactions
-    self.transaction do
-      self.save!
-      goals = self.goals.build(goals_attributes)
-      if self.goals.map(&:weightage).sum == 100
-        goals.each do|goal|
-          if goal.new_record?
-            goal.save!
-          else
-            Goal.where(id: goal["id"]).update(description: goal["description"], weightage: goal["weightage"])
-          end
+     begin
+       self.transaction do
+         self.save!
+         goals = self.goals.build(goals_attributes)
+
+         if(goals.size>0)
+            if self.goals.map(&:weightage).sum == 100
+              goals.each do|goal|
+                if goal.new_record?
+                   goal.save!
+                else
+                   Goal.where(id: goal["id"]).update(description: goal["description"], weightage: goal["weightage"])
+                end
+              end
+              is_saved = true
+           else
+            errors.add(:base, :blank, message: "Total weightage must be 100")
+            raise ActiveRecord::Rollback, "Total weightage must be 100"
+         end
+        else
+           errors.add(:base, :blank, message: "Need at least one goal")
+           raise ActiveRecord::Rollback, "Need at least one goal"
         end
-        is_saved = true
-       else
-         errors.add(:base, :blank, message: "Total weightage must be 100")
-         raise ActiveRecord::Rollback, "Total weightage must be 100"
-      end
-    end
+       end
+     rescue
+       is_saved = false
+     end
+    return is_saved
   end
 end

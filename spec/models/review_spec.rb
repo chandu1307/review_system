@@ -4,20 +4,26 @@ RSpec.describe Review, type: :model do
   let(:user) { User.create(name: 'test', email: 'test@gmail.com') }
   let(:review) { user.reviews.create(name: 'test review') }
 
+  describe 'Review' do
+    [:name].each do |attribute|
+      it "should be invalid if #{attribute} is missing" do
+        review = user.reviews.create(name: 'Anything')
+        review[attribute] = ''
+        review.save
 
-  #TODO Implement in similar fashion as User
-  describe 'validations' do
+        expect(review).not_to be_valid
+        expect(review.errors.messages.keys).to include(attribute)
+      end
+    end
+
     it "is valid with valid attributes" do
+
       expect(user.reviews.create(name: 'Anything')).to be_valid
     end
 
-    it "is not valid without a name" do
-      review = user.reviews.create(name: "")
-      expect(review).not_to be_valid
-      expect(review.errors.messages.keys).to include(:name)
-    end
 
     it 'should belong to user' do
+
       expect(user.id).to eq(review.user_id)
     end
   end
@@ -35,7 +41,7 @@ RSpec.describe Review, type: :model do
 
     context "Second quarter" do
       [4, 5, 6].each do |month_number|
-        it "should return Quater 1 for #{month_number} month" do
+        it "should return Quater 2 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)
 
           expect(Review.get_review_name).to include("Quarter 2")
@@ -45,7 +51,7 @@ RSpec.describe Review, type: :model do
 
     context "Third quarter" do
       [7, 8, 9].each do |month_number|
-        it "should return Quater 1 for #{month_number} month" do
+        it "should return Quater 3 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)
 
           expect(Review.get_review_name).to include("Quarter 3")
@@ -55,7 +61,7 @@ RSpec.describe Review, type: :model do
 
     context "Fourth quarter" do
       [10, 11, 12].each do |month_number|
-        it "should return Quater 1 for #{month_number} month" do
+        it "should return Quater 4 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)
 
           expect(Review.get_review_name).to include("Quarter 4")
@@ -67,20 +73,34 @@ RSpec.describe Review, type: :model do
   describe :save_review_and_goals do
     context "Invalid Details" do
 
-      it "should raise error if review does not have any goals"
-      it "shoudl raise error if description is missing for any goal"
-      #TODO IF weightage is to be dropped then ignore below
-      it "should raise error if sum of wieghtages is not eual to 100"
+      it "should raise error if review does not have any goals" do
+        goals_attributes = [ ]
+
+        expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_falsey
+      end
+
+      it "shoudl raise error if description is missing for any goal" do
+       goals_attributes = [{"description"=>"", "weightage"=>"50"}]
+
+       expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_falsey
+      end
+
+      it "should raise error if sum of wieghtages is not eual to 100"   do
+        goals_attributes = [{"description"=>"Goal 1", "weightage"=>"50"},{"description"=>"Goal 2", "weightage"=>"60"}]
+
+        expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_falsey
+
+      end
     end
 
     context "Valid Details" do
-      it "save review and add saved goals to it"
+      it "save review and add saved goals to it" do
+        goals_attributes = [{"description"=>"Goal1", "weightage"=>"50"}, {"description"=>"Gola2", "weightage"=>"50"}]
+        expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_truthy
+      end
 
     end
 
-    it 'should save the review ' do
-      goals_attributes = [{"description"=>"Goal1", "weightage"=>"50"}, {"description"=>"Gola2", "weightage"=>"50"}, ]
-      expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_truthy
-    end
+
   end
 end

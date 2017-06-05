@@ -7,25 +7,24 @@ RSpec.describe Goal, type: :model do
   let(:goal) { review.goals.create(description: 'test description',weightage: 33) }
 
 
-  #TODO Write specs in similar fashion as UserSpec
-  describe 'validations' do
-   it "is valid with valid attributes" do
+  describe 'Review' do
+    [:description, :weightage].each do |attribute|
+      it "should be invalid if #{attribute} is missing" do
+        goal = review.goals.create(description: 'test description',weightage: 33)
+        goal[attribute] = ''
+        goal.save
 
-     expect(review.goals.create(description: 'test description', weightage: 33)).to be_valid
+        expect(goal).not_to be_valid
+        expect(goal.errors.messages.keys).to include(attribute)
+      end
     end
 
-    it "is not valid without a description" do
-      goal = review.goals.create(description: '', weightage: 33)
+    it "is valid with valid attributes" do
 
-      expect(goal).not_to be_valid
-      expect(goal.errors.messages.keys).to include("description")
+      expect( review.goals.create(description: 'test description',weightage: 33) ).to be_valid
     end
 
-    it "is not valid without a weightage" do
-      goal = review.goals.create(description: 'test description')
 
-      expect(goal).not_to be_valid
-      expect(goal.errors.messages.keys).to include("weightage")
-    end
   end
+
 end
