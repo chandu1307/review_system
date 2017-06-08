@@ -1,0 +1,22 @@
+= form_for @review do |f|
+  = render 'shared/error_messages', object: f.object
+  .table-responsive
+    %table.table.table-bordered.table-striped.table-highlight
+      %thead
+        %th.centered
+          S.No
+        %th.centered Goal
+        %th.centered Weightage(%)
+      %tbody
+        - i=1
+        = f.fields_for :goals do |goals_form|
+          %tr.centered
+            %td.col-md-2
+              %label{:for => "sel1"}= i
+            %td.col-md-6
+              = goals_form.text_area :description, placeholder: "Enter Goal?",:rows => 6,cols: 70, :required => true
+            %td.col-md-3= goals_form.number_field :weightage, max: 40, min: 10  , placeholder: "Weightage", :required => 'required', class: "number_field_cstom centered"
+            - i = i+1
+  .centered.btn-space
+    = f.submit "Save", class: "btn btn-primary", name: "commit"
+    = f.submit "Submit", class: "btn btn-primary", name: "commit"

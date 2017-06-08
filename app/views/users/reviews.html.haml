@@ -1,0 +1,18 @@
+%body
+  - provide(:title, "Reviews")
+  %h1
+    = @team_member.name
+    Reviews
+  .row
+    %aside.col-md-6
+      %h3 Reviews
+      - if @review_items.any?
+        - @review_items.each do |review|
+          %div
+            - if review.accepted?
+              = link_to review.name , review
+            - else
+              = link_to review.name , review,class: "link_custom"
+      - else
+        .center.jumbotron
+          %h1 No reviews yet!
