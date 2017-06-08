@@ -35,7 +35,7 @@ RSpec.describe Review, type: :model do
       end
     end
 
-    context "Second quarter" do
+    context "when it is Second quarter" do
       [4, 5, 6].each do |month_number|
         it "should return Quater 2 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)
@@ -45,7 +45,7 @@ RSpec.describe Review, type: :model do
       end
     end
 
-    context "Third quarter" do
+    context "when it is Third quarter" do
       [7, 8, 9].each do |month_number|
         it "should return Quater 3 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)
@@ -55,7 +55,7 @@ RSpec.describe Review, type: :model do
       end
     end
 
-    context "Fourth quarter" do
+    context "when it is Fourth quarter" do
       [10, 11, 12].each do |month_number|
         it "should return Quater 4 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)

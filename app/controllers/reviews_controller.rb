@@ -18,15 +18,14 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    review = current_user.reviews.build(name: Review.get_review_name, mode: get_review_mode)
+    @review = current_user.reviews.build(name: Review.get_review_name, mode: get_review_mode)
     #TODO use is_saved instead of isSaved
-    isSaved = review.save_review_and_goals(goals_attributes: params[:review][:goals_attributes].values)
+    isSaved = @review.save_review_and_goals(goals_attributes: params[:review][:goals_attributes].values)
     if(isSaved)
       flash[:success] = "Review created!"
       redirect_to reviews_path
     else
-      flash[:success] = "Total weightage must be 100"
-      redirect_to reviews_path
+      render "new" , object: @review
     end
   end
 
@@ -36,8 +35,7 @@ class ReviewsController < ApplicationController
     if isSaved
       redirect_to reviews_path
     else
-      flash[:success] = "Total weightage must be 100"
-      redirect_to reviews_path
+      render "edit"
     end
   end
 

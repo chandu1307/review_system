@@ -31,11 +31,10 @@ class Review < ApplicationRecord
        self.transaction do
          self.save!
          goals = self.goals.build(goals_attributes)
-
          if(goals.size>0)
             if self.goals.map(&:weightage).sum == 100
               goals.each do|goal|
-                if goal.new_record?
+                if goal["id"].nil?
                    goal.save!
                 else
                    Goal.where(id: goal["id"]).update(description: goal["description"], weightage: goal["weightage"])
