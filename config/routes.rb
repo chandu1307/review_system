@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :users do
     member do
       get 'reviews'
+      get 'team_members'
     end
   end
 end

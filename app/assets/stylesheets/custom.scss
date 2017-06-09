@@ -3,9 +3,7 @@
 
 
 
-body {
-  padding-top: 60px;
-}
+
 
 .btn-space {
       margin-top: 16px;
@@ -112,4 +110,33 @@ h1 {
 .centered_row {
   text-align:center;
   @include center-block();
+}
+
+.navbar-custom {
+    background-color: #f2f2f2;
+    border-radius:4;
+    border-color: #E7E7E7;
+}
+
+
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus,
+.navbar-custom .navbar-nav > .open >a,
+.navbar-inverse .navbar-header > a:hover,
+.navbar-inverse .navbar-header > a:focus {
+    text-decoration: none;
+    background-color: #f8f8f8;
+    color: #000000 !important;
+}
+
+
+.navbar-inverse .navbar-nav > li > a , .navbar-inverse .navbar-brand  {
+  color: #000000;
+}
+.navbar-inverse .navbar-brand {
+   font-family: cursive;
+   font-style: bold;
+   font-size: 90;
 }

@@ -41,7 +41,6 @@ class ReviewsController < ApplicationController
 
   def index
     @review_items = current_user.reviews
-    @users = User.where(:manager_id => current_user.id)
   end
 
   def approve_goals

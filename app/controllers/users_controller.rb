@@ -37,4 +37,8 @@ class UsersController < ApplicationController
       @team_member = User.find(params[:id])
       @review_items = Review.where(["user_id = ? and mode != ?", params[:id], 0])
   end
+
+  def team_members
+    @users = User.where(:manager_id => params[:id])
+  end
 end

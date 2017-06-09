@@ -3,30 +3,25 @@
   %h1
     Welcome
     \#{current_user.name}
-  .row
-    %aside.col-md-6
-      %h3 Reviews
-      - if @review_items.any?
-        - @review_items.each do |review|
-          %div
-            - if review.saved?
-              = link_to review.name , edit_review_path(review),class: "link_custom"
-            - elsif review.accepted?
-              = link_to review.name , review
-            - else
-              = link_to review.name , review,class: "link_custom"
-      - else
-        .center.jumbotron
-          %h1 No reviews yet!
-      - if !@review_items.any? || @review_items[@review_items.size-1].accepted?
-        .btn-space
-          %a.btn.btn-primary.btn-lg.active{"aria-pressed" => "true", :href => "reviews/new", :role => "button"} Add Review
-    .col-md-4
-      - if @current_user.manager &&  @users.any?
-        %h3 Team Members
-        - @users.each do |user|
-          %div
-            = link_to user.name , reviews_user_path(user)
-      - if current_user.admin?
-        .btn-space
-          %a.btn.btn-primary.btn-lg.active{"aria-pressed" => "true", :href => "users ", :role => "button"} Team Hierarchy
+  - if @review_items.any?
+    .table-responsive
+      %table.table.table-bordered.table-striped.table-highlight
+        %thead
+          %th.centered Appraisal Cycle
+          %th.centered Status
+          %th.centered Action
+        %tbody
+          - @review_items.each do |review|
+            %tr.centered
+              %td.col-md-3
+                %label{:for => "sel1"}= review.name
+              %td.col-md-5
+                %label{:for => "sel1"}= review.mode
+              %td.col-md-3
+                - if review.saved?
+                  = link_to 'view' , edit_review_path(review)
+                - else
+                  = link_to 'view', review
+  - else
+    .center.jumbotron
+      %h1 No reviews yet!

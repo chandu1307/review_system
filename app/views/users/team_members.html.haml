@@ -1,0 +1,11 @@
+%body
+  - provide(:title, "Team Members")
+
+  %h3 Team Members
+  - if @users.any?
+    - @users.each do |user|
+      %div
+        = link_to user.name , reviews_user_path(user)
+  - else
+    .center.jumbotron
+      %h1 Team Members!      
