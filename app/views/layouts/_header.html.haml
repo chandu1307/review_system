@@ -19,5 +19,6 @@
         - if current_user.manager?
           %li.text-color
             %a{:href => team_members_user_path(current_user)} Team Appraisals
+        - if current_user.admin?
           %li.text-color
             %a{:href => users_path} Action

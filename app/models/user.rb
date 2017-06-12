@@ -14,7 +14,6 @@ class User < ApplicationRecord
         manager: false,
         admin: false,
     ) unless user
-
     user
   end
 end
