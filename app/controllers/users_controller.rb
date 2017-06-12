@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :if_user_is_logged_in, only: [:new ,:create]
 
   def create
-    user = User.from_omniauth(env["omniauth.auth"])
+    user = User.from_omniauth(request.env["omniauth.auth"])
     log_in user
     redirect_to reviews_path
   end

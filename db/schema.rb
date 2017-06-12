@@ -12,33 +12,35 @@
 
 ActiveRecord::Schema.define(version: 20170517124255) do
 
-  create_table "goals", force: :cascade do |t|
-    t.text     "description"
-    t.integer  "weightage"
-    t.integer  "review_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "goals", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "description"
+    t.integer "weightage"
+    t.integer "review_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["review_id"], name: "index_goals_on_review_id"
   end
 
-  create_table "reviews", force: :cascade do |t|
-    t.text     "name"
-    t.integer  "user_id"
+  create_table "reviews", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "name"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "mode"
+    t.integer "mode"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "avatar_url"
-    t.boolean  "manager"
-    t.boolean  "admin"
-    t.integer  "manager_id"
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "email"
+    t.string "avatar_url"
+    t.boolean "manager"
+    t.boolean "admin"
+    t.integer "manager_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "goals", "reviews"
+  add_foreign_key "reviews", "users"
 end
