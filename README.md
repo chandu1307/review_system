@@ -4,9 +4,9 @@
 Review employees performance
 
 ## How to run the app locally?
-Install the right ruby version - 2.2.3 (ruby) with rvm
+Install the right ruby version - 2.3.3 (ruby) with rvm
 
-* `rvm install 2.2.3`
+* `rvm install 2.3.3`
 * `gem install bundler` to install the bundler gem.
 * `bundle install` to install the gems for the project.
 * `bundle exec rake db:create` to create the local database
@@ -95,13 +95,3 @@ form.haml.html
     %p= error.message
 
 form
-
-
-
-
-
-
-
-
-
-
