@@ -4,6 +4,9 @@ class UsersController < ApplicationController
   def create
     user = User.from_omniauth(request.env["omniauth.auth"])
     log_in user
+
+
+
     redirect_to reviews_path
   end
 

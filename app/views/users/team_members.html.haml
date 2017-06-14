@@ -4,8 +4,34 @@
   %h3 Team Members
   - if @users.any?
     - @users.each do |user|
-      %div
-        = link_to user.name , reviews_user_path(user)
+      -@review_items = user.reviews
+      - if @review_items.any?
+        %div.lable_heading
+          %label{:for => "sel1"}= user.name
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-highlight
+            %thead
+              %th.centered Appraisal Cycle
+              %th.centered Status
+              %th.centered Action
+            %tbody
+              - @review_items.each do |review|
+                %tr.centered
+                  %td.col-md-3
+                    %text_field{:for => "sel1"}= review.name
+                  %td.col-md-5
+                    %text_field{:for => "sel1"}= get_manager_status(review.mode)
+                  %td.col-md-3
+                    - if review.accepted? || review.feedback_saved?
+                      = link_to get_manager_action(review.mode) , feedback_review_goal_path(review,review.goal)
+                    - elsif review.saved? || review.started?
+
+                    - else
+                      = link_to get_manager_action(review.mode) , review_goal_path(review,review.goal)
+
+      - else
+        .center.jumbotron
+          %h1 No reviews!
   - else
     .center.jumbotron
-      %h1 Team Members!      
+      %h1 Team Members!
