@@ -48,6 +48,13 @@ module UsersHelper
   def store_location
     session[:forwarding_url] = request.original_url if request.get?
   end
+  def is_admin?
+    if !current_user.nil? &&current_user.admin
+      return true
+    end
+    return false
+
+  end
 
   def is_access?
     @review = Review.find(params[:review_id])
@@ -60,13 +67,6 @@ module UsersHelper
     return false
   end
 
-  def is_allow?
-    review = current_user.reviews.last
-    if(review.nil? || review.accepted?)
-      return true
-    end
-    return false
-  end
 
   def get_user_status(review_state)
    status_message = case review_state

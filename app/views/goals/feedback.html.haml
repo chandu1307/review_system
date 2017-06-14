@@ -6,12 +6,12 @@
   %div.lable_heading
     %label{:for => "sel1"}= 'Goals'
   %div.rounded
-    %text_field{:for => "sel1"}= @goal.description
+    %text_field{:for => "sel1"}= @goal.description.gsub(/\n/, '<br/>').html_safe
   %div.lable_heading
     %label{:for => "sel1"}= 'Your feedback'
-  %div.rounded
-    = text_area_tag :manager_feedback, @goal.manager_feedback, autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 8
   %div.margin_top
+    = text_area_tag :manager_feedback, @goal.manager_feedback, autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 8
+  %div.margin_top_bottom
     .centered
       = submit_tag "Save Feedback", class: "btn btn-primary", name: "commit"
       = submit_tag "Submit Feedback", class: "btn btn-primary", name: "commit"

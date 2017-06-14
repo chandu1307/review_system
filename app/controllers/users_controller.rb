@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :if_user_is_logged_in, only: [:new ,:create]
+  before_action :if_user_is_logged_in, only: [ :new , :create]
+  before_action :if_user_is_admin, only: [:index]
 
   def create
     user = User.from_omniauth(request.env["omniauth.auth"])
@@ -34,6 +35,12 @@ class UsersController < ApplicationController
 
   def if_user_is_logged_in
     redirect_to reviews_path if logged_in?
+  end
+  def if_user_is_admin
+    unless is_admin?
+      flash[:danger] = "You don't have access"
+      redirect_to root_path
+    end
   end
 
   def reviews
