@@ -1,0 +1,24 @@
+%nav.navbar.navbar-inverse.navbar-custom
+  .container-fluid
+    .navbar-header
+      %a.navbar-brand{:href => "#"} Review System
+    %nav
+      %ul.nav.navbar-nav.navbar-right
+        - if logged_in?
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              = current_user.name
+              %b.caret
+            %ul.dropdown-menu
+              %li
+                = link_to "Log out", logout_path, method: "delete"
+    %ul.nav.navbar-nav
+      - if logged_in?
+        %li.text-color
+          %a{:href => reviews_path} My Appraisal Cycle
+        - if current_user.manager?
+          %li.text-color
+            %a{:href => team_members_user_path(current_user)} Team Appraisals
+        - if current_user.admin?
+          %li.text-color
+            %a{:href => users_path} Action

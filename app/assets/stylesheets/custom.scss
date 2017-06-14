@@ -3,9 +3,7 @@
 
 
 
-body {
-  padding-top: 60px;
-}
+
 
 .btn-space {
       margin-top: 16px;
@@ -113,3 +111,87 @@ h1 {
   text-align:center;
   @include center-block();
 }
+
+.navbar-custom {
+    background-color: #f2f2f2;
+    border-radius:4;
+    border-color: #E7E7E7;
+}
+
+
+.navbar-custom .navbar-nav > li > a:hover,
+.navbar-custom .navbar-nav > li > a:focus,
+.navbar-custom .navbar-nav > .active > a:hover,
+.navbar-custom .navbar-nav > .active > a:focus,
+.navbar-custom .navbar-nav > .open >a,
+.navbar-inverse .navbar-header > a:hover,
+.navbar-inverse .navbar-header > a:focus {
+    text-decoration: none;
+    background-color: #f8f8f8;
+    color: #000000 !important;
+}
+
+
+.navbar-inverse .navbar-nav > li > a , .navbar-inverse .navbar-brand  {
+  color: #000000;
+}
+.navbar-inverse .navbar-brand {
+   font-family: cursive;
+   font-style: bold;
+   font-size: 90;
+}
+
+.rounded {
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 16px;
+  border: 1px solid #DDDDDD;
+  background: #fff; // without a background or border applied you won't be able to see if its rounded
+}
+
+.lable_heading {
+  margin-top: 16px;
+  text_color: #000000;
+}
+
+.margin_top {
+  margin-top: 16px;
+  text_color: #000000;
+}
+
+.margin_left_right {
+  margin-left: 16px;
+  margin-right: 6px;
+}
+
+.goal_name {
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 16px;
+  border: 1px solid #DDDDDD;
+  background: #DDDDDD; // without a background or border applied you won't be able to see if its rounded
+}
+
+
+.bs-wizard {margin-top: 40px;}
+
+/*Form Wizard*/
+.bs-wizard {border-bottom: solid 1px #e0e0e0; padding: 0 0 10px 0;}
+.bs-wizard > .bs-wizard-step {padding: 0; position: relative;}
+.bs-wizard > .bs-wizard-step + .bs-wizard-step {}
+.bs-wizard > .bs-wizard-step .bs-wizard-stepnum {color: #595959; font-size: 16px; margin-bottom: 5px;}
+.bs-wizard > .bs-wizard-step .bs-wizard-info {color: #999; font-size: 14px;}
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot {position: absolute; width: 30px; height: 30px; display: block; background: #A6DCB5; top: 45px; left: 50%; margin-top: -15px; margin-left: -15px; border-radius: 50%;}
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 14px; height: 14px; background: #15C447; border-radius: 50px; position: absolute; top: 8px; left: 8px; }
+.bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 8px; box-shadow: none; margin: 20px 0;}
+.bs-wizard > .bs-wizard-step > .progress > .progress-bar {width:0px; box-shadow: none; background: #A6DCB5;}
+.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100%;}
+.bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {width:50%;}
+.bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {width:0%;}
+.bs-wizard > .bs-wizard-step:last-child.active > .progress > .progress-bar {width: 100%;}
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {background-color: #f5f5f5;}
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {opacity: 0;}
+.bs-wizard > .bs-wizard-step:first-child  > .progress {left: 50%; width: 50%;}
+.bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
+.bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
+/*END Form Wizard*/

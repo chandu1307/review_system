@@ -1,0 +1,22 @@
+- provide(:title, "Team Members")
+%h1 Team Hierarchy
+.table-responsive
+  = form_tag(select_team_leads_path, method: :put)  do
+    %table.table.table-bordered.table-striped.table-highlight
+      %thead
+        %th.centered S.No
+        %th.centered Employe name
+        %th.centered Select Manager
+      %tbody
+        - i=1
+        - for user in @users
+          %tr.centered
+            %td.col-md-2
+              %text_field{:for => "sel1"}= i
+            %td.col-md-4
+              %text_field{:for => "sel1"}= user.name
+            %td.col-md-4
+              = select_tag "managers[#{user.id}]", options_from_collection_for_select(@users, 'id', 'name', user.id)
+          - i = i+1
+    .centered
+      = submit_tag 'Submit',class: "btn btn-primary"
