@@ -3,6 +3,7 @@
 = form_for([@review, @goal]) do |f|
   = render 'shared/error_messages', object: f.object
   = f.text_area :description, placeholder: "Enter Goal?",:rows => 12,cols: 150, :required => true
-  %div.center
-    = f.submit "Save", class: "btn btn-primary", name: "commit"
-    = f.submit "Submit", class: "btn btn-primary", name: "commit"
+  %div.margin_top
+    .centered
+      = f.submit "Save as a draft", class: "btn btn-primary", name: "commit"
+      = f.submit "Submit for approval", class: "btn btn-primary", name: "commit"

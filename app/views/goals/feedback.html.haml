@@ -1,4 +1,5 @@
 - provide(:title, "Feedback")
+%h1 Submit Feedback
 = render 'shared/goal_name'
 = render 'shared/snippet_for_approve'
 = form_tag(submit_feedback_review_goal_url([@review, @goal]),  method: :post) do |f|
