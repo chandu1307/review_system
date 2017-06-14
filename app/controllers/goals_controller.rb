@@ -1,7 +1,7 @@
 class GoalsController < ApplicationController
-  before_action :logged_in_user, only: [:index,:new ,:show,:edit]
-  before_action :set_review, only: [:create,:update ,:submit_feedback,:feedback, :show, :edit, :new, :approve_goals]
-
+  before_action :logged_in_user
+  before_action :set_review
+  before_action :belongs_to_this_user
 
   def create
     @review.mode = get_review_mode
@@ -40,7 +40,9 @@ class GoalsController < ApplicationController
   end
 
   def show
-    @user =  User.find(@review.feedback_user_id)
+    if !@review.feedback_user_id.nil?
+     @user =  User.find(@review.feedback_user_id)
+    end
     @goal = @review.goal
   end
 
@@ -62,6 +64,7 @@ class GoalsController < ApplicationController
 
   private
   def logged_in_user
+
     unless logged_in?
       flash[:danger] = "Please log in."
       redirect_to root_path
@@ -95,5 +98,13 @@ class GoalsController < ApplicationController
   def goal_params_feedback
     params.require(:goal).permit(:manager_feedback)
   end
+
+  def belongs_to_this_user
+
+   unless is_access?
+     flash[:danger] = "You are not acess that"
+     redirect_to root_path
+   end
+ end
 
 end

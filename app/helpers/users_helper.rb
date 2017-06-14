@@ -50,7 +50,7 @@ module UsersHelper
   end
 
   def is_access?
-    @review = Review.find(params[:id])
+    @review = Review.find(params[:review_id])
     if(!@review.nil?)
       @review_user =  User.find_by(id: @review.user_id)
     end
