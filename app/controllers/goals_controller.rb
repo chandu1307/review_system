@@ -7,8 +7,11 @@ class GoalsController < ApplicationController
     @review.mode = get_review_mode
     @review.save
     @goal = @review.build_goal(goal_params)
-    @goal.save
-    redirect_to reviews_path
+    if @goal.save
+       redirect_to reviews_path
+    else
+      render 'new', object: review
+    end
   end
 
   def update
@@ -18,7 +21,7 @@ class GoalsController < ApplicationController
     if @goal.update_attributes(goal_params)
       redirect_to reviews_path
     else
-      render 'edit'
+      render 'edit', object: [@review,@goal]
     end
   end
 
@@ -30,7 +33,7 @@ class GoalsController < ApplicationController
     if @goal.update_attributes(manager_feedback: params[:manager_feedback])
       redirect_to team_members_user_path(current_user)
     else
-      render 'feedback'
+      render 'feedback', object: [@review,@goal]
     end
   end
 
@@ -59,7 +62,7 @@ class GoalsController < ApplicationController
   def approve_goals
     @review.mode = get_review_mode
     @review.save
-    redirect_to reviews_path
+    redirect_to team_members_user_path(current_user)
   end
 
   private
@@ -73,7 +76,7 @@ class GoalsController < ApplicationController
 
   def get_review_mode
     mode = Review.modes["saved"]
-    if params[:commit] == 'Submit'
+    if params[:commit] == 'Submit for approval'
       mode = Review.modes["submitted"]
     elsif params[:commit] == 'Approve'
         mode = Review.modes["accepted"]
