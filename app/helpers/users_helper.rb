@@ -67,6 +67,17 @@ module UsersHelper
     return false
   end
 
+  def is_manager_for_this_review?
+    @review = Review.find(params[:review_id])
+    if(!@review.nil?)
+      @review_user =  User.find_by(id: @review.user_id)
+    end
+    if((!current_user.nil? && (!@review_user.nil? && @review_user.manager_id==current_user.id)))
+      return true
+    end
+    return false
+  end
+
 
   def get_user_status(review_state)
    status_message = case review_state

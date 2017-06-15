@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe Goal, type: :model do
   #TODO Use FactoryGirl
   let(:user) { User.create(name: 'test', email: 'test@gmail.com') }
-  let(:review) { user.reviews.create(name: 'test review') }
-  let(:goal) { review.goals.create(description: 'test description',weightage: 33) }
+  let(:review) { user.reviews.create(name: 'test review', mode: 'started') }
+  let(:goal) { review.goals.create(description: 'test description') }
 
 
-  describe 'Review' do
-    [:description, :weightage].each do |attribute|
+
+    [:description].each do |attribute|
       it "should be invalid if #{attribute} is missing" do
-        goal = review.goals.create(description: 'test description',weightage: 33)
+        goal = review.build_goal(description: 'test description')
         goal[attribute] = ''
         goal.save
 
@@ -19,12 +19,12 @@ RSpec.describe Goal, type: :model do
       end
     end
 
-    it "is valid with provided with the following attributes - description, weightage" do
+    it "is valid with provided with the following attributes - description" do
 
-      expect( review.goals.create(description: 'test description',weightage: 33) ).to be_valid
+      expect( review.build_goal(description: 'test description') ).to be_valid
     end
 
 
-  end
+
 
 end

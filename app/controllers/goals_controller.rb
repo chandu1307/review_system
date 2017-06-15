@@ -2,6 +2,7 @@ class GoalsController < ApplicationController
   before_action :logged_in_user
   before_action :set_review
   before_action :belongs_to_this_user
+  before_action :belongs_to_this_manager, only: [:submit_feedback, :feedback]
 
   def create
     @review.mode = get_review_mode
@@ -39,25 +40,20 @@ class GoalsController < ApplicationController
 
 
   def feedback
-    @goal = @review.goal
+      check_review_has_goals
   end
 
   def index
     if !@review.feedback_user_id.nil?
      @user =  User.find(@review.feedback_user_id)
     end
-    @goal = @review.goal
-    if @goal.nil?
-        flash[:danger] = "Create goals"
-        redirect_to reviews_path
-    end
+    check_review_has_goals
   end
 
 
 
   def edit
-
-    @goal = @review.goal
+    check_review_has_goals
   end
 
   def new
@@ -104,15 +100,27 @@ class GoalsController < ApplicationController
     params.require(:goal).permit(:description)
   end
 
-  def goal_params_feedback
-    params.require(:goal).permit(:manager_feedback)
-  end
-
   def belongs_to_this_user
 
    unless is_access?
      flash[:danger] = "You are not acess that"
      redirect_to root_path
+   end
+ end
+
+ def belongs_to_this_manager
+
+  unless is_manager_for_this_review?
+    flash[:danger] = "You are not acess that"
+    redirect_to root_path
+  end
+ end
+
+ def check_review_has_goals
+    @goal = @review.goal
+   if @goal.nil?
+       flash[:danger] = "No goals"
+       redirect_to reviews_path
    end
  end
 

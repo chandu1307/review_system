@@ -1,5 +1,6 @@
 class Review < ApplicationRecord
   validates :name,  presence: true
+  validates :mode,  presence: true
   belongs_to :user
   has_one :goal
   enum mode: [ :started, :saved, :submitted, :accepted, :feedback_submitted, :completed]
@@ -23,35 +24,5 @@ class Review < ApplicationRecord
     return name
   end
 
-  def save_review_and_goals(goals_attributes:)
-    is_saved = false
 
-     begin
-       self.transaction do
-         self.save!
-         goals = self.goals.build(goals_attributes)
-         if(goals.size>0)
-            if self.goals.map(&:weightage).sum == 100
-              goals.each do|goal|
-                if goal["id"].nil?
-                   goal.save!
-                else
-                   Goal.where(id: goal["id"]).update(description: goal["description"], weightage: goal["weightage"])
-                end
-              end
-              is_saved = true
-           else
-            errors.add(:base, :blank, message: "Total weightage must be 100")
-            raise ActiveRecord::Rollback, "Total weightage must be 100"
-         end
-        else
-           errors.add(:base, :blank, message: "Need at least one goal")
-           raise ActiveRecord::Rollback, "Need at least one goal"
-        end
-       end
-     rescue
-       is_saved = false
-     end
-    return is_saved
-  end
 end

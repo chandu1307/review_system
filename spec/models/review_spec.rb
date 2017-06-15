@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Review, type: :model do
   let(:user) { User.create(name: 'test', email: 'test@gmail.com') }
-  let(:review) { user.reviews.create(name: 'test review') }
+  let(:review) { user.reviews.create(name: 'test review', mode: 'started') }
 
-  [:name].each do |attribute|
+  [:name, :mode].each do |attribute|
     it "should be invalid if #{attribute} is missing" do
-      review = user.reviews.create(name: 'Anything')
+      review = user.reviews.create(name: 'Anything', mode: 'started')
       review[attribute] = ''
       review.save
 
@@ -15,8 +15,8 @@ RSpec.describe Review, type: :model do
     end
   end
 
-  it "is valid when provided with the following attributes - name" do
-    expect(user.reviews.create(name: 'Anything')).to be_valid
+  it "is valid when provided with the following attributes - name, mode" do
+    expect(user.reviews.create(name: 'Anything',mode: 'started')).to be_valid
   end
 
 
@@ -62,36 +62,6 @@ RSpec.describe Review, type: :model do
 
           expect(Review.get_review_name).to include("Quarter 4")
         end
-      end
-    end
-  end
-
-  describe :save_review_and_goals do
-    context "when called with invalid details" do
-
-      it "should raise error if review does not have any goals" do
-        goals_attributes = [ ]
-
-        expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_falsey
-      end
-
-      it "should raise error if description is missing for any goal" do
-       goals_attributes = [{"description"=>"", "weightage"=>"50"}]
-
-       expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_falsey
-      end
-
-      it "should raise error if sum of weightageis not equal to 100"   do
-        goals_attributes = [{"description"=>"Goal 1", "weightage"=>"50"},{"description"=>"Goal 2", "weightage"=>"60"}]
-
-        expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_falsey
-      end
-    end
-
-    context "Valid Details" do
-      it "save review and add saved goals to it" do
-        goals_attributes = [{"description"=>"Goal1", "weightage"=>"50"}, {"description"=>"Goal2", "weightage"=>"50"}]
-        expect(review.save_review_and_goals(goals_attributes: goals_attributes)).to be_truthy
       end
     end
   end

@@ -17,23 +17,39 @@ describe 'User' do
   end
 
   describe :from_omniauth do
+
+    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+      provider: 'google_oauth2',
+      info: {
+        first_name: 'mouli',
+        last_name: 'l',
+        email: 'mouli@gmail.com'
+      }
+    })
+
     it 'should get all the user details from omniauth for successful authentication' do
-      OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
-        provider: 'google_oauth2',
-        info: {
-          first_name: 'mouli',
-          last_name: 'l',
-          email: 'mouli@gmail.com'
-        }
-      })
+
       user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
 
       expect(user.name).to eq('mouli l')
       expect(user.email).to eq('mouli@gmail.com')
     end
 
-    it 'creates a new User record if the user authenicated for the very first time'
+    it 'should create a new User record if the user authenicated for the very first time' do
 
-    it 'does not create a new User record if the authenticated user already exists in the DB'
+      expect(User.count).to eq(0)
+
+      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      expect(User.count).to eq(1)
+    end
+
+    it 'should not create a new User record if the authenticated user already exists in the DB' do
+
+      existing_user = User.create(name: 'mouli l', email: "mouli@gmail.com")
+      user_count = User.count
+      
+      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      expect(User.count).to eq(user_count)
+    end
   end
 end
