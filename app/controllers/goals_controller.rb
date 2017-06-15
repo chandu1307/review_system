@@ -42,12 +42,14 @@ class GoalsController < ApplicationController
     @goal = @review.goal
   end
 
-  def show
+  def index
     if !@review.feedback_user_id.nil?
      @user =  User.find(@review.feedback_user_id)
     end
     @goal = @review.goal
   end
+
+
 
   def edit
 
@@ -80,10 +82,10 @@ class GoalsController < ApplicationController
       mode = Review.modes["submitted"]
     elsif params[:commit] == 'Approve'
         mode = Review.modes["accepted"]
-    elsif params[:commit] == 'Save Feedback'
-        mode = Review.modes["feedback_saved"]
-    elsif params[:commit] == 'Submit Feedback'
+    elsif params[:commit] == 'Submit feedback'
         mode = Review.modes["feedback_submitted"]
+    elsif params[:commit] == 'Submit final feedback'
+        mode = Review.modes["completed"]
     end
     return mode
   end

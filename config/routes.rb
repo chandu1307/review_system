@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   #TODO use only action routes
   resources :reviews do
      resources :goals do
-       member do
+       collection do
          get 'feedback'
          post 'submit_feedback'
        end

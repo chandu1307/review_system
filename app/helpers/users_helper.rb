@@ -74,8 +74,8 @@ module UsersHelper
    when "saved" then "Submit goals for manager's approval"
    when "submitted" then "Waiting for manager's approval"
    when "accepted" then "Manager has approved your goals, waiting for feedback"
-   when "feedback_saved" then "Manager has approved your goals, waiting for feedback"
    when "feedback_submitted" then "Manager has given feedback"
+   when "completed" then "Manager has given final feedback"
    else review_state
    end
    return status_message
@@ -88,8 +88,8 @@ module UsersHelper
    when "saved" then "Discuss with reportee for creation of goals"
    when "submitted" then "Goals submitted, waiting for your approval"
    when "accepted" then "Provide feedback"
-   when "feedback_saved" then "Submit your feedback"
-   when "feedback_submitted" then "You have provided feedback"
+   when "feedback_submitted" then "Submit your final feedback"
+   when "completed" then "You have provided feedback"
    else review_state
    end
    return status_message
@@ -107,7 +107,7 @@ module UsersHelper
   def get_manager_action(review_state)
     action  = case review_state
    when "accepted" then "submit feedback"
-   when "feedback_saved" then "submit feedback"
+   when "feedback_submitted" then "submit feedback"
    when "submitted" then "view"
    else "view"
    end

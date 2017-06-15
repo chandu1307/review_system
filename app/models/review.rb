@@ -2,7 +2,7 @@ class Review < ApplicationRecord
   validates :name,  presence: true
   belongs_to :user
   has_one :goal
-  enum mode: [ :started, :saved, :submitted, :accepted, :feedback_saved, :feedback_submitted]
+  enum mode: [ :started, :saved, :submitted, :accepted, :feedback_submitted, :completed]
 
 
   # TODO: Get rid of get_review_name once you capture the quarter value in the form.

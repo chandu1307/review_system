@@ -22,7 +22,7 @@
                 - elsif review.saved?
                   = link_to get_user_action(review.mode) , edit_review_goal_path(review,review.goal)
                 - else
-                  = link_to get_user_action(review.mode) , review_goal_path(review,review.goal)
+                  = link_to get_user_action(review.mode) , review_goals_path(review)
   - else
     .center.jumbotron
       %h1 No reviews yet!

@@ -22,12 +22,12 @@
                   %td.col-md-5
                     %text_field{:for => "sel1"}= get_manager_status(review.mode)
                   %td.col-md-3
-                    - if review.accepted? || review.feedback_saved?
-                      = link_to get_manager_action(review.mode) , feedback_review_goal_path(review,review.goal)
+                    - if review.accepted? || review.feedback_submitted?
+                      = link_to get_manager_action(review.mode) , feedback_review_goals_path(review)
                     - elsif review.saved? || review.started?
 
                     - else
-                      = link_to get_manager_action(review.mode) , review_goal_path(review,review.goal)
+                      = link_to get_manager_action(review.mode) , review_goals_path(review)
 
       - else
         .center.jumbotron

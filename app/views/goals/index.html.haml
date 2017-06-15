@@ -1,16 +1,18 @@
 - provide(:title, "Add")
 = render 'shared/goal_name'
-- if @review.feedback_submitted?
+- if @review.completed?
   = render 'shared/snippet_for_complete'
 - elsif @review.submitted?
   = render 'shared/snippet_for_submit'
+- elsif @review.feedback_submitted?
+  = render 'shared/snippet_for_submit_feedback'
 - else
   = render 'shared/snippet_for_approve'
 %div.lable_heading
   %label{:for => "sel1"}= 'Goals'
 %div.rounded
   %text_field{:for => "sel1"}= @goal.description.gsub(/\n/, '<br/>').html_safe
-- if @review.feedback_submitted?
+- if @review.feedback_submitted? || @review.completed?
   %div.lable_heading
     %label{:for => "sel1"}= 'Feedback from '+ @user.name
   %div.rounded

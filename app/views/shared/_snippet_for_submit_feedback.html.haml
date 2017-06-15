@@ -1,20 +1,19 @@
 .container
   .row.bs-wizard{:style => "border-bottom:0;"}
-    .col-xs-3.bs-wizard-step.disabled
+    .col-xs-3.bs-wizard-step.complete
       .text-center.bs-wizard-stepnum Submited
       .progress
         .progress-bar
       %a.bs-wizard-dot{:href => "#"}
-    .col-xs-3.bs-wizard-step.disabled
+    .col-xs-3.bs-wizard-step.complete
       / complete
       .text-center.bs-wizard-stepnum Accepted
       .progress
         .progress-bar
       %a.bs-wizard-dot{:href => "#"}
-        %a.bs-wizard-dot{:href => "#"}
-    .col-xs-3.bs-wizard-step.disabled
+    .col-xs-3.bs-wizard-step.active
       / complete
-      .text-center.bs-wizard-stepnum Feedback submitted
+      .text-center.bs-wizard-stepnum Feedback Submitted
       .progress
         .progress-bar
       %a.bs-wizard-dot{:href => "#"}
