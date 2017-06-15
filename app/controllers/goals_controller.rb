@@ -5,21 +5,21 @@ class GoalsController < ApplicationController
 
   def create
     @review.mode = get_review_mode
-    @review.save
     @goal = @review.build_goal(goal_params)
     if @goal.save
+       @review.save
        redirect_to reviews_path
     else
-      render 'new', object: review
+      render 'new', object: @review
     end
   end
 
   def update
     @review.mode = get_review_mode
-    @review.save
     @goal = @review.goal
     if @goal.update_attributes(goal_params)
-      redirect_to reviews_path
+       @review.save
+       redirect_to reviews_path
     else
       render 'edit', object: [@review,@goal]
     end
@@ -28,12 +28,12 @@ class GoalsController < ApplicationController
   def submit_feedback
     @review.mode = get_review_mode
     @review.feedback_user_id = current_user.id
-    @review.save
     @goal = @review.goal
     if @goal.update_attributes(manager_feedback: params[:manager_feedback])
-      redirect_to team_members_user_path(current_user)
+       @review.save
+       redirect_to team_members_user_path(current_user)
     else
-      render 'feedback', object: [@review,@goal]
+      render 'feedback', object: @review
     end
   end
 
@@ -47,6 +47,10 @@ class GoalsController < ApplicationController
      @user =  User.find(@review.feedback_user_id)
     end
     @goal = @review.goal
+    if @goal.nil?
+        flash[:danger] = "Create goals"
+        redirect_to reviews_path
+    end
   end
 
 
