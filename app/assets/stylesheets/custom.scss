@@ -141,6 +141,11 @@ h1 {
    font-size: 90;
 }
 
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    background-color: #f8f8f8;
+    color: #fff;
+}
+
 .rounded {
   border-radius: 4px;
   padding: 10px;

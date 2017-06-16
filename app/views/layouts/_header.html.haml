@@ -1,7 +1,10 @@
 %nav.navbar.navbar-inverse.navbar-custom
   .container-fluid
     .navbar-header
-      %a.navbar-brand{:href => "#"} Review System
+      - if logged_in?
+        %a.navbar-brand{:href => reviews_path} Review System
+      - else
+        %a.navbar-brand{:href => "#"} Review System
     %nav
       %ul.nav.navbar-nav.navbar-right
         - if logged_in?
