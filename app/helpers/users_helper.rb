@@ -6,11 +6,6 @@ module UsersHelper
     end
   end
 
-  # Returns true if the user is logged in, false otherwise.
-  def logged_in?
-    !current_user.nil?
-  end
-
   # Returns the user corresponding to the remember token cookie.
   def current_user
     if (user_id = session[:user_id])
@@ -56,7 +51,7 @@ module UsersHelper
 
   end
 
-  def is_access?
+  def can_user_access_review?
     @review = Review.find(params[:review_id])
     if(!@review.nil?)
       @review_user =  User.find_by(id: @review.user_id)
@@ -65,6 +60,11 @@ module UsersHelper
       return true
     end
     return false
+  end
+
+  # Returns true if the user is logged in, false otherwise.
+  def logged_in?
+    !current_user.nil?
   end
 
   def is_manager_for_this_review?
@@ -79,12 +79,11 @@ module UsersHelper
   end
 
   def is_manager?
-    if (!current_user.nil? && current_user.manager)
+    if  current_user.manager
       return true
     end
-    return false
+      return false
   end
-
 
   def get_user_status(review_state)
    status_message = case review_state

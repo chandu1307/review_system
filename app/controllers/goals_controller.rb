@@ -11,7 +11,7 @@ class GoalsController < ApplicationController
        @review.save
        redirect_to reviews_path
     else
-      render 'new', object: @review
+      render 'new'#, object: @review
     end
   end
 
@@ -22,7 +22,7 @@ class GoalsController < ApplicationController
        @review.save
        redirect_to reviews_path
     else
-      render 'edit', object: [@review,@goal]
+      render 'edit'#, object: [@review,@goal]
     end
   end
 
@@ -37,6 +37,7 @@ class GoalsController < ApplicationController
       render 'feedback', object: @review
     end
   end
+
 
   def feedback
       check_review_has_goals
@@ -67,13 +68,6 @@ class GoalsController < ApplicationController
   end
 
   private
-  def logged_in_user
-    unless logged_in?
-      flash[:danger] = "Please log in."
-      redirect_to root_path
-    end
-  end
-
   def get_review_mode
     mode = Review.modes["saved"]
     if params[:commit] == 'Submit for approval'
@@ -87,17 +81,18 @@ class GoalsController < ApplicationController
     end
     return mode
   end
-
   def set_review
     @review = Review.find(params[:review_id])
   end
+
+  private
 
   def goal_params
     params.require(:goal).permit(:description)
   end
 
   def belongs_to_this_user
-   unless is_access?
+   unless can_user_access_review?
      flash[:danger] = "You are not acess that"
      redirect_to root_path
    end
@@ -117,4 +112,5 @@ class GoalsController < ApplicationController
        redirect_to reviews_path
    end
  end
+
 end

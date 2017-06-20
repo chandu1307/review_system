@@ -15,14 +15,7 @@ private
          @review.save
        end
   end
-
-  def logged_in_user
-    unless logged_in?
-      flash[:danger] = "Please log in."
-      redirect_to root_path
-    end
-  end
-
+  
   def belongs_to_this_user
     unless is_access?
       flash[:danger] = "You are not acess that"

@@ -5,13 +5,9 @@ class Review < ApplicationRecord
   has_one :goal
   enum mode: [ :started, :saved, :submitted, :accepted, :feedback_submitted, :completed]
 
-
-  # TODO: Get rid of get_review_name once you capture the quarter value in the form.
-
   def self.get_review_name
     name  = ""
     month_number = Time.now.month
-
     if month_number <= 3
       name = name + "Quarter 1 - " + Time.now.strftime("%Y")
     elsif month_number <= 6
