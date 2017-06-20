@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gem 'bcrypt'
 gem 'bootstrap-sass', '3.3.6'
 gem 'bootstrap-will_paginate', '0.0.10'
-gem "omniauth-google-oauth2", "~> 0.2.1"
-gem "haml-rails"
+gem 'omniauth-google-oauth2', '0.2.1'
+gem 'haml-rails'
 gem 'carrierwave', '0.11.2'
 gem 'coffee-rails'
 gem 'dotenv-rails'
