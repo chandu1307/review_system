@@ -32,7 +32,7 @@ class GoalsController < ApplicationController
     @goal = @review.goal
     if @goal.update_attributes(manager_feedback: params[:manager_feedback])
        @review.save
-       redirect_to team_members_user_path(current_user)
+       redirect_to team_members_users_path
     else
       render 'feedback', object: @review
     end

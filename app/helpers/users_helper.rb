@@ -78,6 +78,13 @@ module UsersHelper
     return false
   end
 
+  def is_manager?
+    if (!current_user.nil? && current_user.manager)
+      return true
+    end
+    return false
+  end
+
 
   def get_user_status(review_state)
    status_message = case review_state
