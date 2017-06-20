@@ -13,7 +13,6 @@ gem 'fog', '1.38.0'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'mini_magick', '4.5.1'
-gem 'omniauth-google-oauth2', "~> 0.2.1"
 gem 'rails'
 gem 'sass-rails'
 gem 'turbolinks'
