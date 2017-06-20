@@ -32,12 +32,11 @@ class GoalsController < ApplicationController
     @goal = @review.goal
     if @goal.update_attributes(manager_feedback: params[:manager_feedback])
        @review.save
-       redirect_to team_members_user_path(current_user)
+       redirect_to team_members_users_path
     else
       render 'feedback', object: @review
     end
   end
-
 
   def feedback
       check_review_has_goals
@@ -64,12 +63,11 @@ class GoalsController < ApplicationController
   def approve_goals
     @review.mode = get_review_mode
     @review.save
-    redirect_to team_members_user_path(current_user)
+    redirect_to team_members_users_path
   end
 
   private
   def logged_in_user
-
     unless logged_in?
       flash[:danger] = "Please log in."
       redirect_to root_path
@@ -94,14 +92,11 @@ class GoalsController < ApplicationController
     @review = Review.find(params[:review_id])
   end
 
-  private
-
   def goal_params
     params.require(:goal).permit(:description)
   end
 
   def belongs_to_this_user
-
    unless is_access?
      flash[:danger] = "You are not acess that"
      redirect_to root_path
@@ -109,7 +104,6 @@ class GoalsController < ApplicationController
  end
 
  def belongs_to_this_manager
-
   unless is_manager_for_this_review?
     flash[:danger] = "You are not acess that"
     redirect_to root_path
@@ -123,5 +117,4 @@ class GoalsController < ApplicationController
        redirect_to reviews_path
    end
  end
-
 end
