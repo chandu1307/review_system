@@ -422,7 +422,6 @@ GEM
     turbolinks-source (5.0.3)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
-
     uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.2.1)
@@ -463,6 +462,7 @@ DEPENDENCIES
   puma
   rails
   rails-controller-testing
+  rb-inotify
   rspec-rails
   rubocop
   sass-rails

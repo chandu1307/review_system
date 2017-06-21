@@ -19,12 +19,12 @@ gem 'turbolinks'
 gem 'uglifier'
 gem 'will_paginate', '3.1.0'
 gem 'mysql2'
-gem 'tzinfo-data'
 
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'rb-inotify', :require => false
   gem 'simplecov', require: false
 end
 
