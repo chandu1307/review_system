@@ -48,6 +48,10 @@ class UsersController < ApplicationController
     @users = User.where(:manager_id => current_user.id)
   end
 
+  def all_reviews
+    @users = User.all
+  end
+
   def user_is_manager
     unless is_manager?
       flash[:danger] = "You don't have access"

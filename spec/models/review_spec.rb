@@ -16,7 +16,7 @@ RSpec.describe Review, type: :model do
   end
 
   it "is valid when provided with the following attributes - name, mode" do
-    expect(user.reviews.create(name: 'Anything',mode: 'started')).to be_valid
+    expect(user.reviews.create(name: 'Anything', mode: 'started')).to be_valid
   end
 
 
@@ -30,7 +30,7 @@ RSpec.describe Review, type: :model do
         it "should return Quarter 1 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)
 
-          expect(Review.get_review_name).to include("Quarter 1")
+          expect(Review.get_review_name).to include('Quarter 1')
         end
       end
     end
@@ -40,7 +40,7 @@ RSpec.describe Review, type: :model do
         it "should return Quater 2 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)
 
-          expect(Review.get_review_name).to include("Quarter 2")
+          expect(Review.get_review_name).to include('Quarter 2')
         end
       end
     end
@@ -50,7 +50,7 @@ RSpec.describe Review, type: :model do
         it "should return Quater 3 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)
 
-          expect(Review.get_review_name).to include("Quarter 3")
+          expect(Review.get_review_name).to include('Quarter 3')
         end
       end
     end
@@ -60,7 +60,7 @@ RSpec.describe Review, type: :model do
         it "should return Quater 4 for #{month_number} month" do
           allow(Time).to receive(:now).and_return Time.now.change(month: month_number)
 
-          expect(Review.get_review_name).to include("Quarter 4")
+          expect(Review.get_review_name).to include('Quarter 4')
         end
       end
     end

@@ -10,7 +10,6 @@ Rails.application.routes.draw do
   put 'select_team_leads', to: 'users#team_leads', as: :select_team_leads
   put '/reviews/:review_id/approve_goals_by_team_lead', to: 'goals#approve_goals', as: :approve_goals_by_team_lead
 
-  #TODO use only action routes
   resources :reviews do
      resources :goals do
        collection do
@@ -22,13 +21,13 @@ Rails.application.routes.draw do
 
   resources :goals
 
-  #TODO use only action routes
   resources :users do
     member do
       get 'reviews'
     end
     collection do
-         get 'team_members'
+      get 'team_members'
+      get 'all_reviews'
     end
   end
 end

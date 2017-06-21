@@ -5,10 +5,9 @@ class GoalsController < ApplicationController
   before_action :belongs_to_this_manager, only: [:submit_feedback, :feedback]
 
   def create
-    @review.mode = get_review_mode
     @goal = @review.build_goal(goal_params)
     if @goal.save
-       @review.save
+       save_review_mode
        redirect_to reviews_path
     else
       render 'new'#, object: @review
@@ -16,10 +15,9 @@ class GoalsController < ApplicationController
   end
 
   def update
-    @review.mode = get_review_mode
     @goal = @review.goal
     if @goal.update_attributes(goal_params)
-       @review.save
+       save_review_mode
        redirect_to reviews_path
     else
       render 'edit'#, object: [@review,@goal]
@@ -27,17 +25,15 @@ class GoalsController < ApplicationController
   end
 
   def submit_feedback
-    @review.mode = get_review_mode
     @review.feedback_user_id = current_user.id
     @goal = @review.goal
     if @goal.update_attributes(manager_feedback: params[:manager_feedback])
-       @review.save
-       redirect_to team_members_users_path
+       save_review_mode
+       redirect_to_path
     else
       render 'feedback', object: @review
     end
   end
-
 
   def feedback
       check_review_has_goals
@@ -50,25 +46,21 @@ class GoalsController < ApplicationController
     check_review_has_goals
   end
 
-
-
   def edit
     check_review_has_goals
   end
 
   def new
-
     @goal = @review.build_goal
   end
 
   def approve_goals
-    @review.mode = get_review_mode
-    @review.save
-    redirect_to team_members_users_path
+    save_review_mode
+    redirect_to_path
   end
 
   private
-  def get_review_mode
+  def save_review_mode
     mode = Review.modes["saved"]
     if params[:commit] == 'Submit for approval'
       mode = Review.modes["submitted"]
@@ -79,13 +71,21 @@ class GoalsController < ApplicationController
     elsif params[:commit] == 'Submit final feedback'
         mode = Review.modes["completed"]
     end
-    return mode
+    @review.mode = mode
+    @review.save
   end
+
+  def redirect_to_path
+    if current_user.id != @review.user.manager_id
+       redirect_to all_reviews_users_path
+     else
+       redirect_to team_members_users_path
+     end
+  end
+
   def set_review
     @review = Review.find(params[:review_id])
   end
-
-  private
 
   def goal_params
     params.require(:goal).permit(:description)
@@ -99,7 +99,7 @@ class GoalsController < ApplicationController
  end
 
  def belongs_to_this_manager
-  unless is_manager_for_this_review?
+  unless is_manager_or_admin_for_this_review?
     flash[:danger] = "You are not acess that"
     redirect_to root_path
   end
@@ -112,5 +112,4 @@ class GoalsController < ApplicationController
        redirect_to reviews_path
    end
  end
-
 end

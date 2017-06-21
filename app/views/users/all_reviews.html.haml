@@ -1,0 +1,37 @@
+%body
+  - provide(:title, "All users and reviews")
+
+  %h3 All users and reviews
+  - if @users.any?
+    - @users.each do |user|
+      -@review_items = user.reviews
+      - if @review_items.any?
+        %div.lable_heading
+          %label{:for => "sel1"}= user.name
+        .table-responsive
+          %table.table.table-bordered.table-striped.table-highlight
+            %thead
+              %th.centered Appraisal Cycle
+              %th.centered Status
+              %th.centered Action
+            %tbody
+              - @review_items.each do |review|
+                %tr.centered
+                  %td.col-md-3
+                    %text_field{:for => "sel1"}= review.name
+                  %td.col-md-5
+                    %text_field{:for => "sel1"}= get_manager_status(review.mode)
+                  %td.col-md-3
+                    - if review.accepted? || review.feedback_submitted?
+                      = link_to get_manager_action(review.mode) , feedback_review_goals_path(review)
+                    - elsif review.saved? || review.started?
+
+                    - else
+                      = link_to get_manager_action(review.mode) , review_goals_path(review)
+
+      - else
+        .center.jumbotron
+          %h1 No reviews!
+  - else
+    .center.jumbotron
+      %h1 Team Members!

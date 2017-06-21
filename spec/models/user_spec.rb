@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'User' do
   [:name, :email].each do |attribute|
     it "should be invalid if #{attribute} is missing" do
-      user = User.new(name: 'Anything', email: "anyemail@gmail.com")
+      user = User.new(name: 'Anything', email: 'anyemail@gmail.com')
       user[attribute] = ''
       user.save
 
@@ -13,7 +13,7 @@ describe 'User' do
   end
 
   it "is valid with valid attributes" do
-    expect(User.new(name: 'Anything', email: "anyemail@gmail.com")).to be_valid
+    expect(User.new(name: 'Anything', email: 'anyemail@gmail.com')).to be_valid
   end
 
   describe :from_omniauth do
@@ -45,9 +45,9 @@ describe 'User' do
 
     it 'should not create a new User record if the authenticated user already exists in the DB' do
 
-      existing_user = User.create(name: 'mouli l', email: "mouli@gmail.com")
+      existing_user = User.create(name: 'mouli l', email: 'mouli@gmail.com')
       user_count = User.count
-      
+
       user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
       expect(User.count).to eq(user_count)
     end
