@@ -7,11 +7,11 @@ class User < ApplicationRecord
     data = access_token.info
     user = User.find_by(email: data['email'])
     user = User.create(
-        name: data['first_name']+" " + data['last_name'],
+        name: data['first_name'] + ' ' + data['last_name'],
         email: data['email'],
         avatar_url: data['image'],
         manager: false,
-        admin: false,
+        admin: false
     ) unless user
     user
   end

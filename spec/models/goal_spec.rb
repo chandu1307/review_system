@@ -9,7 +9,7 @@ RSpec.describe Goal, type: :model do
 
 
     [:description].each do |attribute|
-      it "should be invalid if #{attribute} is missing" do
+      it 'should be invalid if #{attribute} is missing' do
         goal = review.build_goal(description: 'test description')
         goal[attribute] = ''
         goal.save
@@ -19,12 +19,8 @@ RSpec.describe Goal, type: :model do
       end
     end
 
-    it "is valid with provided with the following attributes - description" do
+    it 'is valid with provided with the following attributes - description' do
 
-      expect( review.build_goal(description: 'test description') ).to be_valid
+      expect(review.build_goal(description: 'test description') ).to be_valid
     end
-
-
-
-
 end
