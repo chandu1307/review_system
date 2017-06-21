@@ -10,7 +10,7 @@ class GoalsController < ApplicationController
        save_review_mode
        redirect_to reviews_path
     else
-      render 'new'#, object: @review
+      render 'new'
     end
   end
 
@@ -20,7 +20,7 @@ class GoalsController < ApplicationController
        save_review_mode
        redirect_to reviews_path
     else
-      render 'edit'#, object: [@review,@goal]
+      render 'edit'
     end
   end
 
@@ -60,6 +60,7 @@ class GoalsController < ApplicationController
   end
 
   private
+
   def save_review_mode
     mode = Review.modes["saved"]
     if params[:commit] == 'Submit for approval'

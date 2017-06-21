@@ -460,7 +460,7 @@ DEPENDENCIES
   mini_magick (= 4.5.1)
   minitest-reporters
   mysql2
-  omniauth-google-oauth2 (~> 0.2.1)
+  omniauth-google-oauth2
   puma
   rails
   rails-controller-testing
