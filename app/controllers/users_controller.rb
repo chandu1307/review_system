@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :if_user_is_logged_in, only: [ :new , :create]
   before_action :user_is_admin, only: [:index]
   before_action :user_is_manager, only: [:team_members]
-  before_action :logged_in_user, only: [:index, :team_members]
+  before_action :logged_in_user, only: [:index, :team_members,:all_reviews]
   def create
     user = User.from_omniauth(request.env["omniauth.auth"])
     log_in user
@@ -40,8 +40,8 @@ class UsersController < ApplicationController
   end
 
   def reviews
-      @team_member = User.find(params[:id])
-      @review_items = Review.where(["user_id = ? and mode != ?", params[:id], 0])
+    @team_member = User.find(params[:id])
+    @review_items = Review.where(["user_id = ? and mode != ?", params[:id], 0])
   end
 
   def team_members

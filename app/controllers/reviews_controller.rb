@@ -9,11 +9,11 @@ class ReviewsController < ApplicationController
 private
 
   def add_review_for_current_quarter
-       current_review = current_user.reviews.last
-       if (current_review.nil? || current_review.name != Review.get_review_name)
-         @review = current_user.reviews.build(name: Review.get_review_name, mode: Review.modes['started'])
-         @review.save
-       end
+    current_review = current_user.reviews.last
+    if (current_review.nil? || current_review.name != Review.get_review_name)
+      @review = current_user.reviews.build(name: Review.get_review_name, mode: Review.modes['started'])
+      @review.save
+    end
   end
 
   def belongs_to_this_user

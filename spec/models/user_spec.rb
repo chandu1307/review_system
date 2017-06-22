@@ -39,7 +39,7 @@ describe 'User' do
 
       expect(User.count).to eq(0)
 
-      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
       expect(User.count).to eq(1)
     end
 

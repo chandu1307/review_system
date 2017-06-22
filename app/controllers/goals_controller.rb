@@ -7,8 +7,8 @@ class GoalsController < ApplicationController
   def create
     @goal = @review.build_goal(goal_params)
     if @goal.save
-       save_review_mode
-       redirect_to reviews_path
+      save_review_mode
+      redirect_to reviews_path
     else
       render 'new'
     end
@@ -17,26 +17,26 @@ class GoalsController < ApplicationController
   def update
     @goal = @review.goal
     if @goal.update_attributes(goal_params)
-       save_review_mode
-       redirect_to reviews_path
+      save_review_mode
+      redirect_to reviews_path
     else
       render 'edit'
     end
   end
 
   def submit_feedback
-    @review.feedback_user_id = current_user.id
+    @review.feedback_user_id = @review.user.manager_id
     @goal = @review.goal
     if @goal.update_attributes(manager_feedback: params[:manager_feedback])
-       save_review_mode
-       redirect_to_path
+      save_review_mode
+      redirect_to_path
     else
       render 'feedback', object: @review
     end
   end
 
   def feedback
-      check_review_has_goals
+    check_review_has_goals
   end
 
   def index
@@ -64,13 +64,13 @@ class GoalsController < ApplicationController
   def save_review_mode
     mode = Review.modes["saved"]
     if params[:commit] == 'Submit for approval'
-      mode = Review.modes["submitted"]
+      mode = Review.modes['submitted']
     elsif params[:commit] == 'Approve'
-        mode = Review.modes["accepted"]
+      mode = Review.modes['accepted']
     elsif params[:commit] == 'Submit feedback'
-        mode = Review.modes["feedback_submitted"]
+      mode = Review.modes['feedback_submitted']
     elsif params[:commit] == 'Submit final feedback'
-        mode = Review.modes["completed"]
+      mode = Review.modes['completed']
     end
     @review.mode = mode
     @review.save
@@ -78,10 +78,10 @@ class GoalsController < ApplicationController
 
   def redirect_to_path
     if current_user.id != @review.user.manager_id
-       redirect_to all_reviews_users_path
-     else
-       redirect_to team_members_users_path
-     end
+      redirect_to all_reviews_users_path
+    else
+      redirect_to team_members_users_path
+    end
   end
 
   def set_review
