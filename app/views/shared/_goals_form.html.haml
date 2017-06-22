@@ -1,0 +1,9 @@
+= render 'shared/goal_name'
+= render 'shared/snippet_for_start'
+= form_for([@review, @goal]) do |f|
+  = render 'shared/error_messages', object: f.object
+  = f.text_area :description, placeholder: "Enter Goal?",:rows => 12,cols: 150
+  %div.margin_top
+    .centered
+      = f.submit "Save as a draft", class: "btn btn-primary", name: "commit"
+      = f.submit "Submit for approval", class: "btn btn-primary", name: "commit"
