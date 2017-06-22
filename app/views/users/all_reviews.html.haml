@@ -1,7 +1,7 @@
 %body
-  - provide(:title, "Team Members")
+  - provide(:title, "All users and reviews")
 
-  %h3 Team Members
+  %h3 Appraisals of all users
   - if @users.any?
     - @users.each do |user|
       -@review_items = user.reviews

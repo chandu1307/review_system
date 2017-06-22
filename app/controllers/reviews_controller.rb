@@ -1,32 +1,21 @@
-class ReviewsController < ApplicationController
+# frozen_string_literal: true
 
-  before_action :logged_in_user, only: [:index]
-  before_action :add_review_for_current_quarter, only: [:index ]
+class ReviewsController < ApplicationController
+  before_action :logged_in_user, only: %i[index]
+  before_action :add_review_for_current_quarter, only: %i[index]
 
   def index
     @review_items = current_user.reviews
   end
 
-private
+  private
+
   def add_review_for_current_quarter
-       current_review = current_user.reviews.last
-       if(current_review.nil? || current_review.name != Review.get_review_name)
-         @review = current_user.reviews.build(name: Review.get_review_name, mode: Review.modes["started"])
-         @review.save
-       end
-  end
-
-  def logged_in_user
-    unless logged_in?
-      flash[:danger] = "Please log in."
-      redirect_to root_path
-    end
-  end
-
-  def belongs_to_this_user
-    unless is_access?
-      flash[:danger] = "You are not acess that"
-      redirect_to root_path
-    end
+    current_review = current_user.reviews.last
+    return unless current_review.nil? ||
+                  current_review.name != Review.review_name
+    @review = current_user.reviews.build(name: Review.review_name,
+                                         mode: Review.modes['started'])
+    @review.save
   end
 end

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'User' do
-  [:name, :email].each do |attribute|
-    it "should be invalid if #{attribute} is missing" do
-      user = User.new(name: 'Anything', email: "anyemail@gmail.com")
+  %i[name email].each do |attribute|
+    it 'should be invalid if #{attribute} is missing' do
+      user = User.new(name: 'Anything', email: 'anyemail@gmail.com')
       user[attribute] = ''
       user.save
 
@@ -12,22 +14,22 @@ describe 'User' do
     end
   end
 
-  it "is valid with valid attributes" do
-    expect(User.new(name: 'Anything', email: "anyemail@gmail.com")).to be_valid
+  it 'is valid with valid attributes' do
+    expect(User.new(name: 'Anything', email: 'anyemail@gmail.com')).to be_valid
   end
 
   describe :from_omniauth do
-
-    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
+    OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new(
       provider: 'google_oauth2',
       info: {
         first_name: 'mouli',
         last_name: 'l',
         email: 'mouli@gmail.com'
       }
-    })
+    )
 
-    it 'should get all the user details from omniauth for successful authentication' do
+    it 'should get all the user details from omniauth
+        for successful authentication' do
 
       user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
 
@@ -35,21 +37,54 @@ describe 'User' do
       expect(user.email).to eq('mouli@gmail.com')
     end
 
-    it 'should create a new User record if the user authenicated for the very first time' do
+    it 'should create a new User record if the user
+        authenicated for the very first time' do
 
-      expect(User.count).to eq(0)
-
-      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
-      expect(User.count).to eq(1)
+      user_count = User.count
+      User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+      expect(User.count).to eq(user_count + 1)
     end
 
-    it 'should not create a new User record if the authenticated user already exists in the DB' do
+    it 'should not create a new User record if the
+        authenticated user already exists in the DB' do
 
-      existing_user = User.create(name: 'mouli l', email: "mouli@gmail.com")
+      User.create(name: 'mouli l', email: 'mouli@gmail.com')
       user_count = User.count
-      
-      user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
+
+      User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
       expect(User.count).to eq(user_count)
+    end
+  end
+
+  describe :admin do
+    it 'should return true if user as not an admin' do
+      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', admin:
+      false)
+
+      expect(user.admin).to eq(false)
+    end
+
+    it 'should return true if user as admin' do
+      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', admin:
+      true)
+
+      expect(user.admin).to eq(true)
+    end
+  end
+
+  describe :manager do
+    it 'should return false if user as not a manager' do
+      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', manager:
+      false)
+
+      expect(user.manager).to eq(false)
+    end
+
+    it 'should return true if user as manager' do
+      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', manager:
+      true)
+
+      expect(user.manager).to eq(true)
     end
   end
 end

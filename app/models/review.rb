@@ -1,28 +1,32 @@
+# frozen_string_literal: true
+
 class Review < ApplicationRecord
   validates :name,  presence: true
   validates :mode,  presence: true
   belongs_to :user
   has_one :goal
-  enum mode: [ :started, :saved, :submitted, :accepted, :feedback_submitted, :completed]
+  enum mode: %i[started saved submitted accepted feedback_submitted completed]
 
-
-  # TODO: Get rid of get_review_name once you capture the quarter value in the form.
-
-  def self.get_review_name
-    name  = ""
-    month_number = Time.now.month
-
+  def self.review_name
+    month_number = Time.zone.now.month
     if month_number <= 3
-      name = name + "Quarter 1 - " + Time.now.strftime("%Y")
+      'Quarter 1 - ' + Time.zone.now.strftime('%Y')
     elsif month_number <= 6
-      name =  name + "Quarter 2 - " + Time.now.strftime("%Y")
+      'Quarter 2 - ' + Time.zone.now.strftime('%Y')
     elsif month_number <= 9
-      name =  name + "Quarter 3 - " + Time.now.strftime("%Y")
+      'Quarter 3 - ' + Time.zone.now.strftime('%Y')
     elsif month_number <= 12
-      name =  name + "Quarter 4 - " + Time.now.strftime('%Y')
+      'Quarter 4 - ' + Time.zone.now.strftime('%Y')
     end
-    return name
   end
 
+  def can_user_access_review?(user_id)
+    user = User.find(user_id)
+    user.admin || self.user_id == user.id || self.user.manager_id == user.id
+  end
 
+  def manager_or_admin_for_this_review?(user_id)
+    user = User.find(user_id)
+    user.admin || self.user.manager_id == user.id
+  end
 end

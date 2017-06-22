@@ -24,4 +24,6 @@
             %a{:href => team_members_users_path} Team Appraisals
         - if current_user.admin?
           %li.text-color
-            %a{:href => users_path} Action
+            %a{:href => users_path} Manage Team
+            %li.text-color
+              %a{:href => all_reviews_users_path} All Appraisals
