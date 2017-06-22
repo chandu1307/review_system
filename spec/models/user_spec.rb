@@ -40,10 +40,9 @@ describe 'User' do
     it 'should create a new User record if the user
         authenicated for the very first time' do
 
-      expect(User.count).to eq(0)
-
+      user_count = User.count
       User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
-      expect(User.count).to eq(1)
+      expect(User.count).to eq(user_count + 1)
     end
 
     it 'should not create a new User record if the
