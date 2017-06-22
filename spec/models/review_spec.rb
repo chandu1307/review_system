@@ -29,8 +29,8 @@ RSpec.describe Review, type: :model do
     context 'when it is First quarter' do
       [1, 2, 3].each do |month_number|
         it "should return Quarter 1 for #{month_number} month" do
-          allow(Time).to receive(:now).and_return
-          Time.zone.now.change(month: month_number)
+          allow(Time).to receive(:now).and_return Time.zone.now.change(month:
+            month_number)
 
           expect(Review.review_name).to include('Quarter 1')
         end
@@ -40,8 +40,8 @@ RSpec.describe Review, type: :model do
     context 'when it is Second quarter' do
       [4, 5, 6].each do |month_number|
         it "should return Quater 2 for #{month_number} month" do
-          allow(Time).to receive(:now).and_return
-          Time.zone.now.change(month: month_number)
+          allow(Time).to receive(:now).and_return Time.zone.now.change(month:
+            month_number)
 
           expect(Review.review_name).to include('Quarter 2')
         end
@@ -51,8 +51,8 @@ RSpec.describe Review, type: :model do
     context 'when it is Third quarter' do
       [7, 8, 9].each do |month_number|
         it "should return Quater 3 for #{month_number} month" do
-          allow(Time).to receive(:now).and_return
-          Time.zone.now.change(month: month_number)
+          allow(Time).to receive(:now).and_return Time.zone.now.change(month:
+            month_number)
 
           expect(Review.review_name).to include('Quarter 3')
         end
@@ -62,8 +62,8 @@ RSpec.describe Review, type: :model do
     context 'when it is Fourth quarter' do
       [10, 11, 12].each do |month_number|
         it "should return Quater 4 for #{month_number} month" do
-          allow(Time).to receive(:now).and_return
-          Time.zone.now.change(month: month_number)
+          allow(Time).to receive(:now).and_return Time.zone.now.change(month:
+            month_number)
 
           expect(Review.review_name).to include('Quarter 4')
         end
