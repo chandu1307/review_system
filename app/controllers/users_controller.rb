@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :if_user_is_logged_in, only: [ :new , :create]
-  before_action :user_is_admin, only: [:index]
-  before_action :user_is_manager, only: [:team_members]
-  before_action :logged_in_user, only: [:index, :team_members,:all_reviews]
+  before_action :if_user_is_logged_in, only: %i[new create]
+  before_action :user_is_admin, only: %i[index all_reviews]
+  before_action :user_is_manager, only: %i[team_members]
+  before_action :logged_in_user, only: %i[index team_members all_reviews]
   def create
-    user = User.from_omniauth(request.env["omniauth.auth"])
+    user = User.from_omniauth(request.env['omniauth.auth'])
     log_in user
     redirect_to reviews_path
   end
@@ -20,10 +22,10 @@ class UsersController < ApplicationController
 
   def team_leads
     users = params[:managers].keys
-    managers = params[:managers].values;
-    User.update_all(manager: false)
+    managers = params[:managers].values
+    User.where(manager: true).find_each { |u| u.update(manager: false) }
     users.each.with_index do |user_id, index|
-      User.where(id: managers[index]).update_all(manager: true)
+      User.where(id: managers[index]).update(manager: true)
       User.where(id: user_id).update(manager_id: managers[index])
     end
     redirect_to reviews_path
@@ -32,20 +34,20 @@ class UsersController < ApplicationController
   def if_user_is_logged_in
     redirect_to reviews_path if logged_in?
   end
+
   def user_is_admin
-    unless is_admin?
-      flash[:danger] = "You don't have access"
-      redirect_to root_path
-    end
+    return if admin?
+    flash[:danger] = "You don't have access"
+    redirect_to root_path
   end
 
   def reviews
     @team_member = User.find(params[:id])
-    @review_items = Review.where(["user_id = ? and mode != ?", params[:id], 0])
+    @review_items = Review.where(['user_id = ? and mode != ?', params[:id], 0])
   end
 
   def team_members
-    @users = User.where(:manager_id => current_user.id)
+    @users = User.where(manager_id: current_user.id)
   end
 
   def all_reviews
@@ -53,9 +55,8 @@ class UsersController < ApplicationController
   end
 
   def user_is_manager
-    unless is_manager?
-      flash[:danger] = "You don't have access"
-      redirect_to root_path
-    end
+    return if manager?
+    flash[:danger] = "You don't have access"
+    redirect_to reviews_path
   end
 end

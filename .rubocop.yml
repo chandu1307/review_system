@@ -1,0 +1,53 @@
+Rails:
+  Enabled: true
+AllCops:
+  Exclude:
+    - 'Rakefile'
+    - 'config/environments/*'
+    - 'config/application.rb'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'test/test_helper.rb'
+    - 'config/puma.rb'
+    - 'config/spring.rb'
+    - 'config/initializers/*'
+    - 'app/helpers/application_helper.rb'
+    - 'db/**/*'
+    - 'bin/*'
+  TargetRubyVersion: 2.3
+Style/Documentation:
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: false
+Metrics/AbcSize:
+  Max: 20
+Metrics/MethodLength:
+  CountComments: false
+  Max: 20
+Metrics/ModuleLength:
+  Exclude:
+    - "**/*_spec.rb"
+    - "app/helpers/users_helper.rb"
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Style/SymbolArray:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Date:
+  Enabled: false
+ParenthesesAsGroupedExpression:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Lint/HandleExceptions:
+  Enabled: false
+Rails/FindEach:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Documentation:
+  Enabled: false
+CyclomaticComplexity:
+  Enabled: false

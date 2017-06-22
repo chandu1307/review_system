@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class GoalsController < ApplicationController
   before_action :logged_in_user
   before_action :set_review
   before_action :belongs_to_this_user
-  before_action :belongs_to_this_manager, only: [:submit_feedback, :feedback]
+  before_action :belongs_to_this_manager, only: %i[submit_feedback feedback]
 
   def create
     @goal = @review.build_goal(goal_params)
@@ -40,8 +42,8 @@ class GoalsController < ApplicationController
   end
 
   def index
-    if !@review.feedback_user_id.nil?
-     @user =  User.find(@review.feedback_user_id)
+    unless @review.feedback_user_id.nil?
+      @user = User.find(@review.feedback_user_id)
     end
     check_review_has_goals
   end
@@ -62,17 +64,7 @@ class GoalsController < ApplicationController
   private
 
   def save_review_mode
-    mode = Review.modes["saved"]
-    if params[:commit] == 'Submit for approval'
-      mode = Review.modes['submitted']
-    elsif params[:commit] == 'Approve'
-      mode = Review.modes['accepted']
-    elsif params[:commit] == 'Submit feedback'
-      mode = Review.modes['feedback_submitted']
-    elsif params[:commit] == 'Submit final feedback'
-      mode = Review.modes['completed']
-    end
-    @review.mode = mode
+    @review.mode = review_state
     @review.save
   end
 
@@ -93,24 +85,21 @@ class GoalsController < ApplicationController
   end
 
   def belongs_to_this_user
-   unless can_user_access_review?
-     flash[:danger] = "You are not acess that"
-     redirect_to root_path
-   end
- end
-
- def belongs_to_this_manager
-  unless is_manager_or_admin_for_this_review?
-    flash[:danger] = "You are not acess that"
+    return if can_user_access_review?
+    flash[:danger] = 'You are not acess that'
     redirect_to root_path
   end
- end
 
- def check_review_has_goals
+  def belongs_to_this_manager
+    return if manager_or_admin_for_this_review?
+    flash[:danger] = 'You are not acess that'
+    redirect_to root_path
+  end
+
+  def check_review_has_goals
     @goal = @review.goal
-   if @goal.nil?
-       flash[:danger] = "No goals"
-       redirect_to reviews_path
-   end
- end
+    return unless @goal.nil?
+    flash[:danger] = 'No goals'
+    redirect_to reviews_path
+  end
 end

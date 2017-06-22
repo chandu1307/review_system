@@ -444,7 +444,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   bootstrap-sass (= 3.3.6)
-  bootstrap-will_paginate (= 0.0.10)
+  bootstrap-will_paginate
   byebug
   carrierwave (= 0.11.2)
   coffee-rails
