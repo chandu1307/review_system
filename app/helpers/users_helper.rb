@@ -42,27 +42,8 @@ module UsersHelper
     session[:forwarding_url] = request.original_url if request.get?
   end
 
-  def admin?
-    !current_user.nil? && current_user.admin
-  end
-
-  def manager?
-    current_user.manager
-  end
-
-  def can_user_access_review?
-    @review = Review.find(params[:review_id])
-    current_user.admin || @review.user_id == current_user.id ||
-      @review.user.manager_id == current_user.id
-  end
-
   def logged_in?
     !current_user.nil?
-  end
-
-  def manager_or_admin_for_this_review?
-    @review = Review.find(params[:review_id])
-    current_user.admin || @review.user.manager_id == current_user.id
   end
 
   def user_status(review_state)

@@ -85,13 +85,13 @@ class GoalsController < ApplicationController
   end
 
   def belongs_to_this_user
-    return if can_user_access_review?
+    return if @review.can_user_access_review?(current_user.id)
     flash[:danger] = 'You are not acess that'
     redirect_to root_path
   end
 
   def belongs_to_this_manager
-    return if manager_or_admin_for_this_review?
+    return if @review.manager_or_admin_for_this_review?(current_user.id)
     flash[:danger] = 'You are not acess that'
     redirect_to root_path
   end

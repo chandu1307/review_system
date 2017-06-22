@@ -19,4 +19,14 @@ class Review < ApplicationRecord
       'Quarter 4 - ' + Time.zone.now.strftime('%Y')
     end
   end
+
+  def can_user_access_review?(user_id)
+    user = User.find(user_id)
+    user.admin || self.user_id == user.id || self.user.manager_id == user.id
+  end
+
+  def manager_or_admin_for_this_review?(user_id)
+    user = User.find(user_id)
+    user.admin || self.user.manager_id == user.id
+  end
 end

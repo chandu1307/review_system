@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
 
   def user_is_admin
-    return if admin?
+    return if current_user.admin?
     flash[:danger] = "You don't have access"
     redirect_to root_path
   end
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   end
 
   def user_is_manager
-    return if manager?
+    return if current_user.manager?
     flash[:danger] = "You don't have access"
     redirect_to reviews_path
   end

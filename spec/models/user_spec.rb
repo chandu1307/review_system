@@ -56,4 +56,36 @@ describe 'User' do
       expect(User.count).to eq(user_count)
     end
   end
+
+  describe :admin do
+    it 'should return true if user as not an admin' do
+      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', admin:
+      false)
+
+      expect(user.admin).to eq(false)
+    end
+
+    it 'should return true if user as admin' do
+      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', admin:
+      true)
+
+      expect(user.admin).to eq(true)
+    end
+  end
+
+  describe :manager do
+    it 'should return false if user as not a manager' do
+      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', manager:
+      false)
+
+      expect(user.manager).to eq(false)
+    end
+
+    it 'should return true if user as manager' do
+      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', manager:
+      true)
+
+      expect(user.manager).to eq(true)
+    end
+  end
 end
