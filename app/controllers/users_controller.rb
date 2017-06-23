@@ -2,7 +2,8 @@
 
 class UsersController < ApplicationController
   before_action :if_user_is_logged_in, only: [:new, :create]
-  before_action :verify_user_has_logged_in, only: [:index, :team_members, :all_reviews]
+  before_action :verify_user_has_logged_in, only:
+   [:index, :team_members, :all_reviews]
   before_action :verify_user_as_admin, only: [:all_reviews]
   before_action :verify_user_as_manager, only: [:team_members]
 
