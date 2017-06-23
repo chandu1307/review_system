@@ -57,14 +57,14 @@ describe 'User' do
   end
 
   describe :admin do
-    it 'should return true if user as not an admin' do
+    it 'should return false if user is not an admin' do
       user = User.create(name: 'mouli l', email: 'mouli@gmail.com', admin:
       false)
 
       expect(user.admin).to eq(false)
     end
 
-    it 'should return true if user as admin' do
+    it 'should return true if user is admin' do
       user = User.create(name: 'mouli l', email: 'mouli@gmail.com', admin:
       true)
 
@@ -73,14 +73,14 @@ describe 'User' do
   end
 
   describe :manager do
-    it 'should return false if user as not a manager' do
+    it 'should return false if user is not a manager' do
       user = User.create(name: 'mouli l', email: 'mouli@gmail.com', manager:
       false)
 
       expect(user.manager).to eq(false)
     end
 
-    it 'should return true if user as manager' do
+    it 'should return true if user is manager' do
       user = User.create(name: 'mouli l', email: 'mouli@gmail.com', manager:
       true)
 
