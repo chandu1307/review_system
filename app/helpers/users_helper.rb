@@ -89,16 +89,12 @@ module UsersHelper
   end
 
   def review_state
-    if params[:commit] == 'Submit for approval'
-      Review.modes['submitted']
-    elsif params[:commit] == 'Approve'
-      Review.modes['accepted']
-    elsif params[:commit] == 'Submit feedback'
-      Review.modes['feedback_submitted']
-    elsif params[:commit] == 'Submit final feedback'
-      Review.modes['completed']
-    else
-      Review.modes['saved']
+    case params[:commit]
+    when 'Submit for approval' then Review.modes['submitted']
+    when 'Approve' then Review.modes['accepted']
+    when 'Submit feedback' then Review.modes['feedback_submitted']
+    when 'Submit final feedback' then Review.modes['completed']
+    else Review.modes['saved']
     end
   end
 end

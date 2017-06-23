@@ -7,7 +7,7 @@ RSpec.describe Goal, type: :model do
   let(:review) { user.reviews.create(name: 'test review', mode: 'started') }
   let(:goal) { review.goals.create(description: 'test description') }
 
-  %i[description].each do |attribute|
+  [:description].each do |attribute|
     it 'should be invalid if #{attribute} is missing' do
       goal = review.build_goal(description: 'test description')
       goal[attribute] = ''

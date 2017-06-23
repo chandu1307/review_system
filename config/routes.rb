@@ -22,9 +22,6 @@ Rails.application.routes.draw do
   resources :goals
 
   resources :users do
-    member do
-      get 'reviews'
-    end
     collection do
       get 'team_members'
       get 'all_reviews'

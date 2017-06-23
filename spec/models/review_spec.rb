@@ -6,7 +6,7 @@ RSpec.describe Review, type: :model do
   let(:user) { User.create(name: 'test', email: 'test@gmail.com') }
   let(:review) { user.reviews.create(name: 'test review', mode: 'started') }
 
-  %i[name mode].each do |attribute|
+  [:name, :mode].each do |attribute|
     it 'should be invalid if #{attribute} is missing' do
       review = user.reviews.create(name: 'Anything', mode: 'started')
       review[attribute] = ''

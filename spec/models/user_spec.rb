@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'User' do
-  %i[name email].each do |attribute|
+  [:name, :email].each do |attribute|
     it 'should be invalid if #{attribute} is missing' do
       user = User.new(name: 'Anything', email: 'anyemail@gmail.com')
       user[attribute] = ''
@@ -53,38 +53,6 @@ describe 'User' do
 
       User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
       expect(User.count).to eq(user_count)
-    end
-  end
-
-  describe :admin do
-    it 'should return false if user is not an admin' do
-      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', admin:
-      false)
-
-      expect(user.admin).to eq(false)
-    end
-
-    it 'should return true if user is admin' do
-      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', admin:
-      true)
-
-      expect(user.admin).to eq(true)
-    end
-  end
-
-  describe :manager do
-    it 'should return false if user is not a manager' do
-      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', manager:
-      false)
-
-      expect(user.manager).to eq(false)
-    end
-
-    it 'should return true if user is manager' do
-      user = User.create(name: 'mouli l', email: 'mouli@gmail.com', manager:
-      true)
-
-      expect(user.manager).to eq(true)
     end
   end
 end

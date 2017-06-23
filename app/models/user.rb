@@ -19,12 +19,4 @@ class User < ApplicationRecord
     end
     user
   end
-
-  def admin?
-    admin.present?
-  end
-
-  def manager?
-    manager.present?
-  end
 end

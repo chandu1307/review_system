@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class GoalsController < ApplicationController
-  before_action :logged_in_user
+  before_action :verify_user_has_logged_in
   before_action :set_review
   before_action :belongs_to_this_user
-  before_action :belongs_to_this_manager, only: %i[submit_feedback feedback]
+  before_action :belongs_to_this_manager, only: [:submit_feedback, :feedback]
 
   def create
     @goal = @review.build_goal(goal_params)

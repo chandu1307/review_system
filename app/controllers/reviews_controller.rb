@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ReviewsController < ApplicationController
-  before_action :logged_in_user, only: %i[index]
-  before_action :add_review_for_current_quarter, only: %i[index]
+  before_action :verify_user_has_logged_in, only: [:index]
+  before_action :add_review_for_current_quarter, only: [:index]
 
   def index
     @review_items = current_user.reviews

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :if_user_is_logged_in, only: %i[new create]
-  before_action :user_is_admin, only: %i[index all_reviews]
-  before_action :user_is_manager, only: %i[team_members]
-  before_action :logged_in_user, only: %i[index team_members all_reviews]
+  before_action :if_user_is_logged_in, only: [:new, :create]
+  before_action :verify_user_has_logged_in, only: [:index, :team_members, :all_reviews]
+  before_action :verify_user_as_admin, only: [:all_reviews]
+  before_action :verify_user_as_manager, only: [:team_members]
+
   def create
     user = User.from_omniauth(request.env['omniauth.auth'])
     log_in user
@@ -35,15 +36,10 @@ class UsersController < ApplicationController
     redirect_to reviews_path if logged_in?
   end
 
-  def user_is_admin
+  def verify_user_as_admin
     return if current_user.admin?
     flash[:danger] = "You don't have access"
     redirect_to root_path
-  end
-
-  def reviews
-    @team_member = User.find(params[:id])
-    @review_items = Review.where(['user_id = ? and mode != ?', params[:id], 0])
   end
 
   def team_members
@@ -54,7 +50,7 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  def user_is_manager
+  def verify_user_as_manager
     return if current_user.manager?
     flash[:danger] = "You don't have access"
     redirect_to reviews_path
