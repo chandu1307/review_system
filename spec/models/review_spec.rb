@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Review, type: :model do
-  let(:user) { User.create(name: 'test', email: 'test@gmail.com') }
+  let(:user) { User.create(name: 'test', email: 'test@beautifulcode.in') }
   let(:review) { user.reviews.create(name: 'test review', mode: 'started') }
 
   [:name, :mode].each do |attribute|
@@ -77,14 +77,14 @@ RSpec.describe Review, type: :model do
     end
 
     it 'should return true if user is admin' do
-      admin_user = User.create(name: 'admin', email: 'admin@gmail.com', admin:
+      admin_user = User.create(name: 'admin', email: 'admin@beautifulcode.in', admin:
       true)
 
       expect(review.can_be_accessed?(admin_user)).to eq(true)
     end
 
     it 'should return true if user is manager of review user' do
-      manager_user = User.create(name: 'manager', email: 'manager@gmail.com')
+      manager_user = User.create(name: 'manager', email: 'manager@beautifulcode.in')
       user.manager_id = manager_user.id
       user.save
 
@@ -93,7 +93,7 @@ RSpec.describe Review, type: :model do
 
     it 'should return false if user is not an admin or manager or owner of the
     review' do
-      heacker_user = User.create(name: 'heacker', email: 'heacker@gmail.com')
+      heacker_user = User.create(name: 'heacker', email: 'heacker@beautifulcode.in')
 
       expect(review.can_be_accessed?(heacker_user)).to eq(false)
     end
@@ -101,7 +101,7 @@ RSpec.describe Review, type: :model do
 
   describe :employee_manager_or_admin do
     it 'should return true if user is admin' do
-      admin_user = User.create(name: 'admin', email: 'admin@gmail.com', admin:
+      admin_user = User.create(name: 'admin', email: 'admin@beautifulcode.in', admin:
       true)
 
       expect(review.employee_manager_or_admin?(admin_user))
@@ -109,7 +109,7 @@ RSpec.describe Review, type: :model do
     end
 
     it 'should return true if user is manager of review user' do
-      manager_user = User.create(name: 'manager', email: 'manager@gmail.com')
+      manager_user = User.create(name: 'manager', email: 'manager@beautifulcode.in')
       user.manager_id = manager_user.id
       user.save
 
@@ -118,7 +118,7 @@ RSpec.describe Review, type: :model do
     end
 
     it 'should return false if user is not an admin or manager' do
-      heacker_user = User.create(name: 'heacker', email: 'heacker@gmail.com')
+      heacker_user = User.create(name: 'heacker', email: 'heacker@beautifulcode.in')
 
       expect(review.employee_manager_or_admin?(heacker_user))
         .to eq(false)

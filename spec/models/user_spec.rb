@@ -5,7 +5,7 @@ require 'rails_helper'
 describe 'User' do
   [:name, :email].each do |attribute|
     it 'should be invalid if #{attribute} is missing' do
-      user = User.new(name: 'Anything', email: 'anyemail@gmail.com')
+      user = User.new(name: 'Anything', email: 'anyemail@beautifulcode.in')
       user[attribute] = ''
       user.save
 
@@ -15,7 +15,7 @@ describe 'User' do
   end
 
   it 'is valid with valid attributes' do
-    expect(User.new(name: 'Anything', email: 'anyemail@gmail.com')).to be_valid
+    expect(User.new(name: 'Anything', email: 'anyemail@beautifulcode.in')).to be_valid
   end
 
   describe :from_omniauth do
@@ -24,7 +24,7 @@ describe 'User' do
       info: {
         first_name: 'mouli',
         last_name: 'l',
-        email: 'mouli@gmail.com'
+        email: 'mouli@beautifulcode.in'
       }
     )
 
@@ -34,7 +34,7 @@ describe 'User' do
       user = User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])
 
       expect(user.name).to eq('mouli l')
-      expect(user.email).to eq('mouli@gmail.com')
+      expect(user.email).to eq('mouli@beautifulcode.in')
     end
 
     it 'should create a new User record if the user
@@ -48,7 +48,7 @@ describe 'User' do
     it 'should not create a new User record if the
         authenticated user already exists in the DB' do
 
-      User.create(name: 'mouli l', email: 'mouli@gmail.com')
+      User.create(name: 'mouli l', email: 'mouli@beautifulcode.in')
       user_count = User.count
 
       User.from_omniauth(OmniAuth.config.mock_auth[:google_oauth2])

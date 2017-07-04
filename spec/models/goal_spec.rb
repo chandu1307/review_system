@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Goal, type: :model do
-  let(:user) { User.create(name: 'test', email: 'test@gmail.com') }
+  let(:user) { User.create(name: 'test', email: 'test@beautifulcode.in') }
   let(:review) { user.reviews.create(name: 'test review', mode: 'started') }
   let(:goal) { review.goals.create(description: 'test description') }
 
