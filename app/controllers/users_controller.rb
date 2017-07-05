@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :if_user_is_logged_in, only: [:new, :create]
   before_action :verify_user_has_logged_in, only:
    [:index, :team_members, :all_reviews]
-  before_action :verify_user_as_admin, only: [:all_reviews]
+  before_action :verify_user_as_admin, only: [:index, :all_reviews, :team_leads]
   before_action :verify_user_as_manager, only: [:team_members]
 
   def create
@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    save_tab_mode 3
     @users = User.all
   end
 
@@ -44,21 +45,23 @@ class UsersController < ApplicationController
 
   def verify_user_as_admin
     return if current_user.admin?
-    flash[:danger] = "You don't have access"
+    flash[:danger] = 'denied access'
     redirect_to root_path
   end
 
   def team_members
+    save_tab_mode 2
     @users = User.where(manager_id: current_user.id)
   end
 
   def all_reviews
+    save_tab_mode 4
     @users = User.all
   end
 
   def verify_user_as_manager
     return if current_user.manager?
-    flash[:danger] = "You don't have access"
+    flash[:danger] = 'denied access'
     redirect_to reviews_path
   end
 end

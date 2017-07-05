@@ -17,16 +17,16 @@ gem 'omniauth-google-oauth2'
 gem 'rails'
 gem 'sass-rails'
 gem 'turbolinks'
+gem 'tzinfo-data'
 gem 'uglifier'
 gem 'will_paginate', '3.1.0'
-gem 'tzinfo-data'
 
 group :development, :test do
   gem 'byebug'
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'simplecov', require: false
-  gem 'rails-controller-testing'
 end
 
 group :development do

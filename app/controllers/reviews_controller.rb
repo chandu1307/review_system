@@ -5,6 +5,7 @@ class ReviewsController < ApplicationController
   before_action :add_review_for_current_quarter, only: [:index]
 
   def index
+    save_tab_mode 1
     @review_items = current_user.reviews.reverse_order
   end
 
