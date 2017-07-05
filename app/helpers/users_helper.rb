@@ -19,6 +19,14 @@ module UsersHelper
     end
   end
 
+  def save_tab_mode(mode)
+    session[:tab_mode] = mode
+  end
+
+  def tab_mode
+    session[:tab_mode]
+  end
+
   def current_user?(user)
     user == current_user
   end

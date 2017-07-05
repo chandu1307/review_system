@@ -98,6 +98,10 @@ h1 {
     font-size: 16px
 }
 
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active {
+    color: #fff;
+    background-color: #00506b;
+}
 .navbar-inverse .navbar-header > a:hover {
     text-decoration: none;
     color: #DDDDDD;

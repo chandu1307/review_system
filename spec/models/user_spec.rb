@@ -15,7 +15,8 @@ describe 'User' do
   end
 
   it 'is valid with valid attributes' do
-    expect(User.new(name: 'Anything', email: 'anyemail@beautifulcode.in')).to be_valid
+    expect(User.new(name: 'Anything', email:
+    'anyemail@beautifulcode.in')).to be_valid
   end
 
   describe :from_omniauth do

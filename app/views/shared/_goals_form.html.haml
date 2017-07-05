@@ -6,4 +6,4 @@
   %div.margin_top
     .centered
       = f.submit "Save as a draft", class: "btn btn-primary", name: "commit"
-      = f.submit "Submit for approval", class: "btn btn-primary", name: "commit"
+      = f.submit "Submit for approval", class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to submit for approval?' }
