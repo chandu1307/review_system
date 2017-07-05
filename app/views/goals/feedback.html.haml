@@ -16,5 +16,5 @@
     = text_area_tag :manager_feedback, @goal.manager_feedback, autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 8
   %div.margin_top_bottom
     .centered
-      = submit_tag "Submit feedback", class: "btn btn-primary", name: "commit"
-      = submit_tag "Submit final feedback", class: "btn btn-primary", name: "commit"
+      = submit_tag "Submit feedback", class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to submit this feedback?' }
+      = submit_tag "Submit final feedback", class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to submit this final feedback?' }

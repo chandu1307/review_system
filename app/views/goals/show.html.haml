@@ -22,5 +22,5 @@
   = form_tag(approve_review_goals_path(@review), method: :put)  do
     %div.margin_top
       .centered
-        = submit_tag 'Approve', class: "btn btn-primary", name: "commit"
-        = submit_tag 'Reject', class: "btn btn-primary", name: "commit"
+        = submit_tag 'Approve', class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to approve this goals?' }
+        = submit_tag 'Reject', class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to reject this goals?' }
