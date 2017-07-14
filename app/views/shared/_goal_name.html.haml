@@ -1,3 +1,4 @@
-%div.goal_name
-    = link_to 'Home', reviews_path
-    %text_field{:for => "sel1"}= ' / ' + @review.name
+%ul.breadcrumb
+  %li
+    %a{:href => reviews_path} Home
+  %li.active #{@review.name}

@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613110654) do
+ActiveRecord::Schema.define(version: 20170706091928) do
 
-  create_table "goals", id: :integer, force: :cascade do |t|
+  create_table "feedbacks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "content"
+    t.integer "user_id"
+    t.integer "goal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "goals", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "description"
     t.integer "review_id"
     t.datetime "created_at", null: false
@@ -21,9 +29,9 @@ ActiveRecord::Schema.define(version: 20170613110654) do
     t.index ["review_id"], name: "index_goals_on_review_id"
   end
 
-  create_table "reviews", force: :cascade do |t|
-    t.text     "name"
-    t.integer  "user_id"
+  create_table "reviews", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "name"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "mode"
@@ -31,15 +39,17 @@ ActiveRecord::Schema.define(version: 20170613110654) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email"
-    t.string   "avatar_url"
-    t.boolean  "manager"
-    t.boolean  "admin"
-    t.integer  "manager_id"
+  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "email"
+    t.string "avatar_url"
+    t.boolean "manager"
+    t.boolean "admin"
+    t.integer "manager_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "goals", "reviews"
+  add_foreign_key "reviews", "users"
 end

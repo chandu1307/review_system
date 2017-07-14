@@ -1,4 +1,4 @@
-%nav.navbar.navbar-inverse.navbar-custom
+%nav.navbar.navbar-inverse
   .container-fluid
     .navbar-header
       - if logged_in?
@@ -13,6 +13,9 @@
               = current_user.name
               %b.caret
             %ul.dropdown-menu
+              - if current_user.admin?
+                %li
+                  = link_to "Manage Team", users_path
               %li
                 = link_to "Log out", user_logout_path(current_user), method: "delete"
     %ul.nav.navbar-nav
@@ -31,15 +34,15 @@
             %li.text-color
               %a{:href => team_members_users_path} My Team Appraisals
         - if current_user.admin?
-          - if tab_mode == 3
-            %li.nav.nav-tabs.active
-              %a{:href => users_path} Manage Team
-          - else
-            %li.text-color
-              %a{:href => users_path} Manage Team
           - if tab_mode == 4
             %li.nav-tabs.active
-              %a{:href => all_reviews_users_path} All Appraisals
+              %a{:href => all_reviews_users_path} Appraisals by User
           - else
             %li.text-color
-              %a{:href => all_reviews_users_path} All Appraisals
+              %a{:href => all_reviews_users_path} Appraisals by User
+          - if tab_mode == 5
+            %li.nav-tabs.active
+              %a{:href => reviews_by_quarter_users_path} Appraisals by Quarter
+          - else
+            %li.text-color
+              %a{:href => reviews_by_quarter_users_path} Appraisals by Quarter

@@ -3,8 +3,9 @@
 class UsersController < ApplicationController
   before_action :if_user_is_logged_in, only: [:new, :create]
   before_action :verify_user_has_logged_in, only:
-   [:index, :team_members, :all_reviews]
-  before_action :verify_user_as_admin, only: [:index, :all_reviews, :team_leads]
+   [:index, :team_members, :all_reviews, :all_reviews_by_quarter]
+  before_action :verify_user_as_admin, only:
+   [:index, :all_reviews, :all_reviews_by_quarter, :team_leads]
   before_action :verify_user_as_manager, only: [:team_members]
 
   def create
@@ -51,12 +52,17 @@ class UsersController < ApplicationController
 
   def team_members
     save_tab_mode 2
-    @users = User.where(manager_id: current_user.id)
+    @users = User.where(manager_id: current_user.id).includes(:reviews)
   end
 
   def all_reviews
     save_tab_mode 4
-    @users = User.all
+    @users = User.all.includes(:reviews)
+  end
+
+  def reviews_by_quarter
+    save_tab_mode 5
+    @reviews_hash = Review.all.group_by(&:name)
   end
 
   def verify_user_as_manager

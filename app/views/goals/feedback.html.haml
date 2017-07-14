@@ -1,20 +1,35 @@
 - provide(:title, "Feedback")
-%h1 Submit Feedback
 = render 'shared/goal_name'
+%h2.text-center Submit Feedback
 - if @review.feedback_submitted?
   = render 'shared/snippet_for_submit_feedback'
 - else
   = render 'shared/snippet_for_approve'
+.panel.panel-primary
+  .panel-heading
+    %h3.panel-title Goals
+  .panel-body
+    #{@goal.description.gsub(/\n/, '<br/>').html_safe}
+- if @feedbacks.any?
+  - @feedbacks.each do |feedback|
+    - if current_user.id != feedback.user_id
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title Feedback from #{feedback.user.name}
+        .panel-body
+          #{feedback.content.gsub(/\n/, '<br/>').html_safe}
 = form_tag(submit_feedback_review_goals_url([@review]),  method: :post) do |f|
-  %div.lable_heading
-    %label{:for => "sel1"}= 'Goals'
-  %div.rounded
-    %text_field{:for => "sel1"}= @goal.description.gsub(/\n/, '<br/>').html_safe
-  %div.lable_heading
-    %label{:for => "sel1"}= 'Your feedback'
-  %div.margin_top
-    = text_area_tag :manager_feedback, @goal.manager_feedback, autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 8
-  %div.margin_top_bottom
-    .centered
-      = submit_tag "Submit feedback", class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to submit this feedback?' }
-      = submit_tag "Submit final feedback", class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to submit this final feedback?' }
+  - unless @my_feedback.nil?
+    %div
+      %legend Enter Your Feedback
+      = text_area_tag :manager_feedback, @my_feedback.content, autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 7
+    %div.modal-footer
+      = submit_tag "Interim Feedback", class: "btn btn-primary", name: "commit[#{@my_feedback.id}]", data: { confirm: 'Are you sure you want to submit this feedback?' }
+      = submit_tag "Final Feedback", class: "btn btn-primary", name: "commit[#{@my_feedback.id}]", data: { confirm: 'Are you sure you want to submit this final feedback?' }
+  - else
+    %div
+      %legend Enter Your Feedback
+      = text_area_tag :manager_feedback, "", autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 7
+    %div.modal-footer
+      = submit_tag "Interim Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this feedback?' }
+      = submit_tag "Final Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this final feedback?' }

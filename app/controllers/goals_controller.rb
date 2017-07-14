@@ -28,9 +28,19 @@ class GoalsController < ApplicationController
   end
 
   def submit_feedback
-    @review.feedback_user_id = @review.user.manager_id
     @goal = @review.goal
-    if @goal.update_attributes(manager_feedback: params[:manager_feedback])
+    feedback_id = params[:commit].keys[0]
+    mesg = params[:manager_feedback]
+    if feedback_id != '-1'
+      @feedbak = Feedback.find(params[:commit].keys[0])
+      @feedbak.update_attributes(user_id: current_user.id, content: mesg)
+    else
+      @feedbak = @goal.feedbacks.create(user_id: current_user.id, content: mesg)
+    end
+    if @feedbak.save
+      if @review.user.manager_id == current_user.id
+        @review.feedback_user_id = @review.user.manager_id
+      end
       save_review_mode
       redirect_to_path
     else
@@ -39,7 +49,13 @@ class GoalsController < ApplicationController
   end
 
   def feedback
-    check_review_has_goals
+    if @review.completed?
+      redirect_to_path
+    else
+      check_review_has_goals
+      @my_feedback = Feedback.where(user_id: current_user.id, goal_id: @goal.id)
+      @my_feedback = @my_feedback.present? ? @my_feedback.first : nil
+    end
   end
 
   def show
@@ -99,8 +115,11 @@ class GoalsController < ApplicationController
 
   def check_review_has_goals
     @goal = @review.goal
-    return unless @goal.nil?
-    flash[:danger] = 'No goals'
-    redirect_to reviews_path
+    if !@goal.nil?
+      @feedbacks = @goal.feedbacks
+    else
+      flash[:danger] = 'No goals'
+      redirect_to reviews_path
+    end
   end
 end

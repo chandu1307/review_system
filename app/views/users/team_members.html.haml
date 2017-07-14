@@ -1,23 +1,22 @@
 %body
-  - provide(:title, "Team Members")
-
-  %h3 Team Members
+  - provide(:title, "My Team Appraisals")
+  %h2.text-center  My Team Appraisals
   - if @users.any?
     - @users.each do |user|
       - if user.id != current_user.id
         -@review_items = user.reviews.reverse_order
         - if @review_items.any?
           %div.lable_heading
-            %label{:for => "sel1"}= user.name
+            %h4 #{user.name}
           .table-responsive
             %table.table.table-bordered.table-striped.table-highlight
               %thead
-                %th.centered Appraisal Cycle
-                %th.centered Status
-                %th.centered Action
+                %th.text-center Appraisal Cycle
+                %th.text-center Status
+                %th.text-center Action
               %tbody
                 - @review_items.each do |review|
-                  %tr.centered
+                  %tr.text-center
                     %td.col-md-3
                       %text_field{:for => "sel1"}= review.name
                     %td.col-md-5

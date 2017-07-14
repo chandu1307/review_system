@@ -4,14 +4,14 @@
 
   - if @review_items.any?
     .table-responsive
-      %table.table.table-bordered.table-striped.table-highlight
+      %table.table.table-bordered.table-striped.table-hover
         %thead
-          %th.centered Appraisal Cycle
-          %th.centered Status
-          %th.centered Action
-        %tbody
+          %th.text-center Appraisal Cycle
+          %th.text-center Status
+          %th.text-center Action
+        %tbody.text-center
           - @review_items.each do |review|
-            %tr.centered
+            %tr
               %td.col-md-3
                 %text_field{:for => "sel1"}= review.name
               %td.col-md-5

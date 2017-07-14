@@ -1,9 +1,8 @@
-= render 'shared/goal_name'
 = render 'shared/snippet_for_start'
 = form_for([@review, @goal], url: (review_goals_path(@review)))  do |f|
   = render 'shared/error_messages', object: f.object
-  = f.text_area :description, placeholder: "Enter Goal?",:rows => 12,cols: 150
-  %div.margin_top
-    .centered
-      = f.submit "Save as a draft", class: "btn btn-primary", name: "commit"
-      = f.submit "Submit for approval", class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to submit for approval?' }
+  %legend Enter Your Goals
+  = f.text_area :description, placeholder: "Enter Goal?",:rows => 10,cols: 135
+  %div.modal-footer
+    = f.submit "Save as a draft", class: "btn btn-primary", name: "commit[-1]"
+    = f.submit "Submit for approval", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit for approval?' }
