@@ -1,17 +1,14 @@
 - provide(:title, "Team Members")
-%h1 Team Hierarchy
+%h2.text-center Manage Team
 .table-responsive
   = form_tag(team_leads_users_path, method: :put)  do
     %table.table.table-bordered.table-striped.table-highlight
       %thead
-        %th.centered S.No
-        %th.centered Employe name
-        %th.centered Select Manager
+        %th.text-center Employe name
+        %th.text-center Select Manager
       %tbody
         - @users.each.with_index do |user, index|
-          %tr.centered
-            %td.col-md-2
-              %text_field{:for => "sel1"}= index
+          %tr.text-center
             %td.col-md-4
               %text_field{:for => "sel1"}= user.name
             %td.col-md-4

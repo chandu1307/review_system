@@ -19,7 +19,9 @@ Rails.application.routes.draw do
     collection do
       get 'team_members'
       get 'all_reviews'
+      get 'reviews_by_quarter'
       put 'team_leads'
+      get 'team_hierarchy'
     end
   end
 end

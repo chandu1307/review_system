@@ -8,19 +8,20 @@
   = render 'shared/snippet_for_submit_feedback'
 - else
   = render 'shared/snippet_for_approve'
-%div.lable_heading
-  %label{:for => "sel1"}= 'Goals'
-%div.rounded
-  %text_field{:for => "sel1"}= @goal.description.gsub(/\n/, '<br/>').html_safe
-- if @review.feedback_submitted? || @review.completed?
-  %div.lable_heading
-    %label{:for => "sel1"}= 'Feedback from '+ @user.name
-  %div.rounded
-    %text_field{:for => "sel1"}= @goal.manager_feedback.gsub(/\n/, '<br/>').html_safe
-
+.panel.panel-success
+  .panel-heading
+    %h3.panel-title Goals
+  .panel-body
+    %h5 #{@goal.description.gsub(/\n/, '<br/>').html_safe}
+- if @feedbacks.any?
+  - @feedbacks.each do |feedback|
+    .panel.panel-primary
+      .panel-heading
+        %h3.panel-title Feedback from #{feedback.user.name}
+      .panel-body
+        %h5 #{feedback.content.gsub(/\n/, '<br/>').html_safe}
 - if @review.submitted? && current_user.id != @review.user_id
   = form_tag(approve_review_goals_path(@review), method: :put)  do
-    %div.margin_top
-      .centered
-        = submit_tag 'Approve', class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to approve this goals?' }
-        = submit_tag 'Reject', class: "btn btn-primary", name: "commit", data: { confirm: 'Are you sure you want to reject this goals?' }
+    %div.modal-footer
+      = submit_tag 'Approve', class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to approve this goals?' }
+      = submit_tag 'Reject', class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to reject this goals?' }

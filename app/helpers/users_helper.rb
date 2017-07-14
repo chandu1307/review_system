@@ -72,7 +72,7 @@ module UsersHelper
   def user_action(review_state)
     case review_state
     when 'started' then 'Create'
-    when 'saved' then 'Submit'
+    when 'saved' then 'View and Submit'
     else 'View'
     end
   end
@@ -87,11 +87,11 @@ module UsersHelper
   end
 
   def review_state
-    case params[:commit]
+    case params[:commit].values[0]
     when 'Submit for approval' then Review.modes['submitted']
     when 'Approve' then Review.modes['accepted']
-    when 'Submit feedback' then Review.modes['feedback_submitted']
-    when 'Submit final feedback' then Review.modes['completed']
+    when 'Interim Feedback' then Review.modes['feedback_submitted']
+    when 'Final Feedback' then Review.modes['completed']
     else Review.modes['saved']
     end
   end

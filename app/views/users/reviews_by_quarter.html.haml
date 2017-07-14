@@ -1,0 +1,41 @@
+%body
+  - provide(:title, "Appraisals of all users")
+
+  %h2.text-center Appraisals by Quarter
+  - if @reviews_hash.any?
+    - @reviews_hash.each do |key, review_items|
+      %div.lable_heading
+        %h4 #{key}
+      .table-responsive
+        %table.table.table-bordered.table-striped.table-highlight
+          %thead
+            %th.text-center Name
+            %th.text-center Status
+            %th.text-center Action
+            %th.text-center Admin
+          %tbody
+            - review_items.each do |review|
+              - if !review.started?
+                - feedbacks = review.goal.feedbacks.group_by(&:user_id)
+              %tr.text-center
+                %td.col-md-3
+                  %text_field{:for => "sel1"}= review.user.name
+                %td.col-md-5
+                  %text_field{:for => "sel1"}= review_status(review.mode)
+                %td.col-md-3
+                  - if review.accepted? || review.feedback_submitted?
+                    = link_to manager_action(review.mode) , feedback_review_goals_path(review)
+                  - elsif review.saved? || review.started?
+
+                  - else
+                    = link_to manager_action(review.mode) , review_goals_path(review)
+                %td.col-md-3
+                  - if !feedbacks.nil? && feedbacks.any?
+                    - if feedbacks.key?(current_user.id)
+                      %span.label.label-success Feedback provided
+                    - elsif feedbacks.key?(review.user.manager_id)
+                      %span.label.label-danger Awaiting your feedback
+
+  - else
+    .center.jumbotron
+      %h1 Team Members!
