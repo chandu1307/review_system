@@ -1,0 +1,17 @@
+- provide(:title, "Team hierarchy")
+%h2.text-center Team hierarchy
+.table-responsive
+  %table.table.table-bordered.table-striped.table-highlight
+    %thead
+      %th.text-center Employe name
+      %th.text-center Manager
+    %tbody
+      - @users.each.with_index do |user, index|
+        %tr.text-center
+          %td.col-md-4
+            %text_field{:for => "sel1"}= user.name
+          %td.col-md-4
+            - if !user.manager_id.nil?
+              %text_field{:for => "sel1"}= @users.find(user.manager_id).name
+            - else
+              %text_field{:for => "sel1"}= 'Not assigned yet!'

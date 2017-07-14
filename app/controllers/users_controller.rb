@@ -24,6 +24,10 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
+  def team_hierarchy
+    @users = User.all
+  end
+
   def logout
     log_out if logged_in?
     redirect_to root_path

@@ -19,6 +19,7 @@ RSpec.describe Feedback, type: :model do
 
   it 'is valid with provided with the following attributes - content,user_id' do
     goal.save
-    expect(goal.feedbacks.create(content: 'feedback', user_id: user.id)).to be_valid
+    expect(goal.feedbacks.create(content: 'feedback', user_id:
+    user.id)).to be_valid
   end
 end

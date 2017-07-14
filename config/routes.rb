@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get 'all_reviews'
       get 'reviews_by_quarter'
       put 'team_leads'
+      get 'team_hierarchy'
     end
   end
 end

@@ -8,18 +8,17 @@
   = render 'shared/snippet_for_submit_feedback'
 - else
   = render 'shared/snippet_for_approve'
-.panel.panel-primary
+.panel.panel-success
   .panel-heading
     %h3.panel-title Goals
   .panel-body
     %h5 #{@goal.description.gsub(/\n/, '<br/>').html_safe}
 - if @feedbacks.any?
-  .panel.panel-primary
-    .panel-heading
-      %h3.panel-title Feedback
-    .panel-body
-      - @feedbacks.each do |feedback|
-        %h4 Feedback from #{feedback.user.name}
+  - @feedbacks.each do |feedback|
+    .panel.panel-primary
+      .panel-heading
+        %h3.panel-title Feedback from #{feedback.user.name}
+      .panel-body
         %h5 #{feedback.content.gsub(/\n/, '<br/>').html_safe}
 - if @review.submitted? && current_user.id != @review.user_id
   = form_tag(approve_review_goals_path(@review), method: :put)  do
