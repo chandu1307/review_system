@@ -86,10 +86,14 @@ class GoalsController < ApplicationController
   end
 
   def redirect_to_path
-    if current_user.id != @review.user.manager_id
-      redirect_to all_reviews_users_path
-    else
+    if tab_mode == 2
       redirect_to team_members_users_path
+    elsif tab_mode == 4
+      redirect_to all_reviews_users_path
+    elsif tab_mode == 5
+      redirect_to reviews_by_quarter_users_path
+    else
+      redirect_to reviews_path
     end
   end
 
