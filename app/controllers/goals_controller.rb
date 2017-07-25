@@ -5,6 +5,8 @@ class GoalsController < ApplicationController
   before_action :verify_user_has_logged_in
   before_action :set_review
   before_action :belongs_to_this_user
+  before_action :access, only: [:new, :edit]
+
   before_action :belongs_to_this_manager, only: [:submit_feedback, :feedback]
 
   def create
@@ -66,7 +68,12 @@ class GoalsController < ApplicationController
   end
 
   def edit
-    check_review_has_goals
+    if @review.started? || @review.saved?
+      check_review_has_goals
+    else
+      flash[:danger] = 'denied access'
+      redirect_to root_path
+    end
   end
 
   def new
@@ -107,6 +114,12 @@ class GoalsController < ApplicationController
 
   def belongs_to_this_user
     return if @review.can_be_accessed?(current_user)
+    flash[:danger] = 'denied access'
+    redirect_to root_path
+  end
+
+  def access
+    return if @review.belongs_to_user?(current_user)
     flash[:danger] = 'denied access'
     redirect_to root_path
   end

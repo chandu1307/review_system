@@ -24,6 +24,10 @@ class Review < ApplicationRecord
     user.admin || user_id == user.id || self.user.manager_id == user.id
   end
 
+  def belongs_to_user?(user)
+    user_id == user.id
+  end
+
   def employee_manager_or_admin?(user)
     user.admin || self.user.manager_id == user.id
   end
