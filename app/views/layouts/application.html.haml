@@ -5,7 +5,7 @@
     %title= full_title(yield(:title))
     = csrf_meta_tags              |
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    = stylesheet_link_tag 'https://bootswatch.com/yeti/bootstrap.min.css'
+    = stylesheet_link_tag 'app/asset/stylesheet/bootstrap.css'
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
   %body
     = render 'layouts/header'
