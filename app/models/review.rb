@@ -7,8 +7,9 @@ class Review < ApplicationRecord
   enum mode: %i[started saved submitted accepted feedback_submitted completed]
 
   def self.review_name
-    month_number = Time.zone.now.month
-    year = Time.zone.now.strftime('%Y')
+    time_now = Time.zone.now + 10.days
+    month_number = time_now.month
+    year = time_now.strftime('%Y')
     if month_number <= 3
       'Jan ' + year + ' - March ' + year
     elsif month_number <= 6
