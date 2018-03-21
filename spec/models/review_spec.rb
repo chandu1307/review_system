@@ -30,7 +30,7 @@ RSpec.describe Review, type: :model do
       [1, 2, 3].each do |month_number|
         it 'should return Quarter 1 for #{month_number} month' do
           allow(Time).to receive(:now).and_return Time.zone.now.change(month:
-            month_number)
+            month_number, day: 1)
 
           expect(Review.review_name).to include('Jan')
         end
@@ -41,7 +41,7 @@ RSpec.describe Review, type: :model do
       [4, 5, 6].each do |month_number|
         it 'should return Quater 2 for #{month_number} month' do
           allow(Time).to receive(:now).and_return Time.zone.now.change(month:
-            month_number)
+            month_number, day: 1)
 
           expect(Review.review_name).to include('April')
         end
@@ -52,7 +52,7 @@ RSpec.describe Review, type: :model do
       [7, 8, 9].each do |month_number|
         it 'should return Quater 3 for #{month_number} month' do
           allow(Time).to receive(:now).and_return Time.zone.now.change(month:
-            month_number)
+            month_number, day: 1)
 
           expect(Review.review_name).to include('July')
         end
@@ -63,7 +63,7 @@ RSpec.describe Review, type: :model do
       [10, 11, 12].each do |month_number|
         it 'should return Quater 4 for #{month_number} month' do
           allow(Time).to receive(:now).and_return Time.zone.now.change(month:
-            month_number)
+            month_number, day: 1)
 
           expect(Review.review_name).to include('Oct')
         end
