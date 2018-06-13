@@ -6,7 +6,7 @@ box: phusion/passenger-ruby23
 # http://devcenter.wercker.com/docs/services/index.html
 services:
   - id: mysql
-    tag: latest
+    tag: 5.6
     env:
       MYSQL_DATABASE: review-system_test
       MYSQL_USER: review-system
