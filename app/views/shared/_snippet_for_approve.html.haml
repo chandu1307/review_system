@@ -1,23 +1,29 @@
 .container
   .row.bs-wizard{:style => "border-bottom:0;"}
-    .col-xs-3.bs-wizard-step.complete
+    .col-xs-2.bs-wizard-step.complete
       .text-center.bs-wizard-stepnum Set Goals
       .progress
         .progress-bar
       %a.bs-wizard-dot{:href => "#"}
-    .col-xs-3.bs-wizard-step.active
+    .col-xs-2.bs-wizard-step.active
       / complete
       .text-center.bs-wizard-stepnum Finalize Goals
       .progress
         .progress-bar
       %a.bs-wizard-dot{:href => "#"}
-    .col-xs-3.bs-wizard-step.disabled
+    .col-xs-2.bs-wizard-step.disabled
+      / complete
+      .text-center.bs-wizard-stepnum Self Rating
+      .progress
+        .progress-bar
+      %a.bs-wizard-dot{:href => "#"}
+    .col-xs-2.bs-wizard-step.disabled
       / complete
       .text-center.bs-wizard-stepnum Interim Feedback
       .progress
         .progress-bar
       %a.bs-wizard-dot{:href => "#"}
-    .col-xs-3.bs-wizard-step.disabled
+    .col-xs-2.bs-wizard-step.disabled
       / complete
       .text-center.bs-wizard-stepnum Final Feedback
       .progress

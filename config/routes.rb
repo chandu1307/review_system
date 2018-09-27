@@ -10,6 +10,8 @@ Rails.application.routes.draw do
         get 'feedback'
         post 'submit_feedback'
         put 'approve'
+        get 'self_rating'
+        post 'submit_self_rating'
       end
     end
   end

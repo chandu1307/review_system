@@ -4,12 +4,23 @@
 - if @review.feedback_submitted?
   = render 'shared/snippet_for_submit_feedback'
 - else
-  = render 'shared/snippet_for_approve'
+  = render 'shared/snippet_for_submit_self_rating_feedback'
 .panel.panel-success
   .panel-heading
     %h3.panel-title Goals
   .panel-body
     #{@goal.description.gsub(/\n/, '<br/>').html_safe}
+- if @goal.self_rating
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Self Rating from #{@goal.self_rating.user.name}
+    .panel-body
+      .star-rating
+        - @goal.self_rating.total_rating.times do |i|
+          %span.fa.fa-star-o{"data-rating" => (i+1)}
+        %input.rating-value{:name => "self_rating", :type => "hidden", :value => @goal.self_rating.rating}/
+        %span{:style => "color:black;font-weight:lighter;margin-left: 3vh"}
+      %h5 #{@goal.self_rating.content.gsub(/\n/, '<br/>').html_safe}
 - if @feedbacks.any?
   - @feedbacks.each do |feedback|
     - if current_user.id != feedback.user_id
@@ -33,3 +44,20 @@
     %div.modal-footer
       = submit_tag "Interim Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this feedback?' }
       = submit_tag "Final Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this final feedback?' }
+
+:javascript
+   var $star_rating = $('.star-rating .fa');
+   var SetRatingStar = function() {
+     return $star_rating.each(function() {
+       if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+         return $(this).removeClass('fa-star-o').addClass('fa-star');
+       } else {
+         return $(this).removeClass('fa-star').addClass('fa-star-o');
+       }
+     });
+   };
+
+   SetRatingStar();
+   $(document).ready(function() {
+
+   });

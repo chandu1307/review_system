@@ -2,7 +2,7 @@
 
 class User < ApplicationRecord
   validates :name, :email, presence: true
-  validates :email, format: { with: /\b[A-Z0-9._%a-z\-]+@beautifulcode\.in\z/ }
+  #validates :email, format: { with: /\b[A-Z0-9._%a-z\-]+@beautifulcode\.in\z/ }
   has_many :reviews
 
   def self.from_omniauth(access_token)
