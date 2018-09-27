@@ -36,4 +36,18 @@
     font-weight: bolder;
     }
 
+    span.hint{
+    font-weight: lighter;
+    left: 24vh;
+    color: #428bca;
+    }
+
   }
+  .star-rating {
+   line-height:32px;
+   font-size:1.25em;
+ }
+
+ .star-rating .fa-star{
+   color: green;
+ }

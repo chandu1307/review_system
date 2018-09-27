@@ -29,6 +29,25 @@ class GoalsController < ApplicationController
     end
   end
 
+  def self_rating
+    @goal = @review.goal
+    @self_rating = @goal.create_self_rating
+    check_review_has_goals
+  end
+
+  def submit_self_rating
+    @goal = @review.goal
+    self_rating = @goal.create_self_rating(
+      user_id: current_user.id,
+      content: params[:feedback],
+      rating: params[:self_rating],
+      total_rating: 5
+    )
+    self_rating.save
+    save_review_mode
+    redirect_to reviews_path
+  end
+
   def submit_feedback
     @goal = @review.goal
     feedback_id = params[:commit].keys[0]

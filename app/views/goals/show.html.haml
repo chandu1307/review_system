@@ -2,6 +2,8 @@
 = render 'shared/goal_name'
 - if @review.completed?
   = render 'shared/snippet_for_complete'
+- elsif @review.self_rating_submitted?
+  = render 'shared/snippet_for_submit_self_rating_feedback'
 - elsif @review.submitted?
   = render 'shared/snippet_for_submit'
 - elsif @review.feedback_submitted?
@@ -13,6 +15,19 @@
     %h3.panel-title Goals
   .panel-body
     %h5 #{@goal.description.gsub(/\n/, '<br/>').html_safe}
+
+- if @goal.self_rating
+  .panel.panel-primary
+    .panel-heading
+      %h3.panel-title Self Rating from #{@goal.self_rating.user.name}
+    .panel-body
+      .star-rating
+        - @goal.self_rating.total_rating.times do |i|
+          %span.fa.fa-star-o{"data-rating" => (i+1)}
+        %input.rating-value{:name => "self_rating", :type => "hidden", :value => @goal.self_rating.rating}/
+        %span{:style => "color:black;font-weight:lighter;margin-left: 3vh"}
+      %h5 #{@goal.self_rating.content.gsub(/\n/, '<br/>').html_safe}
+
 - if @feedbacks.any?
   - @feedbacks.each do |feedback|
     .panel.panel-primary
@@ -20,8 +35,29 @@
         %h3.panel-title Feedback from #{feedback.user.name}
       .panel-body
         %h5 #{feedback.content.gsub(/\n/, '<br/>').html_safe}
+
+
+
 - if @review.submitted? && current_user.id != @review.user_id
   = form_tag(approve_review_goals_path(@review), method: :put)  do
     %div.modal-footer
       = submit_tag 'Approve', class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to approve this goals?' }
       = submit_tag 'Reject', class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to reject this goals?' }
+
+
+:javascript
+   var $star_rating = $('.star-rating .fa');
+   var SetRatingStar = function() {
+     return $star_rating.each(function() {
+       if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+         return $(this).removeClass('fa-star-o').addClass('fa-star');
+       } else {
+         return $(this).removeClass('fa-star').addClass('fa-star-o');
+       }
+     });
+   };
+
+   SetRatingStar();
+   $(document).ready(function() {
+
+   });

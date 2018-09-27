@@ -4,7 +4,8 @@ class Review < ApplicationRecord
   validates :name, :mode, presence: true
   belongs_to :user
   has_one :goal
-  enum mode: %i[started saved submitted accepted feedback_submitted completed]
+  enum mode: %i[started saved submitted accepted self_rating_submitted
+                feedback_submitted completed]
 
   def self.review_name
     time_now = Time.zone.now + 20.days

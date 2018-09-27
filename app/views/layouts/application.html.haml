@@ -3,6 +3,7 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title= full_title(yield(:title))
+    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
     = csrf_meta_tags              |
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag 'app/asset/stylesheet/bootstrap.css'

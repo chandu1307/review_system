@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170706091928) do
+ActiveRecord::Schema.define(version: 20180926173322) do
 
   create_table "feedbacks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "content"
@@ -37,6 +37,14 @@ ActiveRecord::Schema.define(version: 20170706091928) do
     t.integer "mode"
     t.integer "feedback_user_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "self_ratings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "content"
+    t.integer "user_id"
+    t.integer "goal_id"
+    t.integer "rating"
+    t.integer "total_rating"
   end
 
   create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

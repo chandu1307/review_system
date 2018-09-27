@@ -1,0 +1,55 @@
+- provide(:title, "Self Rating")
+= render 'shared/goal_name'
+%h2.text-center Submit Self Rating
+= render 'shared/snippet_for_approve'
+.panel.panel-success
+  .panel-heading
+    %h3.panel-title Goals
+  .panel-body
+    #{@goal.description.gsub(/\n/, '<br/>').html_safe}
+- if @feedbacks.any?
+  - @feedbacks.each do |feedback|
+    .panel.panel-primary
+      .panel-heading
+        %h3.panel-title Feedback from #{feedback.user.name}
+      .panel-body
+        %h5 #{feedback.content.gsub(/\n/, '<br/>').html_safe}
+
+
+= form_tag(submit_self_rating_review_goals_url([@review]),  method: :post) do |f|
+
+
+  %div
+    %legend Self Rating
+    %div
+      .star-rating
+        - 5.times do |i|
+          %span.fa.fa-star-o{"data-rating" => (i+1)}
+        %input.rating-value{:name => "self_rating", :type => "hidden", :value => "0"}/
+        %span{:style => "color:black;font-weight:lighter;margin-left: 3vh"}
+
+    = text_area_tag :feedback, "", autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 7
+  %div.modal-footer
+    = submit_tag "Submit Self Rating", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this self rating?' }
+
+:javascript
+   var $star_rating = $('.star-rating .fa');
+   var SetRatingStar = function() {
+     return $star_rating.each(function() {
+       if (parseInt($star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+         return $(this).removeClass('fa-star-o').addClass('fa-star');
+       } else {
+         return $(this).removeClass('fa-star').addClass('fa-star-o');
+       }
+     });
+   };
+
+   $star_rating.on('click', function() {
+     $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+     return SetRatingStar();
+   });
+
+   SetRatingStar();
+   $(document).ready(function() {
+
+   });
