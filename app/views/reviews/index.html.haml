@@ -21,7 +21,7 @@
                   = link_to user_action(review.mode) , new_review_goals_path(review)
                 - elsif review.saved?
                   = link_to user_action(review.mode) , edit_review_goals_path(review)
-                - elsif review.accepted?
+                - elsif review.final_feedback_submitted?
                   = link_to user_action(review.mode) , self_rating_review_goals_path(review)
                 - else
                   = link_to user_action(review.mode) , review_goals_path(review)

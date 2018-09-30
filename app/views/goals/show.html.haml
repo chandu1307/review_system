@@ -2,8 +2,8 @@
 = render 'shared/goal_name'
 - if @review.completed?
   = render 'shared/snippet_for_complete'
-- elsif @review.self_rating_submitted?
-  = render 'shared/snippet_for_submit_self_rating_feedback'
+- elsif @review.final_feedback_submitted?
+  = render 'shared/snippet_for_submited_final_feedback'
 - elsif @review.submitted?
   = render 'shared/snippet_for_submit'
 - elsif @review.feedback_submitted?

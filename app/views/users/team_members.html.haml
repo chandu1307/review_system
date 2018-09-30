@@ -22,7 +22,7 @@
                     %td.col-md-5
                       %text_field{:for => "sel1"}= review_status(review.mode)
                     %td.col-md-3
-                      - if review.self_rating_submitted? || review.feedback_submitted?
+                      - if review.accepted? || review.feedback_submitted?
                         = link_to manager_action(review.mode) , feedback_review_goals_path(review)
                       - elsif review.saved? || review.started?
 

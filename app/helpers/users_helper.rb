@@ -61,12 +61,12 @@ module UsersHelper
     when 'saved' then "Goals not submitted. Discuss with manager/reportee and
       finalize goals"
     when 'submitted' then "Goals submitted. Awaiting manager's approval"
-    when 'accepted' then 'Goals accepted. Awaiting Self rating'
-    when 'self_rating_submitted' then 'Self rating submitted. Awaiting
+    when 'accepted' then 'Goals accepted. Awaiting
       temporary/final feedback'
     when 'feedback_submitted' then 'Temporary feedback submitted. Final feedback
       awaited'
-    when 'completed' then 'Final feedback provided. Appraisal closed!'
+    when 'final_feedback_submitted' then 'Final feedback provided. Awaiting Self ratin'
+    when 'completed' then 'Final feedback and Self ratin provided. Appraisal closed!'
     else review_state
     end
   end
@@ -75,15 +75,14 @@ module UsersHelper
     case review_state
     when 'started' then 'Create'
     when 'saved' then 'View and Submit'
-    when 'accepted' then 'Submit Self Rating'
+    when 'final_feedback_submitted' then 'Submit Self Rating'
     else 'View'
     end
   end
 
   def manager_action(review_state)
     case review_state
-    when 'self_rating_submitted' then 'Submit feedback'
-    when 'accepted' then 'View'
+    when 'accepted' then 'Submit feedback'
     when 'feedback_submitted' then 'Submit feedback'
     when 'submitted' then 'View'
     else 'View'
@@ -95,8 +94,8 @@ module UsersHelper
     when 'Submit for approval' then Review.modes['submitted']
     when 'Approve' then Review.modes['accepted']
     when 'Interim Feedback' then Review.modes['feedback_submitted']
-    when 'Final Feedback' then Review.modes['completed']
-    when 'Submit Self Rating' then Review.modes['self_rating_submitted']
+    when 'Final Feedback' then Review.modes['final_feedback_submitted']
+    when 'Submit Self Rating' then Review.modes['completed']
     else Review.modes['saved']
     end
   end
