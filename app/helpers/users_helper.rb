@@ -61,11 +61,12 @@ module UsersHelper
     when 'saved' then "Goals not submitted. Discuss with manager/reportee and
       finalize goals"
     when 'submitted' then "Goals submitted. Awaiting manager's approval"
-    when 'accepted' then 'Goals accepted. Awaiting Self rating'
+    when 'accepted' then 'Goals accepted. Awaiting
+      temporary feedback'
     when 'self_rating_submitted' then 'Self rating submitted. Awaiting
-      temporary/final feedback'
-    when 'feedback_submitted' then 'Temporary feedback submitted. Final feedback
-      awaited'
+      final feedback'
+    when 'feedback_submitted' then 'Temporary feedback submitted. Awaiting
+      Self rating'
     when 'completed' then 'Final feedback provided. Appraisal closed!'
     else review_state
     end
@@ -75,7 +76,7 @@ module UsersHelper
     case review_state
     when 'started' then 'Create'
     when 'saved' then 'View and Submit'
-    when 'accepted' then 'Submit Self Rating'
+    when 'feedback_submitted' then 'Submit Self Rating'
     else 'View'
     end
   end
@@ -84,7 +85,7 @@ module UsersHelper
     case review_state
     when 'self_rating_submitted' then 'Submit feedback'
     when 'accepted' then 'View'
-    when 'feedback_submitted' then 'Submit feedback'
+    when 'feedback_submitted' then 'View'
     when 'submitted' then 'View'
     else 'View'
     end

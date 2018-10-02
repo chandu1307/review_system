@@ -7,4 +7,32 @@ namespace :admin do
       User.where(email: email).update(admin: true)
     end
   end
+
+  desc 'load_test'
+  task load_test: :environment do
+    users  = User.all
+    users.each do|user|
+      20.times do |j|
+        review = user.reviews.build(name: 'name' + (100 + j).to_s,
+                                             mode: Review.modes['started'])
+        review.save
+        goal = review.build_goal
+        goal.description = 'Hi'
+        goal.save
+
+
+
+         feedback = goal.feedbacks.create(user_id: 2, content: 'Feedabck')
+         feedback.save
+         review.mode = 'feedback_submitted'
+         review.save
+
+      end
+    end
+    30.times do |i|
+
+
+
+    end
+  end
 end

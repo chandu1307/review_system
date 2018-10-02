@@ -4,7 +4,7 @@
   - if @users.any?
     - @users.each do |user|
       - if user.id != current_user.id
-        -@review_items = user.reviews.reverse_order
+        -@review_items = user.reviews
         - if @review_items.any?
           %div.lable_heading
             %h4 #{user.name}
@@ -15,19 +15,14 @@
                 %th.text-center Status
                 %th.text-center Action
               %tbody
-                - @review_items.each do |review|
+                - @review_items.reverse.each do |review|
                   %tr.text-center
                     %td.col-md-3
                       %text_field{:for => "sel1"}= review.name
                     %td.col-md-5
                       %text_field{:for => "sel1"}= review_status(review.mode)
                     %td.col-md-3
-                      - if review.self_rating_submitted? || review.feedback_submitted?
-                        = link_to manager_action(review.mode) , feedback_review_goals_path(review)
-                      - elsif review.saved? || review.started?
-
-                      - else
-                        = link_to manager_action(review.mode) , review_goals_path(review)
+                      = link_to manager_action(review.mode) , review_goals_path(review)
 
         - else
           .center.jumbotron

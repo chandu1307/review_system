@@ -152,6 +152,8 @@ class GoalsController < ApplicationController
   def check_review_has_goals
     @goal = @review.goal
     if !@goal.nil?
+      @my_feedback = Feedback.where(user_id: current_user.id, goal_id: @goal.id)
+      @my_feedback = @my_feedback.present? ? @my_feedback.first : nil
       @feedbacks = @goal.feedbacks
     else
       flash[:danger] = 'No goals'
