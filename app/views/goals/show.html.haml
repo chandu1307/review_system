@@ -10,6 +10,9 @@
   = render 'shared/snippet_for_submit_feedback'
 - else
   = render 'shared/snippet_for_approve'
+
+- self_rating_need = @review.feedback_submitted?
+
 .panel.panel-success
   .panel-heading
     %h3.panel-title Goals
@@ -30,19 +33,61 @@
 
 - if @feedbacks.any?
   - @feedbacks.each do |feedback|
-    .panel.panel-primary
-      .panel-heading
-        %h3.panel-title Feedback from #{feedback.user.name}
-      .panel-body
-        %h5 #{feedback.content.gsub(/\n/, '<br/>').html_safe}
-
-
+    - if (current_user.id != feedback.user_id)
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title Feedback from #{feedback.user.name}
+        .panel-body
+          %h5 #{feedback.content.gsub(/\n/, '<br/>').html_safe}
+    - elsif !@review.accepted? && !@review.self_rating_submitted?
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title Feedback from #{feedback.user.name}
+        .panel-body
+          %h5 #{feedback.content.gsub(/\n/, '<br/>').html_safe}
 
 - if @review.submitted? && current_user.id != @review.user_id
   = form_tag(approve_review_goals_path(@review), method: :put)  do
     %div.modal-footer
       = submit_tag 'Approve', class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to approve this goals?' }
       = submit_tag 'Reject', class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to reject this goals?' }
+- elsif (@review.accepted? || @review.self_rating_submitted?) && current_user.id != @review.user_id
+  = form_tag(submit_feedback_review_goals_url([@review]),  method: :post) do |f|
+    - unless @my_feedback.nil?
+      %div
+        %legend Enter Your Feedback
+        = text_area_tag :manager_feedback, @my_feedback.content, autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 7
+      %div.modal-footer
+        - if @review.accepted?
+          = submit_tag "Interim Feedback", class: "btn btn-primary", name: "commit[#{@my_feedback.id}]", data: { confirm: 'Are you sure you want to submit this feedback?' }
+        - if @review.self_rating_submitted?
+          = submit_tag "Final Feedback", class: "btn btn-primary", name: "commit[#{@my_feedback.id}]", data: { confirm: 'Are you sure you want to submit this final feedback?' }
+    - else
+      %div
+        %legend Enter Your Feedback
+        = text_area_tag :manager_feedback, "", autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 7
+      %div.modal-footer
+        - if @review.accepted?
+          = submit_tag "Interim Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this feedback?' }
+        - if @review.self_rating_submitted?
+          = submit_tag "Final Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this final feedback?' }
+- elsif @review.feedback_submitted? && current_user.id == @review.user_id
+  = form_tag(submit_self_rating_review_goals_url([@review]),  method: :post) do |f|
+    %div
+      %legend Self Rating
+      %div
+        .star-rating
+          - 10.times do |i|
+            %span.fa.fa-star-o{"data-rating" => (i+1)}
+          %input.rating-value{:name => "self_rating", :type => "hidden", :value => "0"}/
+          %span{:style => "color:black;font-weight:lighter;margin-left: 3vh"}
+
+      = text_area_tag :feedback, "", autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: false, rows: 7
+    %div.modal-footer
+      = submit_tag "Submit Self Rating", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this self rating?' }
+
+
+
 
 
 :javascript
@@ -56,6 +101,13 @@
        }
      });
    };
+
+   $star_rating.on('click', function() {
+     if (#{self_rating_need}){
+       $star_rating.siblings('input.rating-value').val($(this).data('rating'));
+       return SetRatingStar();
+     }
+   });
 
    SetRatingStar();
    $(document).ready(function() {

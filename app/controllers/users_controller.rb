@@ -56,17 +56,17 @@ class UsersController < ApplicationController
 
   def team_members
     save_tab_mode 2
-    @users = User.where(manager_id: current_user.id).includes(:reviews)
+    @users = User.where(manager_id: current_user.id).eager_load(:reviews)
   end
 
   def all_reviews
     save_tab_mode 4
-    @users = User.all.includes(:reviews)
+    @users = User.all.eager_load(:reviews)
   end
 
   def reviews_by_quarter
     save_tab_mode 5
-    @reviews_hash = Review.all.group_by(&:name)
+    @reviews_hash = Review.all.eager_load(:user).group_by(&:name)
   end
 
   def verify_user_as_manager
