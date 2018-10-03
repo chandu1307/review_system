@@ -66,7 +66,9 @@ class UsersController < ApplicationController
 
   def reviews_by_quarter
     save_tab_mode 5
-    @reviews_hash = Review.all.eager_load(:user).group_by(&:name)
+    @reviews_hash = Review.all.eager_load(
+      :user, goal: [:feedbacks]
+    ).group_by(&:name)
   end
 
   def verify_user_as_manager
