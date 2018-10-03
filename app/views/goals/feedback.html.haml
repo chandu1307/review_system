@@ -42,8 +42,10 @@
       %legend Enter Your Feedback
       = text_area_tag :manager_feedback, "", autocomplete: "off", class: "form-control", placeholder: "Enter Feedback?", required: true, rows: 7
     %div.modal-footer
-      = submit_tag "Interim Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this feedback?' }
-      = submit_tag "Final Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this final feedback?' }
+      - if @review.accepted?
+        = submit_tag "Interim Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this feedback?' }
+      - if @review.self_rating_submitted?
+        = submit_tag "Final Feedback", class: "btn btn-primary", name: "commit[-1]", data: { confirm: 'Are you sure you want to submit this final feedback?' }
 
 :javascript
    var $star_rating = $('.star-rating .fa');
