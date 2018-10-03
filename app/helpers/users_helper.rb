@@ -84,9 +84,11 @@ module UsersHelper
   def manager_action(review_state)
     case review_state
     when 'self_rating_submitted' then 'Submit feedback'
-    when 'accepted' then 'View'
+    when 'accepted' then 'Submit feedback'
     when 'feedback_submitted' then 'View'
     when 'submitted' then 'View'
+    when 'started' then ''
+    when 'saved' then ''
     else 'View'
     end
   end
