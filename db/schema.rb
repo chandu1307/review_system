@@ -10,54 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180926173322) do
+ActiveRecord::Schema.define(version: 20200328064215) do
 
-  create_table "feedbacks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "feedbacks", force: :cascade do |t|
     t.text "content"
-    t.integer "user_id"
-    t.integer "goal_id"
+    t.bigint "user_id"
+    t.bigint "goal_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "goals", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "goals", force: :cascade do |t|
     t.text "description"
-    t.integer "review_id"
+    t.bigint "review_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "manager_feedback"
-    t.index ["review_id"], name: "index_goals_on_review_id"
+    t.string "manager_feedback", limit: 255
+    t.index ["review_id"], name: "idx_34335_index_goals_on_review_id"
   end
 
-  create_table "reviews", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "reviews", force: :cascade do |t|
     t.text "name"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "mode"
-    t.integer "feedback_user_id"
-    t.index ["user_id"], name: "index_reviews_on_user_id"
+    t.bigint "mode"
+    t.bigint "feedback_user_id"
+    t.index ["user_id"], name: "idx_34344_index_reviews_on_user_id"
   end
 
-  create_table "self_ratings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "self_ratings", force: :cascade do |t|
     t.text "content"
-    t.integer "user_id"
-    t.integer "goal_id"
-    t.integer "rating"
-    t.integer "total_rating"
+    t.bigint "user_id"
+    t.bigint "goal_id"
+    t.bigint "rating"
+    t.bigint "total_rating"
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name"
-    t.string "email"
-    t.string "avatar_url"
+  create_table "users", force: :cascade do |t|
+    t.string "name", limit: 255
+    t.string "email", limit: 255
+    t.string "avatar_url", limit: 255
     t.boolean "manager"
     t.boolean "admin"
-    t.integer "manager_id"
+    t.bigint "manager_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
   end
 
-  add_foreign_key "goals", "reviews"
-  add_foreign_key "reviews", "users"
+  add_foreign_key "goals", "reviews", on_update: :restrict, on_delete: :restrict
+  add_foreign_key "reviews", "users", on_update: :restrict, on_delete: :restrict
 end

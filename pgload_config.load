@@ -1,0 +1,10 @@
+/* pgloader config file */
+
+LOAD DATABASE
+     FROM      mysql://root@localhost/reviewsystem_stagingdb
+     INTO      pgsql://postgres@localhost/reviewsystem_production
+
+ WITH include drop, create tables
+
+ALTER SCHEMA 'reviewsystem_stagingdb' RENAME TO 'public'
+;

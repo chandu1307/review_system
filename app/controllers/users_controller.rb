@@ -2,10 +2,14 @@
 
 class UsersController < ApplicationController
   before_action :if_user_is_logged_in, only: [:new, :create]
-  before_action :verify_user_has_logged_in, only:
-   [:index, :team_members, :all_reviews, :all_reviews_by_quarter]
-  before_action :verify_user_as_admin, only:
-   [:index, :all_reviews, :all_reviews_by_quarter, :team_leads]
+  before_action :verify_user_has_logged_in, only: [
+    :index, :team_members, :all_reviews, :all_reviews_by_quarter,
+    :toggle_state, :show
+  ]
+  before_action :verify_user_as_admin, only: [
+    :index, :all_reviews, :all_reviews_by_quarter, :team_leads,
+    :toggle_state, :show
+  ]
   before_action :verify_user_as_manager, only: [:team_members]
 
   def create
@@ -22,6 +26,21 @@ class UsersController < ApplicationController
   def index
     save_tab_mode 3
     @users = User.all
+  end
+
+  def show
+    @users = User.all
+    @user = User.where(id: params[:id]).first
+  end
+
+  def toggle_state
+    @user = User.where(id: params[:id]).first
+    if @user && @user.update_attributes(params.fetch(:user).permit(:active))
+      flash[:success] = "#{@user.name} updated Successfully"
+      redirect_to users_path
+    else
+      render 'index'
+    end
   end
 
   def team_hierarchy
@@ -61,7 +80,7 @@ class UsersController < ApplicationController
 
   def all_reviews
     save_tab_mode 4
-    @users = User.all.eager_load(:reviews)
+    @users = User.where(active: true).eager_load(:reviews)
   end
 
   def reviews_by_quarter

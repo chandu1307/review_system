@@ -4,22 +4,4 @@
   %h2.text-center Appraisals of all users
   - if @users.any?
     - @users.each do |user|
-      -@review_items = user.reviews
-      - if @review_items.any?
-        %div.lable_heading
-          %h4 #{user.name}
-        .table-responsive
-          %table.table.table-bordered.table-striped.table-highlight
-            %thead
-              %th.text-center Appraisal Cycle
-              %th.text-center Status
-              %th.text-center Action
-            %tbody
-              - @review_items.reverse.each do |review|
-                %tr.text-center
-                  %td.col-md-3
-                    %text_field{:for => "sel1"}= review.name
-                  %td.col-md-5
-                    %text_field{:for => "sel1"}= review_status(review.mode)
-                  %td.col-md-3
-                    = link_to manager_action(review.mode) , review_goals_path(review)
+      = render "reviews", user: user

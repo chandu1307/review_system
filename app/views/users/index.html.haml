@@ -1,17 +1,44 @@
 - provide(:title, "Team Members")
-%h2.text-center Manage Team
+%h2.text-center Manage Team (Active Members)
 .table-responsive
   = form_tag(team_leads_users_path, method: :put)  do
     %table.table.table-bordered.table-striped.table-highlight
       %thead
         %th.text-center Employe name
         %th.text-center Select Manager
+        %th.text-center Actions
       %tbody
-        - @users.each.with_index do |user, index|
+        - @users.select {|user| user[:active] }.each.with_index do |user, index|
           %tr.text-center
             %td.col-md-4
-              %text_field{:for => "sel1"}= user.name
+              %text_field{:for => "sel1"}
+                = link_to user_path(user), target: '_blank' do
+                  = user.name
             %td.col-md-4
               = select_tag "managers[#{user.id}]", options_from_collection_for_select(@users, 'id', 'name', user.manager_id), { :prompt => 'Select Manager' }
+            %td.col-md-2
+              = form_for(user, url: toggle_state_user_path(user), method: :patch) do |f|
+                = f.hidden_field :active, value: false
+                = f.submit "Disable"
     .centered
       = submit_tag 'Submit',class: "btn btn-primary"
+
+%h2 Inactive Team Members
+%div.table.table-responsive
+  %table#user_table.table.table-striped.table-bordered
+    %thead
+      %tr
+        %td Name
+        %td Email
+        %td Actions
+    %tbody
+      - @users.select{ |user| !user[:active] }.each do |user|
+        %tr
+          %td
+            = link_to user_path(user), target: '_blank' do
+              = user.name
+          %td= user.email
+          %td
+            = form_for(user, url: toggle_state_user_path(user), method: :patch) do |f|
+              = f.hidden_field :active, value: true
+              = f.submit "Enable"

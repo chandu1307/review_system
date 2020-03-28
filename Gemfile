@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.5.7'
+
 gem 'bcrypt'
 gem 'bootstrap-sass', '3.3.6'
 gem 'bootstrap-will_paginate'
@@ -12,7 +14,8 @@ gem 'haml-rails'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'mini_magick', '4.5.1'
-gem 'mysql2'
+gem 'pg', '~> 0.20'
+gem 'puma'
 gem 'omniauth-google-oauth2'
 gem 'rails'
 gem 'sass-rails'
@@ -31,6 +34,5 @@ end
 
 group :development do
   gem 'listen'
-  gem 'puma'
   gem 'web-console'
 end

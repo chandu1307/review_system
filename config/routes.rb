@@ -16,8 +16,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:index, :new, :create] do
+  resources :users, only: [:index, :new, :create, :show] do
     delete 'logout'
+    member do
+      patch :toggle_state
+    end
     collection do
       get 'team_members'
       get 'all_reviews'
