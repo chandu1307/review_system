@@ -81,7 +81,7 @@ GEM
       i18n (~> 0.5)
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.18)
+    ffi (1.12.2)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
     fog (1.38.0)
