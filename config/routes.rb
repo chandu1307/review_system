@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :new, :create, :show] do
     delete 'logout'
     member do
-      patch :toggle_state
+      put :toggle_state
     end
     collection do
       get 'team_members'
