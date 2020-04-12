@@ -17,7 +17,7 @@
             %td.col-md-4
               = select_tag "managers[#{user.id}]", options_from_collection_for_select(@users, 'id', 'name', user.manager_id), { :prompt => 'Select Manager' }
             %td.col-md-2
-              = form_for(user, url: toggle_state_user_path(user), method: :patch) do |f|
+              = form_for(user, url: toggle_state_user_path(user), method: :put) do |f|
                 = f.hidden_field :active, value: false
                 = f.submit "Disable"
     .centered
@@ -39,6 +39,6 @@
               = user.name
           %td= user.email
           %td
-            = form_for(user, url: toggle_state_user_path(user), method: :patch) do |f|
+            = form_for(user, url: toggle_state_user_path(user), method: :put) do |f|
               = f.hidden_field :active, value: true
               = f.submit "Enable"
