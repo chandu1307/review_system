@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.5.7'
 
 gem 'bcrypt'
-gem 'bootstrap-sass', '3.3.6'
+gem 'bootstrap-sass', '3.4.1'
 gem 'bootstrap-will_paginate'
 gem 'carrierwave', '0.11.2'
 gem 'coffee-rails'
